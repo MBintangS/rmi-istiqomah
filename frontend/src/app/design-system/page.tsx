@@ -1,3 +1,5 @@
+import { Badge, Button, Card } from "@/components/ui";
+
 const colors = [
   { name: "primary", className: "bg-primary", hex: "#4e830a" },
   { name: "primary-dark", className: "bg-primary-dark", hex: "#3c5e0a" },
@@ -21,9 +23,74 @@ export default function DesignSystemPage() {
           <p className="text-caption font-medium text-primary">Dev Reference</p>
           <h1>Design System RMI</h1>
           <p className="text-body max-w-2xl text-foreground/80">
-            Preview warna, tipografi, dan token desain untuk website Remaja Masjid Istiqomah.
+            Preview warna, tipografi, dan komponen UI untuk website Remaja Masjid Istiqomah.
           </p>
         </header>
+
+        <section className="space-y-4">
+          <h2>Button</h2>
+          <div className="space-y-6 rounded-rmi bg-surface p-6 shadow-soft">
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Variants</p>
+              <div className="flex flex-wrap gap-3">
+                <Button variant="primary">Primary</Button>
+                <Button variant="secondary">Secondary</Button>
+                <Button variant="outline">Outline</Button>
+                <Button variant="ghost">Ghost</Button>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Sizes</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button size="sm">Small</Button>
+                <Button size="md">Medium</Button>
+                <Button size="lg">Large</Button>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Disabled</p>
+              <Button disabled>Disabled</Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2>Badge</h2>
+          <div className="flex flex-wrap gap-3 rounded-rmi bg-surface p-6 shadow-soft">
+            <Badge variant="default">Default</Badge>
+            <Badge variant="success">Success</Badge>
+            <Badge variant="warning">Warning</Badge>
+            <Badge variant="category">Kategori Dakwah</Badge>
+            <Badge variant="category">Kegiatan</Badge>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2>Card</h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <Card
+              image={{
+                src: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=800&q=80",
+                alt: "Kegiatan remaja masjid",
+              }}
+              title="Isra Miraj"
+              description="Peringatan Isra Miraj bersama jamaah dan kegiatan tausiyah remaja masjid."
+              footer={<Button size="sm">Selengkapnya</Button>}
+            />
+            <Card
+              title="Sanlat RMI"
+              description="Pesantren kilat tahunan untuk meningkatkan pemahaman agama generasi muda."
+              footer={
+                <div className="flex items-center justify-between">
+                  <Badge variant="category">Program</Badge>
+                  <Button variant="outline" size="sm">
+                    Detail
+                  </Button>
+                </div>
+              }
+            />
+          </div>
+        </section>
 
         <section className="space-y-4">
           <h2>Warna</h2>
@@ -72,30 +139,6 @@ export default function DesignSystemPage() {
               <p className="text-caption mb-1 text-foreground/60">Caption — Regular 400</p>
               <p className="text-caption">Terakhir diperbarui: 7 Juli 2026</p>
             </div>
-            <div>
-              <p className="text-caption mb-1 text-foreground/60">Button — Medium 500</p>
-              <span className="text-button inline-block rounded-full bg-primary px-5 py-2.5 text-white">
-                Lihat Kegiatan
-              </span>
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <h2>Utility Classes</h2>
-          <div className="flex flex-wrap gap-3">
-            <span className="rounded-full bg-primary px-4 py-2 text-sm text-white">
-              bg-primary
-            </span>
-            <span className="rounded-full bg-secondary px-4 py-2 text-sm text-heading">
-              bg-secondary
-            </span>
-            <span className="rounded-full border border-accent-green-2 px-4 py-2 text-sm text-primary">
-              text-primary
-            </span>
-            <span className="rounded-full bg-surface px-4 py-2 text-sm text-secondary shadow-soft">
-              text-secondary
-            </span>
           </div>
         </section>
       </div>
