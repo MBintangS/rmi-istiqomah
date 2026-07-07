@@ -1,3 +1,6 @@
+export { Drawer, type DrawerProps } from "./Drawer";
+export { Modal, type ModalProps } from "./Modal";
+export { Toaster } from "./Toaster";
 export { Badge, type BadgeProps, type BadgeVariant } from "./Badge";
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from "./Button";
 export { Card, type CardProps } from "./Card";

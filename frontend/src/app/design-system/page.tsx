@@ -1,4 +1,5 @@
 import { Badge, Button, Card, Input, Label, Select, Textarea } from "@/components/ui";
+import { OverlayPreview } from "@/components/ui/OverlayPreview";
 
 const colors = [
   { name: "primary", className: "bg-primary", hex: "#4e830a" },
@@ -26,6 +27,11 @@ export default function DesignSystemPage() {
             Preview warna, tipografi, dan komponen UI untuk website Remaja Masjid Istiqomah.
           </p>
         </header>
+
+        <section className="space-y-4">
+          <h2>Modal, Drawer &amp; Toast</h2>
+          <OverlayPreview />
+        </section>
 
         <section className="space-y-4">
           <h2>Form</h2>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/Toaster";
 import { poppins } from "@/lib/fonts";
 import "./globals.css";
 
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${poppins.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${poppins.variable} font-sans antialiased`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
