@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Input, Label, Select, Textarea } from "@/components/ui";
+import { Badge, Button, Card, EmptyState, Input, Label, Select, Skeleton, SkeletonList, Spinner, Textarea } from "@/components/ui";
 import { OverlayPreview } from "@/components/ui/OverlayPreview";
 
 const colors = [
@@ -27,6 +27,42 @@ export default function DesignSystemPage() {
             Preview warna, tipografi, dan komponen UI untuk website Remaja Masjid Istiqomah.
           </p>
         </header>
+
+        <section className="space-y-4">
+          <h2>Loading &amp; Empty States</h2>
+          <div className="space-y-8 rounded-rmi bg-surface p-6 shadow-soft">
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Spinner</p>
+              <div className="flex flex-wrap items-center gap-6">
+                <Spinner size="sm" />
+                <Spinner size="md" />
+                <Spinner size="lg" />
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Skeleton — bar &amp; text</p>
+              <div className="max-w-md space-y-4">
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton variant="text" lines={3} />
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Skeleton — card list (artikel/kegiatan)</p>
+              <SkeletonList count={3} />
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-caption text-foreground/60">Empty State</p>
+              <EmptyState
+                title="Belum ada artikel"
+                description="Artikel Islami akan tampil di sini setelah dipublikasikan."
+                actionLabel="Kembali ke Beranda"
+              />
+            </div>
+          </div>
+        </section>
 
         <section className="space-y-4">
           <h2>Modal, Drawer &amp; Toast</h2>
