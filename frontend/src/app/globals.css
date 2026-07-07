@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-white text-gray-900;
+:root {
+  /* Primary — hijau RMI */
+  --color-primary: #4e830a;
+  --color-primary-dark: #3c5e0a;
+  --color-primary-light: #6b9129;
+
+  /* Secondary — emas */
+  --color-secondary: #d4af37;
+  --color-secondary-alt: #c0a34e;
+
+  /* Neutral & surface */
+  --color-background: #ebded3;
+  --color-surface: #f8fafc;
+  --color-foreground: #1f2937;
+  --color-heading: #23300a;
+
+  /* Accent greens */
+  --color-accent-green: #94a658;
+  --color-accent-green-2: #477909;
+  --color-accent-green-3: #598712;
+}
+
+@layer base {
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-heading;
+  }
+
+  h1 {
+    @apply text-4xl font-bold leading-tight md:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold leading-snug md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl font-semibold leading-snug md:text-2xl;
+  }
+}
+
+@layer components {
+  .text-body {
+    @apply text-base font-normal leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-sm font-normal leading-normal;
+  }
+
+  .text-button {
+    @apply text-sm font-medium leading-none md:text-base;
+  }
 }
