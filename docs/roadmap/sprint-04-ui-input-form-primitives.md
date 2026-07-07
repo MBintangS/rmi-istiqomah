@@ -6,6 +6,7 @@
 | **Estimasi** | 2 jam |
 | **Prasyarat** | Sprint 03 |
 | **Output** | Input, Textarea, Select, Label |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 03](./sprint-03-ui-button-card-badge.md) | [Sprint 05 →](./sprint-05-ui-modal-drawer-toast.md)
 
@@ -17,16 +18,16 @@ Komponen form siap untuk halaman kontak & admin nanti.
 
 ## Task
 
-- [ ] Buat `Input.tsx` dengan error state
-- [ ] Buat `Textarea.tsx`
-- [ ] Buat `Select.tsx` (native atau headless sederhana)
-- [ ] Buat `Label.tsx`
-- [ ] Preview form sederhana di design-system
+- [x] Buat `Input.tsx` dengan error state
+- [x] Buat `Textarea.tsx`
+- [x] Buat `Select.tsx` (native atau headless sederhana)
+- [x] Buat `Label.tsx`
+- [x] Preview form sederhana di design-system
 
 ## Selesai Jika
 
-- [ ] Focus ring & error styling konsisten
-- [ ] Accessible label association
+- [x] Focus ring & error styling konsisten
+- [x] Accessible label association
 
 ---
 

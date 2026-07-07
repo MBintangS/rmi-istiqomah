@@ -1,4 +1,4 @@
-import { Badge, Button, Card } from "@/components/ui";
+import { Badge, Button, Card, Input, Label, Select, Textarea } from "@/components/ui";
 
 const colors = [
   { name: "primary", className: "bg-primary", hex: "#4e830a" },
@@ -26,6 +26,60 @@ export default function DesignSystemPage() {
             Preview warna, tipografi, dan komponen UI untuk website Remaja Masjid Istiqomah.
           </p>
         </header>
+
+        <section className="space-y-4">
+          <h2>Form</h2>
+          <div className="max-w-lg space-y-5 rounded-rmi bg-surface p-6 shadow-soft">
+            <div className="space-y-2">
+              <Label htmlFor="ds-name" required>
+                Nama Lengkap
+              </Label>
+              <Input id="ds-name" name="name" placeholder="Masukkan nama Anda" />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ds-email" required>
+                Email
+              </Label>
+              <Input
+                id="ds-email"
+                name="email"
+                type="email"
+                placeholder="nama@email.com"
+                error
+                aria-describedby="ds-email-error"
+              />
+              <p id="ds-email-error" className="text-sm text-red-600" role="alert">
+                Email wajib diisi dengan format yang benar.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ds-subject">Subjek</Label>
+              <Select id="ds-subject" name="subject" defaultValue="">
+                <option value="" disabled>
+                  Pilih subjek
+                </option>
+                <option value="kegiatan">Info Kegiatan</option>
+                <option value="anggota">Pendaftaran Anggota</option>
+                <option value="lainnya">Lainnya</option>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ds-message" required>
+                Pesan
+              </Label>
+              <Textarea
+                id="ds-message"
+                name="message"
+                placeholder="Tulis pesan Anda di sini..."
+              />
+            </div>
+
+            <Button type="button">Kirim Pesan</Button>
+          </div>
+        </section>
 
         <section className="space-y-4">
           <h2>Button</h2>
