@@ -1,5 +1,7 @@
 import { Badge, Button, Card, EmptyState, Input, Label, Select, Skeleton, SkeletonList, Spinner, Textarea } from "@/components/ui";
+import { MotionPreview } from "@/components/ui/MotionPreview";
 import { OverlayPreview } from "@/components/ui/OverlayPreview";
+import { mockArticles, mockEvents, mockPrograms, mockSettings } from "@/data/mock";
 
 const colors = [
   { name: "primary", className: "bg-primary", hex: "#4e830a" },
@@ -27,6 +29,15 @@ export default function DesignSystemPage() {
             Preview warna, tipografi, dan komponen UI untuk website Remaja Masjid Istiqomah.
           </p>
         </header>
+
+        <section className="space-y-4">
+          <h2>Motion &amp; Mock Data</h2>
+          <MotionPreview />
+          <div className="rounded-rmi bg-surface p-4 text-caption text-foreground/70 shadow-soft">
+            Mock: {mockArticles.length} artikel · {mockEvents.length} kegiatan ·{" "}
+            {mockPrograms.length} program · tagline &quot;{mockSettings.tagline}&quot;
+          </div>
+        </section>
 
         <section className="space-y-4">
           <h2>Loading &amp; Empty States</h2>
