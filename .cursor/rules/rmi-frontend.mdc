@@ -1,0 +1,49 @@
+---
+description: Konvensi frontend Next.js dan design system RMI
+globs: frontend/**/*
+alwaysApply: false
+---
+
+# Frontend RMI
+
+## Design Tokens (jangan hardcode warna)
+
+```tsx
+// ✅ Gunakan token Tailwind
+<button className="bg-primary hover:bg-primary-dark text-white" />
+<p className="text-foreground" />
+<div className="bg-surface rounded-rmi shadow-soft" />
+
+// ❌ Hindari hex langsung di komponen
+<button className="bg-[#4e830a]" />
+```
+
+Token: `primary`, `primary-dark`, `primary-light`, `secondary`, `background`, `surface`, `foreground`, `heading`, `accent-green`.
+
+Font: Poppins via `font-sans` (sudah di root layout).
+
+## Struktur File
+
+| Path | Isi |
+|------|-----|
+| `src/components/ui/` | Primitif reusable (Button, Card, Input) |
+| `src/components/layout/` | Navbar, Footer |
+| `src/components/home/` | Section beranda |
+| `src/data/mock/` | Mock data (fase visual) |
+| `src/lib/` | Utils, API client, fonts |
+| `src/types/` | TypeScript types |
+| `src/app/(public)/` | Halaman publik |
+
+## Komponen UI
+
+- Props dengan TypeScript interface
+- Variant via props (`variant`, `size`), bukan class string di parent
+- Export dari `src/components/ui/index.ts` jika banyak komponen
+- Preview komponen baru di `/design-system`
+
+## Next.js
+
+- App Router, server components default
+- `"use client"` hanya jika perlu state/event/hooks
+- `next/image` untuk gambar produksi
+- Metadata di `layout.tsx` atau `generateMetadata`

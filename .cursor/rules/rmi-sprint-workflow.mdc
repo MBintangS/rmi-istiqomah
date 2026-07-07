@@ -1,0 +1,62 @@
+---
+description: Workflow sprint RMI — baca sprint doc, implement, update docs, commit
+alwaysApply: true
+---
+
+# Sprint Workflow RMI
+
+Saat user meminta menjalankan/melanjutkan sprint (mis. "jalankan sprint 03", "lanjut sprint 05"):
+
+## 1. Persiapan
+
+- Baca file sprint: `docs/roadmap/sprint-XX-*.md`
+- Pastikan prasyarat sprint sebelumnya berstatus ✅ Selesai
+- Kerjakan **hanya** scope sprint tersebut — jangan scope creep ke sprint lain
+- Rujuk PRD jika perlu: `docs/prd/`, `docs/roadmap/README.md`
+
+## 2. Implementasi
+
+- Ikuti task list di file sprint secara berurutan
+- Gunakan design tokens RMI (`bg-primary`, `font-sans`, dll.) — lihat `frontend/tailwind.config.ts`
+- Fase visual (Sprint 08–19): pakai mock data di `frontend/src/data/mock/`
+- Fase backend (Sprint 20+): ikuti `docs/prd/09-database-schema.md` dan `10-api-specification.md`
+
+## 3. Verifikasi (wajib sebelum tutup sprint)
+
+- Frontend: `cd frontend && npm run lint && npm run build`
+- Backend (jika ada perubahan): lint/build/test sesuai setup backend
+- Pastikan kriteria **Selesai Jika** di sprint doc terpenuhi
+
+## 4. Update Dokumentasi Sprint (wajib)
+
+Edit `docs/roadmap/sprint-XX-*.md`:
+
+- Tambah baris `| **Status** | ✅ Selesai |` di tabel metadata (jika belum ada)
+- Centang semua task: `- [x]`
+- Centang semua kriteria: `- [x]` di bagian **Selesai Jika**
+
+## 5. Commit Git (wajib setiap sprint selesai)
+
+```bash
+git add <file yang relevan>
+git commit -m "feat(sprint-XX): ringkasan singkat" -m "Detail opsional."
+```
+
+Format pesan:
+- `feat(sprint-XX): ...` — fitur/komponen/halaman baru
+- `chore(sprint-XX): ...` — setup, config, tooling
+- `fix(sprint-XX): ...` — perbaikan dalam sprint
+
+Aturan commit:
+- Selalu sertakan file sprint doc yang diupdate
+- Jangan commit `.env`, credentials, atau `node_modules`
+- Jangan push ke remote kecuali user minta
+- Di PowerShell: gunakan `-m` ganda, bukan heredoc
+
+## 6. Lapor ke User
+
+Setelah selesai, beri ringkasan singkat:
+- Task yang dikerjakan
+- Cara verifikasi (URL/command)
+- Hash commit
+- Tawarkan sprint berikutnya (tanpa memaksa)

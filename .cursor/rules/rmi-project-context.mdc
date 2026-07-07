@@ -1,0 +1,48 @@
+---
+description: Konteks proyek RMI — struktur, stack, dan dokumentasi utama
+alwaysApply: true
+---
+
+# Proyek: Website Remaja Masjid Istiqomah (RMI)
+
+## Struktur Monorepo
+
+```
+rmi/
+├── frontend/          # Next.js 14, App Router, TypeScript, Tailwind
+├── backend/           # Express.js + MongoDB (Sprint 20+)
+├── docs/prd/          # Product Requirements (terpisah per topik)
+├── docs/roadmap/      # 43 sprint guide — sumber kebenaran urutan kerja
+└── project.md         # Brief awal
+```
+
+## Tech Stack
+
+| Layer | Teknologi |
+|-------|-----------|
+| Frontend | Next.js 14, TypeScript, Tailwind, TanStack Query, Axios, RHF, Zod, Framer Motion |
+| Backend | Node.js, Express, Mongoose, JWT, Cloudinary |
+| DB | MongoDB Atlas |
+
+## Pendekatan Development
+
+**Visual First** — frontend + mock data dulu (Sprint 01–19), backend kemudian (20–28), integrasi (29–33), CMS (34–40), launch (41–43).
+
+## Dokumentasi Kunci
+
+| Kebutuhan | File |
+|-----------|------|
+| Mulai coding | `docs/roadmap/README.md` |
+| Sprint aktif | `docs/roadmap/sprint-XX-*.md` |
+| Functional reqs | `docs/prd/04-functional-requirements.md` |
+| Warna & UX | `docs/prd/06-design-ux.md` |
+| Database | `docs/prd/09-database-schema.md` |
+| API | `docs/prd/10-api-specification.md` |
+
+## Prinsip Kode
+
+- React functional components + TypeScript
+- Komponen reusable di `frontend/src/components/ui/`
+- Custom hooks di `frontend/src/hooks/`
+- Minimize scope — diff kecil, fokus, jangan over-engineer
+- Mobile-first, responsif, aksesibel
