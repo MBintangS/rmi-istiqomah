@@ -1,0 +1,43 @@
+import Image from "next/image";
+import { Button } from "@/components/ui";
+import { mockSettings } from "@/data/mock";
+
+const heroImage =
+  "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=1600&q=80";
+
+export function HeroSection() {
+  const { siteName, tagline } = mockSettings;
+
+  return (
+    <section className="relative min-h-[85vh] overflow-hidden">
+      <Image
+        src={heroImage}
+        alt="Kegiatan remaja masjid"
+        fill
+        priority
+        className="object-cover"
+        sizes="100vw"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-heading/90 via-heading/70 to-heading/40" />
+
+      <div className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
+        <p className="text-caption mb-4 font-medium uppercase tracking-widest text-secondary">
+          {tagline}
+        </p>
+        <h1 className="max-w-3xl text-white">{siteName}</h1>
+        <p className="text-body mt-4 max-w-xl text-surface/80">
+          Wadah pembinaan generasi muda yang istiqomah dalam beribadah, berdakwah, dan
+          berkontribusi untuk kemajuan masjid.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button href="/kegiatan" size="lg">
+            Lihat Kegiatan
+          </Button>
+          <Button href="/kontak" variant="secondary" size="lg">
+            Gabung Bersama Kami
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
