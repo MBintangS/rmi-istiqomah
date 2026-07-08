@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 10 |
 | **Output** | UpcomingEventsSection + LatestArticlesSection |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 10](./sprint-10-beranda-visi-misi-program.md) | [Sprint 12 →](./sprint-12-beranda-galeri-statistik-testimoni.md)
 
@@ -17,15 +18,15 @@ Section agenda terdekat dan artikel terbaru dari mock.
 
 ## Task
 
-- [ ] Buat `EventCard.tsx`
-- [ ] Buat `UpcomingEventsSection.tsx` — max 5 dari mock-events
-- [ ] Buat `ArticleCard.tsx`
-- [ ] Buat `LatestArticlesSection.tsx` — max 6 dari mock-articles
+- [x] Buat `EventCard.tsx`
+- [x] Buat `UpcomingEventsSection.tsx` — max 5 dari mock-events
+- [x] Buat `ArticleCard.tsx`
+- [x] Buat `LatestArticlesSection.tsx` — max 6 dari mock-articles
 
 ## Selesai Jika
 
-- [ ] Tanggal agenda terformat (locale id-ID)
-- [ ] Card artikel punya thumbnail placeholder
+- [x] Tanggal agenda terformat (locale id-ID)
+- [x] Card artikel punya thumbnail placeholder
 
 ---
 
