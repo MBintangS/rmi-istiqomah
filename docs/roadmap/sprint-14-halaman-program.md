@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 10 |
 | **Output** | `/program` + `/program/[slug]` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 13](./sprint-13-halaman-tentang-kami.md) | [Sprint 15 →](./sprint-15-halaman-artikel-list-detail.md)
 
@@ -17,15 +18,15 @@ Index program + halaman detail per program.
 
 ## Task
 
-- [ ] Halaman index: grid semua program dari mock
-- [ ] Halaman detail: deskripsi, jadwal, galeri terkait (placeholder)
-- [ ] CTA "Info lebih lanjut" ke kontak
-- [ ] Static params atau dynamic route untuk 3 slug
+- [x] Halaman index: grid semua program dari mock
+- [x] Halaman detail: deskripsi, jadwal, galeri terkait (placeholder)
+- [x] CTA "Info lebih lanjut" ke kontak
+- [x] Static params atau dynamic route untuk 3 slug
 
 ## Selesai Jika
 
-- [ ] 3 program bisa dibuka detailnya
-- [ ] 404 jika slug tidak ada
+- [x] 3 program bisa dibuka detailnya
+- [x] 404 jika slug tidak ada
 
 ---
 

@@ -1,3 +1,8 @@
+export interface ProgramScheduleItem {
+  label: string;
+  value: string;
+}
+
 export interface Program {
   id: string;
   name: string;
@@ -6,6 +11,8 @@ export interface Program {
   content: string;
   image: string;
   icon?: string;
+  schedule: ProgramScheduleItem[];
+  galleryImages: string[];
   isActive: boolean;
   createdAt: string;
 }
