@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui";
 import type { Kegiatan } from "@/types";
 import { formatEventDate, formatEventDateParts } from "@/lib/format-date";
+import { eventStatusLabels } from "@/lib/events";
 import { cn } from "@/lib/utils";
 
 interface EventCardProps {
@@ -11,6 +13,7 @@ interface EventCardProps {
 export function EventCard({ event, className }: EventCardProps) {
   const { day, month } = formatEventDateParts(event.dateStart);
   const formattedDate = formatEventDate(event.dateStart);
+  const status = eventStatusLabels[event.status];
 
   return (
     <Link
@@ -29,6 +32,10 @@ export function EventCard({ event, className }: EventCardProps) {
       </div>
 
       <div className="min-w-0 flex-1 space-y-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant={status.variant}>{status.label}</Badge>
+          <Badge variant="category">{event.category.name}</Badge>
+        </div>
         <h3 className="text-base font-semibold text-heading transition-colors group-hover:text-primary sm:text-lg">
           {event.title}
         </h3>

@@ -6,6 +6,7 @@
 | **Estimasi** | 3 jam |
 | **Prasyarat** | Sprint 08, 07 |
 | **Output** | `/kegiatan`, `/kegiatan/[slug]`, `/agenda` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 15](./sprint-15-halaman-artikel-list-detail.md) | [Sprint 17 →](./sprint-17-halaman-galeri.md)
 
@@ -17,15 +18,15 @@ Daftar kegiatan + detail + halaman agenda.
 
 ## Task
 
-- [ ] List kegiatan: EventCard grid + filter kategori + search
-- [ ] Badge status: upcoming / ongoing / completed
-- [ ] Detail: tanggal, lokasi, deskripsi, maps placeholder
-- [ ] Halaman agenda: fokus kegiatan upcoming saja
+- [x] List kegiatan: EventCard grid + filter kategori + search
+- [x] Badge status: upcoming / ongoing / completed
+- [x] Detail: tanggal, lokasi, deskripsi, maps placeholder
+- [x] Halaman agenda: fokus kegiatan upcoming saja
 
 ## Selesai Jika
 
-- [ ] Filter client-side jalan
-- [ ] Detail kegiatan informatif
+- [x] Filter client-side jalan
+- [x] Detail kegiatan informatif
 
 ---
 
