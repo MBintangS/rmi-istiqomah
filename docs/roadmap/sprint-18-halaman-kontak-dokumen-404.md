@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 04, 08 |
 | **Output** | `/kontak`, `/dokumen`, `not-found.tsx` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 17](./sprint-17-halaman-galeri.md) | [Sprint 19 →](./sprint-19-review-visual-responsive-pass.md)
 
@@ -17,16 +18,16 @@ Halaman pendukung terakhir — frontend visual 100% selesai.
 
 ## Task
 
-- [ ] Kontak: form UI (belum submit), validasi Zod client-side only
-- [ ] Embed Google Maps iframe (koordinat placeholder)
-- [ ] Dokumen: list file mock + tombol download (href `#`)
-- [ ] Halaman 404 custom dengan branding RMI
-- [ ] Optional: `/donasi` halaman info rekening statis
+- [x] Kontak: form UI (belum submit), validasi Zod client-side only
+- [x] Embed Google Maps iframe (koordinat placeholder)
+- [x] Dokumen: list file mock + tombol download (href `#`)
+- [x] Halaman 404 custom dengan branding RMI
+- [x] Optional: `/donasi` halaman info rekening statis
 
 ## Selesai Jika
 
-- [ ] Semua route publik PRD bisa dikunjungi
-- [ ] Form kontak validasi tampil error
+- [x] Semua route publik PRD bisa dikunjungi
+- [x] Form kontak validasi tampil error
 
 ---
 
