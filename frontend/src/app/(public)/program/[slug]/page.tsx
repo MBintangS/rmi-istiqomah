@@ -53,7 +53,7 @@ export default function ProgramDetailPage({ params }: ProgramDetailPageProps) {
 
       <section className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="relative mb-10 aspect-[21/9] overflow-hidden rounded-rmi shadow-soft">
+          <div className="relative mb-10 aspect-video overflow-hidden rounded-rmi shadow-soft sm:aspect-[21/9]">
             <Image
               src={program.image}
               alt={program.name}

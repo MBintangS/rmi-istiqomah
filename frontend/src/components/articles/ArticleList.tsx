@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ArticleCard } from "@/components/home/ArticleCard";
-import { Input, Select } from "@/components/ui";
-import { Pagination } from "@/components/ui/Pagination";
+import { Input, Pagination, Select } from "@/components/ui";
 import type { Artikel, Kategori } from "@/types";
 
 const PAGE_SIZE = 3;

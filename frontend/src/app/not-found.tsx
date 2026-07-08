@@ -1,14 +1,19 @@
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { SkipToContent } from "@/components/layout/SkipToContent";
 import { Button } from "@/components/ui";
 import { mockSettings } from "@/data/mock";
 
 export default function NotFound() {
   return (
     <>
+      <SkipToContent />
       <Navbar />
-      <main className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center bg-background px-4 py-16 text-center">
+      <main
+        id="main-content"
+        className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center bg-background px-4 py-16 text-center"
+      >
         <div className="mx-auto max-w-lg">
           <div className="mb-6 flex justify-center">
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-xl font-bold text-white">

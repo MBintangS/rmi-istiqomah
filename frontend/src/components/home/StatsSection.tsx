@@ -19,11 +19,11 @@ export function StatsSection() {
           <h2 className="text-white">Angka yang Membanggakan</h2>
         </div>
 
-        <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-8">
+        <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-8">
           {statItems.map(({ key, label, suffix }) => (
-            <div key={key} className="text-center">
+            <div key={key} className="min-w-0 text-center">
               <dt className="text-caption mb-2 font-medium text-white/80">{label}</dt>
-              <dd className="text-3xl font-bold text-white sm:text-4xl">
+              <dd className="break-words text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 {stats[key]}
                 {suffix}
               </dd>

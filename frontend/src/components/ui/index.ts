@@ -1,6 +1,8 @@
+export { Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from "./Breadcrumb";
 export { Drawer, type DrawerProps } from "./Drawer";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { Modal, type ModalProps } from "./Modal";
+export { Pagination } from "./Pagination";
 export { Skeleton, SkeletonList, type SkeletonListProps, type SkeletonProps, type SkeletonVariant } from "./Skeleton";
 export { Spinner, type SpinnerProps, type SpinnerSize } from "./Spinner";
 export { Toaster } from "./Toaster";
