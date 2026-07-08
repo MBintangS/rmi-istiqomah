@@ -6,6 +6,7 @@
 | **Estimasi** | 3 jam |
 | **Prasyarat** | Sprint 08, 07 |
 | **Output** | `/artikel` + `/artikel/[slug]` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 14](./sprint-14-halaman-program.md) | [Sprint 16 →](./sprint-16-halaman-kegiatan-agenda.md)
 
@@ -17,16 +18,16 @@ Blog/dakwah tampil dengan filter & detail (mock).
 
 ## Task
 
-- [ ] List: grid ArticleCard + pagination UI (static)
-- [ ] Filter kategori (client-side filter mock data)
-- [ ] Search input (filter judul client-side)
-- [ ] Detail: konten HTML mock, share buttons (WA, FB — link only)
-- [ ] Breadcrumb + artikel terkait (2–3 card)
+- [x] List: grid ArticleCard + pagination UI (static)
+- [x] Filter kategori (client-side filter mock data)
+- [x] Search input (filter judul client-side)
+- [x] Detail: konten HTML mock, share buttons (WA, FB — link only)
+- [x] Breadcrumb + artikel terkait (2–3 card)
 
 ## Selesai Jika
 
-- [ ] Filter & search bekerja di mock
-- [ ] Share button generate URL benar
+- [x] Filter & search bekerja di mock
+- [x] Share button generate URL benar
 
 ---
 
