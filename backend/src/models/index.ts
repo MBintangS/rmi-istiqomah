@@ -5,6 +5,9 @@ export { Kegiatan, type IKegiatan, type KegiatanDocument, type KegiatanStatus } 
 export { Agenda, type IAgenda, type AgendaDocument } from "./Agenda.model";
 export { Galeri, type IGaleri, type IGaleriImage, type GaleriDocument } from "./Galeri.model";
 export { Banner, type IBanner, type BannerDocument } from "./Banner.model";
+export { Pengurus, type IPengurus, type PengurusDocument } from "./Pengurus.model";
+export { Program, type IProgram, type ProgramDocument } from "./Program.model";
+export { Testimoni, type ITestimoni, type TestimoniDocument } from "./Testimoni.model";
 export {
   Settings,
   type ISettings,

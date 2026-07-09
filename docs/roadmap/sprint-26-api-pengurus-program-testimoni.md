@@ -6,6 +6,7 @@
 | **Estimasi** | 2 jam |
 | **Prasyarat** | Sprint 25 |
 | **Output** | 3 endpoint groups |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 25](./sprint-25-api-galeri-banner.md) | [Sprint 27 →](./sprint-27-api-dokumen-contact-search.md)
 
@@ -17,15 +18,15 @@ Konten organisasi dan homepage sections.
 
 ## Task
 
-- [ ] Model + CRUD `Pengurus` (sort by order)
-- [ ] Model + CRUD `Program`
-- [ ] Model + CRUD `Testimoni`
-- [ ] GET publik: hanya active items
+- [x] Model + CRUD `Pengurus` (sort by order)
+- [x] Model + CRUD `Program`
+- [x] Model + CRUD `Testimoni`
+- [x] GET publik: hanya active items
 
 ## Selesai Jika
 
-- [ ] Pengurus sorted by order field
-- [ ] Program by slug works
+- [x] Pengurus sorted by order field
+- [x] Program by slug works
 
 ---
 

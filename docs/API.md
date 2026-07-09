@@ -3,7 +3,7 @@
 > Referensi implementasi aktual backend Express.  
 > Spesifikasi desain lengkap: [`docs/prd/10-api-specification.md`](./prd/10-api-specification.md)
 
-**Cakupan saat ini:** Sprint 20–25 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner)
+**Cakupan saat ini:** Sprint 20–26 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner, Pengurus, Program, Testimoni)
 
 ---
 
@@ -714,6 +714,211 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 ---
 
+## Pengurus
+
+### `GET /pengurus`
+
+List pengurus organisasi.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+**Aturan:** Sort `order` ascending, lalu `createdAt` descending
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "Ahmad",
+      "position": "Ketua",
+      "photo": null,
+      "period": "2024-2026",
+      "order": 1,
+      "isActive": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### `POST /pengurus`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "name": "Ahmad",
+  "position": "Ketua",
+  "photo": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+  "period": "2024-2026",
+  "order": 0,
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama pengurus |
+| `position` | ✅ | Jabatan |
+| `photo` | — | URL foto |
+| `period` | — | Periode menjabat |
+| `order` | — | Urutan tampil (default: `0`) |
+| `isActive` | — | `true` (default) |
+
+### `PUT /pengurus/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /pengurus/:id`
+
+**Auth:** Admin
+
+---
+
+## Program
+
+### `GET /program`
+
+List program RMI.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+**Response `200`:** array program (tanpa field `content`)
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "Tahfidz Quran",
+      "slug": "tahfidz-quran",
+      "description": "Program hafalan",
+      "image": null,
+      "icon": null,
+      "isActive": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### `GET /program/:slug`
+
+Detail program by slug.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+**Response `200`:** object program + field `content`
+
+### `POST /program`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "name": "Tahfidz Quran",
+  "description": "Program hafalan Al-Quran",
+  "content": "<p>Detail program...</p>",
+  "image": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+  "icon": "book-open",
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama program |
+| `description`, `content`, `image`, `icon` | — | Opsional |
+| `isActive` | — | `true` (default) |
+
+Slug auto-generate dari `name`.
+
+### `PUT /program/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /program/:id`
+
+**Auth:** Admin
+
+---
+
+## Testimoni
+
+### `GET /testimoni`
+
+List testimoni untuk homepage.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+**Aturan:** Sort `order` ascending, lalu `createdAt` descending
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "Rina",
+      "content": "RMI keren!",
+      "role": "Anggota RMI",
+      "photo": null,
+      "order": 1,
+      "isActive": true,
+      "createdAt": "..."
+    }
+  ]
+}
+```
+
+### `POST /testimoni`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "name": "Rina",
+  "content": "RMI keren!",
+  "role": "Anggota RMI",
+  "photo": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+  "order": 0,
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama pemberi testimoni |
+| `content` | ✅ | Isi testimoni |
+| `role` | — | Peran/keterangan |
+| `photo` | — | URL foto |
+| `order` | — | Urutan tampil (default: `0`) |
+| `isActive` | — | `true` (default) |
+
+### `PUT /testimoni/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /testimoni/:id`
+
+**Auth:** Admin
+
+---
+
 ## Seed & Testing
 
 ```bash
@@ -739,6 +944,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-09 | 26 | Pengurus, Program (by slug), Testimoni CRUD |
 | 2026-07-09 | 25 | Galeri CRUD (images array), Banner CRUD, GET banner aktif |
 | 2026-07-09 | 20–24 | Dokumentasi awal: Health, Auth, Kategori, Artikel, Kegiatan, Agenda |
 
