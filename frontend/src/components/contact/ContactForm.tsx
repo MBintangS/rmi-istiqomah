@@ -1,10 +1,13 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button, Input, Label, Textarea } from "@/components/ui";
+import { getApiErrorMessage } from "@/lib/api";
 import { contactFormSchema, type ContactFormValues } from "@/lib/contact-schema";
+import { submitContact } from "@/services/contact.service";
 
 export function ContactForm() {
   const {
@@ -22,9 +25,19 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = () => {
-    toast.success("Pesan tervalidasi. Pengiriman form akan tersedia setelah integrasi backend.");
-    reset();
+  const mutation = useMutation({
+    mutationFn: submitContact,
+    onSuccess: (response) => {
+      toast.success(response.message ?? "Pesan berhasil dikirim");
+      reset();
+    },
+    onError: (error) => {
+      toast.error(getApiErrorMessage(error, "Gagal mengirim pesan"));
+    },
+  });
+
+  const onSubmit = (values: ContactFormValues) => {
+    mutation.mutate(values);
   };
 
   return (
@@ -78,8 +91,8 @@ export function ContactForm() {
         {errors.message && <p className="text-caption text-red-600">{errors.message.message}</p>}
       </div>
 
-      <Button type="submit" className="w-full sm:w-auto">
-        Kirim Pesan
+      <Button type="submit" className="w-full sm:w-auto" disabled={mutation.isPending}>
+        {mutation.isPending ? "Mengirim..." : "Kirim Pesan"}
       </Button>
     </form>
   );

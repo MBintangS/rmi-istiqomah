@@ -17,7 +17,9 @@ src/
 │   ├── settings.service.ts
 │   ├── banner.service.ts
 │   ├── pengurus.service.ts
-│   └── testimoni.service.ts
+│   ├── testimoni.service.ts
+│   ├── contact.service.ts
+│   └── dokumen.service.ts
 └── hooks/                  # React Query hooks untuk komponen client
     ├── useHealth.ts
     ├── useArticles.ts
@@ -30,7 +32,8 @@ src/
     ├── useSettings.ts
     ├── useBanners.ts
     ├── usePengurus.ts
-    └── useTestimoni.ts
+    ├── useTestimoni.ts
+    └── useDokumen.ts
 ```
 
 ## Menambah modul baru

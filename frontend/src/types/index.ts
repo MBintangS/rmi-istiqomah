@@ -29,6 +29,10 @@ export type {
   BannerListItem,
   PengurusListItem,
   TestimoniListItem,
+  DokumenListItem,
+  DokumenListParams,
+  DokumenListResult,
+  ContactSubmitData,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";

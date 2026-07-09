@@ -5,6 +5,7 @@
 | **Grup** | D — Integrasi API |
 | **Estimasi** | 1–2 jam |
 | **Prasyarat** | Sprint 32 |
+| **Status** | ✅ Selesai |
 | **Output** | Contact POST + dokumen list |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 32](./sprint-32-integrasi-homepage-settings.md) | [Sprint 34 →](./sprint-34-admin-login-layout.md)
@@ -17,15 +18,15 @@ Form kontak submit ke API + dokumen unduh.
 
 ## Task
 
-- [ ] React Hook Form + Zod untuk kontak
-- [ ] Submit ke `POST /api/contact`
-- [ ] Toast sukses/error
-- [ ] Dokumen list dari API + download link
+- [x] React Hook Form + Zod untuk kontak
+- [x] Submit ke `POST /api/contact`
+- [x] Toast sukses/error
+- [x] Dokumen list dari API + download link
 
 ## Selesai Jika
 
-- [ ] Form kontak submit berhasil
-- [ ] Dokumen download link benar
+- [x] Form kontak submit berhasil
+- [x] Dokumen download link benar
 
 ---
 

@@ -80,3 +80,11 @@ export async function apiGet<T>(url: string, params?: Record<string, unknown>): 
   const { data } = await api.get<ApiSuccessResponse<T>>(url, { params });
   return data;
 }
+
+export async function apiPost<T, B = unknown>(
+  url: string,
+  body?: B,
+): Promise<ApiSuccessResponse<T>> {
+  const { data } = await api.post<ApiSuccessResponse<T>>(url, body);
+  return data;
+}

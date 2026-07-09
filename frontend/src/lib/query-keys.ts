@@ -1,4 +1,4 @@
-import type { ArtikelListParams, GaleriListParams, KegiatanListParams } from "@/types/api";
+import type { ArtikelListParams, DokumenListParams, GaleriListParams, KegiatanListParams } from "@/types/api";
 
 export const queryKeys = {
   health: ["health"] as const,
@@ -42,5 +42,10 @@ export const queryKeys = {
   testimoni: {
     all: ["testimoni"] as const,
     list: () => [...queryKeys.testimoni.all, "list"] as const,
+  },
+  dokumen: {
+    all: ["dokumen"] as const,
+    lists: () => [...queryKeys.dokumen.all, "list"] as const,
+    list: (params?: DokumenListParams) => [...queryKeys.dokumen.lists(), params ?? {}] as const,
   },
 } as const;

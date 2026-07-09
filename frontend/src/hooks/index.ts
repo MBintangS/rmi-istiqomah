@@ -1,3 +1,4 @@
+export { useDokumen } from "./useDokumen";
 export { useBanners } from "./useBanners";
 export { useMainNavItems } from "./useMainNavItems";
 export { usePengurus } from "./usePengurus";

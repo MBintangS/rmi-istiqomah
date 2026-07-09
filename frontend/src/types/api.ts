@@ -232,3 +232,36 @@ export interface TestimoniListItem {
   isActive: boolean;
   createdAt: string;
 }
+
+export interface DokumenListItem {
+  id: string;
+  name: string;
+  fileUrl: string;
+  fileSize: number | null;
+  fileType: string | null;
+  category: string | null;
+  description: string | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DokumenListParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+}
+
+export interface DokumenListResult {
+  items: DokumenListItem[];
+  pagination?: PaginationMeta;
+}
+
+export interface ContactSubmitData {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  createdAt: string;
+}
