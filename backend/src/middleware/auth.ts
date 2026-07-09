@@ -41,3 +41,27 @@ function requireRoles(...roles: UserRole[]) {
 
 export const requireAdmin = requireRoles("admin", "superadmin");
 export const requireSuperAdmin = requireRoles("superadmin");
+
+export function optionalAuthenticate(req: Request, _res: Response, next: NextFunction): void {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader?.startsWith("Bearer ")) {
+    next();
+    return;
+  }
+
+  try {
+    const token = authHeader.slice(7);
+    const payload = verifyToken(token);
+
+    req.user = {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role,
+    };
+  } catch {
+    // Token tidak valid — perlakukan sebagai request publik
+  }
+
+  next();
+}
