@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { ProgramCard } from "@/components/home/ProgramCard";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { getActivePrograms } from "@/lib/programs";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Program",
   description: "Program unggulan Remaja Masjid Istiqomah: Isra Miraj, Maulid Nabi, dan Sanlat.",
-};
+  path: "/program",
+});
 
 export default function ProgramIndexPage() {
   const programs = getActivePrograms();
@@ -22,7 +23,7 @@ export default function ProgramIndexPage() {
             ]}
             className="mb-4"
           />
-          <h1>Program Unggulan</h1>
+          <h2>Program Unggulan</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Tiga program tahunan yang menjadi ciri khas pembinaan remaja masjid Istiqomah.
           </p>

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { formatEventDate } from "@/lib/format-date";
 import { eventStatusLabels, getEventBySlug, getEventSlugs } from "@/lib/events";
 import { mockSettings } from "@/data/mock";
+import { buildPageMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 interface KegiatanDetailPageProps {
   params: { slug: string };
@@ -19,13 +21,20 @@ export function generateMetadata({ params }: KegiatanDetailPageProps): Metadata 
   const event = getEventBySlug(params.slug);
 
   if (!event) {
-    return { title: "Kegiatan Tidak Ditemukan" };
+    return buildPageMetadata({
+      title: "Kegiatan Tidak Ditemukan",
+      description: "Kegiatan yang Anda cari tidak ditemukan.",
+      path: `/kegiatan/${params.slug}`,
+      noIndex: true,
+    });
   }
 
-  return {
+  return buildPageMetadata({
     title: event.title,
     description: event.description,
-  };
+    path: `/kegiatan/${event.slug}`,
+    image: event.thumbnail || undefined,
+  });
 }
 
 export default function KegiatanDetailPage({ params }: KegiatanDetailPageProps) {
@@ -38,8 +47,29 @@ export default function KegiatanDetailPage({ params }: KegiatanDetailPageProps) 
   const status = eventStatusLabels[event.status];
   const mapEmbed = event.locationMap ?? mockSettings.googleMapsEmbed;
 
+  const eventLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: event.description,
+    startDate: event.dateStart,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.location,
+    },
+    organizer: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    image: event.thumbnail || undefined,
+  };
+
   return (
     <>
+      <JsonLd data={eventLd} />
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb
@@ -54,7 +84,7 @@ export default function KegiatanDetailPage({ params }: KegiatanDetailPageProps) 
             <Badge variant={status.variant}>{status.label}</Badge>
             <Badge variant="category">{event.category.name}</Badge>
           </div>
-          <h1 className="mt-3">{event.title}</h1>
+          <h2 className="mt-3">{event.title}</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">{event.description}</p>
         </div>
       </section>
@@ -105,7 +135,7 @@ export default function KegiatanDetailPage({ params }: KegiatanDetailPageProps) 
                       <time dateTime={event.dateStart}>{formatEventDate(event.dateStart)}</time>
                       {event.dateEnd && (
                         <>
-                          <span aria-hidden="true"> — </span>
+                          <span aria-hidden="true"> · </span>
                           <time dateTime={event.dateEnd}>{formatEventDate(event.dateEnd)}</time>
                         </>
                       )}

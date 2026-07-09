@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { Badge } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { mockDokumen } from "@/data/mock";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Dokumen",
   description: "Unduh dokumen publik Remaja Masjid Istiqomah.",
-};
+  path: "/dokumen",
+});
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -30,7 +31,7 @@ export default function DokumenPage() {
             ]}
             className="mb-4"
           />
-          <h1>Dokumen Publik</h1>
+          <h2>Dokumen Publik</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Unduh proposal, panduan, laporan, dan formulir kegiatan RMI.
           </p>

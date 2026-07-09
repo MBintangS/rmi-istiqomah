@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import {
@@ -6,11 +5,13 @@ import {
   getGalleryEventFilters,
   getGalleryItems,
 } from "@/lib/gallery";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Galeri",
   description: "Dokumentasi foto kegiatan Remaja Masjid Istiqomah.",
-};
+  path: "/galeri",
+});
 
 export default function GaleriPage() {
   const items = getGalleryItems();
@@ -28,9 +29,9 @@ export default function GaleriPage() {
             ]}
             className="mb-4"
           />
-          <h1>Galeri Kegiatan</h1>
+          <h2>Galeri</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
-            Dokumentasi foto kegiatan rutin, perayaan besar, dan aktivitas remaja masjid.
+            Dokumentasi foto kegiatan Remaja Masjid Istiqomah.
           </p>
         </div>
       </section>

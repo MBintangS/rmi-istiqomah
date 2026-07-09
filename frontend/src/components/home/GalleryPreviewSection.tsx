@@ -3,40 +3,48 @@ import Link from "next/link";
 import { Button } from "@/components/ui";
 import { MotionSection } from "@/components/home/MotionSection";
 import { mockGalleryPreview } from "@/data/mock";
+import { cn } from "@/lib/utils";
+
+const previewImages = mockGalleryPreview.slice(0, 5);
 
 export function GalleryPreviewSection() {
   return (
-    <MotionSection className="bg-surface py-16 sm:py-20">
+    <MotionSection tone="fade" className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-caption font-medium text-primary">Dokumentasi</p>
-            <h2>Momen Kegiatan RMI</h2>
-            <p className="text-body mt-2 max-w-xl text-foreground/70">
-              Cuplikan foto kegiatan rutin, perayaan besar, dan aktivitas sosial remaja masjid.
-            </p>
+        <div className="mb-12 max-w-2xl">
+          <p className="text-caption mb-3 font-medium uppercase tracking-[0.18em] text-primary">
+            Dokumentasi
+          </p>
+          <h2>Momen Kegiatan RMI</h2>
+          <p className="text-body mt-4 text-foreground/70">
+            Cuplikan foto kegiatan rutin, perayaan besar, dan aktivitas sosial remaja masjid.
+          </p>
+          <div className="mt-6">
+            <Button href="/galeri" variant="outline" size="sm">
+              Lihat Galeri
+            </Button>
           </div>
-          <Button href="/galeri" variant="outline" size="sm">
-            Lihat Galeri
-          </Button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-          {mockGalleryPreview.map((image, index) => (
+        <div className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] sm:gap-4 md:grid-cols-4">
+          {previewImages.map((image, index) => (
             <Link
               key={`${image.url}-${index}`}
               href="/galeri"
-              className="group relative aspect-square overflow-hidden rounded-rmi shadow-soft"
+              className={cn(
+                "group relative overflow-hidden rounded-rmi",
+                index === 0 && "col-span-2 row-span-2",
+              )}
             >
               <Image
                 src={image.url}
                 alt={image.caption}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                sizes="(max-width: 768px) 50vw, 40vw"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/20" />
+              <div className="absolute inset-0 bg-heading/0 transition-colors group-hover:bg-heading/20" />
               <span className="sr-only">{image.caption}</span>
             </Link>
           ))}

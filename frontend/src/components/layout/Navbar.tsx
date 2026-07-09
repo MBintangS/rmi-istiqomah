@@ -58,13 +58,13 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-foreground/10 bg-surface/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex min-w-0 items-center gap-2">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-white">
             RMI
           </span>
-          <span className="hidden truncate text-sm font-semibold text-heading sm:inline">
+          <span className="hidden truncate font-display text-sm font-semibold tracking-tight text-heading sm:inline">
             Remaja Masjid Istiqomah
           </span>
         </Link>

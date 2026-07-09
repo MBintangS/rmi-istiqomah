@@ -6,32 +6,44 @@ import { cn } from "@/lib/utils";
 interface ProgramCardProps {
   program: Program;
   className?: string;
+  featured?: boolean;
 }
 
-export function ProgramCard({ program, className }: ProgramCardProps) {
+export function ProgramCard({ program, className, featured = false }: ProgramCardProps) {
   return (
     <Link
       href={`/program/${program.slug}`}
       className={cn(
-        "group block overflow-hidden rounded-rmi bg-surface shadow-soft transition-all hover:-translate-y-1 hover:shadow-md",
+        "group relative block overflow-hidden rounded-rmi bg-heading text-white",
+        featured ? "min-h-[22rem] sm:min-h-[28rem]" : "min-h-[18rem] sm:min-h-[20rem]",
         className,
       )}
     >
-      <div className="relative aspect-video w-full overflow-hidden">
-        <Image
-          src={program.image}
-          alt={program.name}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-      <div className="space-y-2 p-5">
-        <h3 className="text-lg font-semibold text-heading transition-colors group-hover:text-primary">
+      <Image
+        src={program.image}
+        alt={program.name}
+        fill
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        sizes={
+          featured
+            ? "(max-width: 1024px) 100vw, 55vw"
+            : "(max-width: 1024px) 100vw, 33vw"
+        }
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-heading/95 via-heading/40 to-heading/10" />
+      <div className={cn("absolute inset-x-0 bottom-0 space-y-2 p-5 sm:p-6", featured && "sm:p-8")}>
+        <h3
+          className={cn(
+            "font-display font-bold tracking-tight text-white transition-colors group-hover:text-secondary",
+            featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl",
+          )}
+        >
           {program.name}
         </h3>
-        <p className="text-body line-clamp-2 text-foreground/80">{program.description}</p>
-        <span className="text-caption inline-flex items-center font-medium text-primary">
+        <p className={cn("text-body text-white/80", featured ? "line-clamp-3 max-w-md" : "line-clamp-2 text-sm")}>
+          {program.description}
+        </p>
+        <span className="text-caption inline-flex items-center font-medium text-secondary">
           Lihat detail
           <span className="ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true">
             →

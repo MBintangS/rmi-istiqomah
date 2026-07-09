@@ -1,11 +1,34 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/Toaster";
-import { poppins } from "@/lib/fonts";
+import { QueryProvider } from "@/providers/QueryProvider";
+import { poppins, syne } from "@/lib/fonts";
+import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Remaja Masjid Istiqomah",
-  description: "Website resmi Remaja Masjid Istiqomah (RMI)",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: DEFAULT_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +38,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${poppins.variable} font-sans antialiased`}>
-        {children}
+      <body className={`${poppins.variable} ${syne.variable} font-sans antialiased`}>
+        <QueryProvider>{children}</QueryProvider>
         <Toaster />
       </body>
     </html>

@@ -8,29 +8,37 @@ const latestArticles = mockArticles
   .sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   )
-  .slice(0, 6);
+  .slice(0, 4);
 
 export function LatestArticlesSection() {
+  const [featured, ...rest] = latestArticles;
+
   return (
-    <MotionSection className="bg-background py-16 sm:py-20">
+    <MotionSection tone="slide" className="bg-surface py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-caption font-medium text-primary">Berita Terbaru</p>
-            <h2>Artikel Islami RMI</h2>
-            <p className="text-body mt-2 max-w-xl text-foreground/70">
-              Bacaan ringan seputar dakwah, tips ibadah, dan kajian untuk remaja muslim.
-            </p>
+        <div className="mb-12 max-w-2xl">
+          <h2>Artikel Islami RMI</h2>
+          <p className="text-body mt-4 text-foreground/70">
+            Bacaan ringan seputar dakwah, tips ibadah, dan kajian untuk remaja muslim.
+          </p>
+          <div className="mt-6">
+            <Button href="/artikel" variant="outline" size="sm">
+              Semua Artikel
+            </Button>
           </div>
-          <Button href="/artikel" variant="outline" size="sm">
-            Semua Artikel
-          </Button>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {latestArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          {featured && (
+            <div className="lg:col-span-7">
+              <ArticleCard article={featured} variant="featured" />
+            </div>
+          )}
+          <div className="space-y-1 lg:col-span-5">
+            {rest.map((article) => (
+              <ArticleCard key={article.id} article={article} variant="list" />
+            ))}
+          </div>
         </div>
       </div>
     </MotionSection>

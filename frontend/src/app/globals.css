@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  /* Primary — hijau RMI */
+  /* Primary - hijau RMI */
   --color-primary: #4e830a;
   --color-primary-dark: #3c5e0a;
   --color-primary-light: #6b9129;
 
-  /* Secondary — emas */
+  /* Secondary - emas */
   --color-secondary: #d4af37;
   --color-secondary-alt: #c0a34e;
 
-  /* Neutral & surface */
-  --color-background: #ebded3;
-  --color-surface: #f8fafc;
+  /* White modern neutrals */
+  --color-background: #ffffff;
+  --color-surface: #f4f5f2;
   --color-foreground: #1f2937;
-  --color-heading: #23300a;
+  --color-heading: #14200a;
 
   /* Accent greens */
   --color-accent-green: #94a658;
@@ -44,19 +44,19 @@
   h2,
   h3,
   h4 {
-    @apply text-heading;
+    @apply font-display text-heading;
   }
 
   h1 {
-    @apply text-3xl font-bold leading-tight sm:text-4xl md:text-5xl;
+    @apply text-4xl font-extrabold tracking-tight leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl;
   }
 
   h2 {
-    @apply text-xl font-semibold leading-snug sm:text-2xl md:text-3xl;
+    @apply text-3xl font-bold tracking-tight leading-[1.1] sm:text-4xl md:text-[2.75rem];
   }
 
   h3 {
-    @apply text-lg font-semibold leading-snug sm:text-xl md:text-2xl;
+    @apply text-xl font-semibold leading-snug sm:text-2xl;
   }
 }
 

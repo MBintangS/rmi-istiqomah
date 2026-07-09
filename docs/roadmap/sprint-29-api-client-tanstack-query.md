@@ -6,6 +6,7 @@
 | **Estimasi** | 2 jam |
 | **Prasyarat** | Sprint 28 |
 | **Output** | `lib/api.ts` + QueryProvider + hooks pattern |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 28](./sprint-28-upload-cloudinary-seed-data.md) | [Sprint 30 →](./sprint-30-integrasi-artikel-program.md)
 
@@ -17,16 +18,16 @@ Infrastruktur fetch data di frontend.
 
 ## Task
 
-- [ ] Install Axios + TanStack Query
-- [ ] Buat axios instance dengan `NEXT_PUBLIC_API_URL`
-- [ ] Setup `QueryClientProvider` di root layout
-- [ ] Buat pattern hook: `useArticles()`, `useArticle(slug)`
-- [ ] Env `NEXT_PUBLIC_API_URL` di `.env.example`
+- [x] Install Axios + TanStack Query
+- [x] Buat axios instance dengan `NEXT_PUBLIC_API_URL`
+- [x] Setup `QueryClientProvider` di root layout
+- [x] Buat pattern hook: `useArticles()`, `useArticle(slug)`
+- [x] Env `NEXT_PUBLIC_API_URL` di `.env.example`
 
 ## Selesai Jika
 
-- [ ] Fetch health endpoint dari frontend berhasil
-- [ ] Hook pattern documented
+- [x] Fetch health endpoint dari frontend berhasil
+- [x] Hook pattern documented
 
 ---
 

@@ -20,7 +20,7 @@ export default function NotFound() {
               RMI
             </span>
           </div>
-          <p className="text-caption font-medium text-primary">404 — Halaman Tidak Ditemukan</p>
+          <p className="text-caption font-medium text-primary">404 - Halaman Tidak Ditemukan</p>
           <h1 className="mt-3">Maaf, halaman ini tidak ada</h1>
           <p className="text-body mt-4 text-foreground/70">
             Halaman yang Anda cari mungkin sudah dipindahkan atau alamat URL-nya salah.

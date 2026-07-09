@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { EventList } from "@/components/events/EventList";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { getEventCategories, getPublishedEvents } from "@/lib/events";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Kegiatan",
-  description: "Daftar kegiatan Remaja Masjid Istiqomah — rutin maupun acara besar.",
-};
+  description: "Daftar kegiatan Remaja Masjid Istiqomah: rutin maupun acara besar.",
+  path: "/kegiatan",
+});
 
 export default function KegiatanIndexPage() {
   const events = getPublishedEvents();
@@ -23,7 +24,7 @@ export default function KegiatanIndexPage() {
             ]}
             className="mb-4"
           />
-          <h1>Kegiatan RMI</h1>
+          <h2>Kegiatan RMI</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Jadwal kegiatan rutin dan perayaan besar remaja masjid Istiqomah.
           </p>

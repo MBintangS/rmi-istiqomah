@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui";
 import { getProgramBySlug, getProgramSlugs } from "@/lib/programs";
+import { buildPageMetadata } from "@/lib/seo";
 
 interface ProgramDetailPageProps {
   params: { slug: string };
@@ -18,13 +19,20 @@ export function generateMetadata({ params }: ProgramDetailPageProps): Metadata {
   const program = getProgramBySlug(params.slug);
 
   if (!program) {
-    return { title: "Program Tidak Ditemukan" };
+    return buildPageMetadata({
+      title: "Program Tidak Ditemukan",
+      description: "Program yang Anda cari tidak ditemukan.",
+      path: `/program/${params.slug}`,
+      noIndex: true,
+    });
   }
 
-  return {
+  return buildPageMetadata({
     title: program.name,
     description: program.description,
-  };
+    path: `/program/${program.slug}`,
+    image: program.image || undefined,
+  });
 }
 
 export default function ProgramDetailPage({ params }: ProgramDetailPageProps) {
@@ -46,7 +54,7 @@ export default function ProgramDetailPage({ params }: ProgramDetailPageProps) {
             ]}
             className="mb-4"
           />
-          <h1>{program.name}</h1>
+          <h2>{program.name}</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">{program.description}</p>
         </div>
       </section>

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { mockSettings } from "@/data/mock";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Kontak",
-  description: "Hubungi Remaja Masjid Istiqomah — form kontak, alamat, dan peta lokasi.",
-};
+  description: "Hubungi Remaja Masjid Istiqomah: form kontak, alamat, dan peta lokasi.",
+  path: "/kontak",
+});
 
 export default function KontakPage() {
   const { address, phone, email, whatsapp, googleMapsEmbed } = mockSettings;
@@ -22,7 +23,7 @@ export default function KontakPage() {
             ]}
             className="mb-4"
           />
-          <h1>Hubungi Kami</h1>
+          <h2>Hubungi Kami</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Ada pertanyaan atau ingin bergabung? Kirim pesan atau hubungi pengurus RMI langsung.
           </p>

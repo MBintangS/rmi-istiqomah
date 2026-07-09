@@ -12,18 +12,13 @@ export function StatsSection() {
   const { stats } = mockSettings;
 
   return (
-    <MotionSection className="bg-primary py-14 sm:py-16">
+    <MotionSection tone="soft" className="bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-caption font-medium text-secondary">Pencapaian RMI</p>
-          <h2 className="text-white">Angka yang Membanggakan</h2>
-        </div>
-
-        <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-8">
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
           {statItems.map(({ key, label, suffix }) => (
-            <div key={key} className="min-w-0 text-center">
-              <dt className="text-caption mb-2 font-medium text-white/80">{label}</dt>
-              <dd className="break-words text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+            <div key={key} className="min-w-0">
+              <dt className="text-caption font-medium text-foreground/55">{label}</dt>
+              <dd className="mt-2 font-display text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
                 {stats[key]}
                 {suffix}
               </dd>

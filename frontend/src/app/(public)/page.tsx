@@ -6,14 +6,22 @@ import { ProgramsSection } from "@/components/home/ProgramsSection";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { UpcomingEventsSection } from "@/components/home/UpcomingEventsSection";
-import { VisionMissionSection } from "@/components/home/VisionMissionSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildPageMetadata, organizationJsonLd } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: { absolute: "Remaja Masjid Istiqomah" },
+  description:
+    "Remaja Masjid Istiqomah (RMI): kegiatan, program, artikel Islami, dan ruang bergabung bagi generasi muda masjid.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={organizationJsonLd()} />
       <HeroSection />
       <AboutSection />
-      <VisionMissionSection />
       <ProgramsSection />
       <UpcomingEventsSection />
       <LatestArticlesSection />

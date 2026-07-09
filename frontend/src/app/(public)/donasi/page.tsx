@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { Button } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { mockDonasi, mockSettings } from "@/data/mock";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Donasi",
   description: "Dukung kegiatan Remaja Masjid Istiqomah melalui donasi.",
-};
+  path: "/donasi",
+});
 
 export default function DonasiPage() {
   const { whatsapp } = mockSettings;
@@ -22,7 +23,7 @@ export default function DonasiPage() {
             ]}
             className="mb-4"
           />
-          <h1>{mockDonasi.title}</h1>
+          <h2>{mockDonasi.title}</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">{mockDonasi.description}</p>
         </div>
       </section>

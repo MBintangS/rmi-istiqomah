@@ -41,7 +41,7 @@ export const mockEvents: Kegiatan[] = [
   },
   {
     id: "evt-3",
-    title: "Sanlat RMI — Pesantren Kilat",
+    title: "Sanlat RMI - Pesantren Kilat",
     slug: "sanlat-rmi-2026",
     description: "Program pesantren kilat 3 hari 2 malam untuk remaja putra dan putri.",
     dateStart: "2026-12-20T00:00:00.000Z",

@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { EventCard } from "@/components/home/EventCard";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { formatEventDate } from "@/lib/format-date";
 import { getEventById, getUpcomingAgenda } from "@/lib/events";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Agenda",
   description: "Agenda kegiatan terdekat Remaja Masjid Istiqomah.",
-};
+  path: "/agenda",
+});
 
 export default function AgendaPage() {
   const agendaItems = getUpcomingAgenda();
@@ -24,7 +25,7 @@ export default function AgendaPage() {
             ]}
             className="mb-4"
           />
-          <h1>Agenda Terdekat</h1>
+          <h2>Agenda Terdekat</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Kegiatan RMI yang akan segera dilaksanakan. Ikuti jadwal terbaru di bawah ini.
           </p>

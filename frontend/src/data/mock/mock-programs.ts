@@ -69,7 +69,7 @@ export const mockPrograms: Program[] = [
     name: "Sanlat",
     slug: "sanlat",
     description:
-      "Pesantren Kilat (Sanlat) — program intensif mengaji, tahfidz, dan pembinaan karakter remaja.",
+      "Pesantren Kilat (Sanlat): program intensif mengaji, tahfidz, dan pembinaan karakter remaja.",
     content:
       "<p>Sanlat RMI diselenggarakan setiap tahun dengan materi ngaji, tahfidz, dan pembinaan akhlak. Program ini menjadi ciri khas kegiatan remaja masjid.</p><p>Peserta mengikuti kegiatan full day selama 3 hari 2 malam dengan pengajar terpilih dan suasana pesantren yang kondusif.</p>",
     image: thumbs[2],

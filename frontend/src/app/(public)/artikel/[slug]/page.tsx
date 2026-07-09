@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/home/ArticleCard";
 import { ShareButtons } from "@/components/articles/ShareButtons";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { formatArticleDate } from "@/lib/format-date";
@@ -11,6 +12,7 @@ import {
   getArticleSlugs,
   getRelatedArticles,
 } from "@/lib/articles";
+import { buildPageMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 interface ArtikelDetailPageProps {
   params: { slug: string };
@@ -24,13 +26,21 @@ export function generateMetadata({ params }: ArtikelDetailPageProps): Metadata {
   const article = getArticleBySlug(params.slug);
 
   if (!article) {
-    return { title: "Artikel Tidak Ditemukan" };
+    return buildPageMetadata({
+      title: "Artikel Tidak Ditemukan",
+      description: "Artikel yang Anda cari tidak ditemukan.",
+      path: `/artikel/${params.slug}`,
+      noIndex: true,
+    });
   }
 
-  return {
+  return buildPageMetadata({
     title: article.metaTitle ?? article.title,
     description: article.metaDescription ?? article.excerpt,
-  };
+    path: `/artikel/${article.slug}`,
+    image: article.thumbnail || undefined,
+    type: "article",
+  });
 }
 
 export default function ArtikelDetailPage({ params }: ArtikelDetailPageProps) {
@@ -43,8 +53,20 @@ export default function ArtikelDetailPage({ params }: ArtikelDetailPageProps) {
   const relatedArticles = getRelatedArticles(article, 3);
   const articlePath = `/artikel/${article.slug}`;
 
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.publishedAt,
+    author: { "@type": "Organization", name: SITE_NAME },
+    image: article.thumbnail || undefined,
+    mainEntityOfPage: `${SITE_URL}${articlePath}`,
+  };
+
   return (
     <>
+      <JsonLd data={articleLd} />
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb
@@ -61,7 +83,7 @@ export default function ArtikelDetailPage({ params }: ArtikelDetailPageProps) {
               {formatArticleDate(article.publishedAt)}
             </time>
           </div>
-          <h1 className="mt-3">{article.title}</h1>
+          <h2 className="mt-3">{article.title}</h2>
           <p className="text-body mt-2 text-foreground/70">Oleh {article.author}</p>
         </div>
       </section>

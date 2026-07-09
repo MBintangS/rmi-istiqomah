@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { PengurusCard } from "@/components/about/PengurusCard";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { mockPengurus, mockSettings } from "@/data/mock";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Tentang Kami",
   description:
     "Profil Remaja Masjid Istiqomah (RMI), visi misi, sejarah, dan struktur kepengurusan.",
-};
+  path: "/tentang-kami",
+});
 
 const historyText =
   "RMI berdiri pada tahun 2015 sebagai wadah formal bagi remaja jamaah Masjid Istiqomah untuk aktif berorganisasi. Berawal dari kajian kecil dan kegiatan sosial sederhana, organisasi ini berkembang menjadi rumah bagi puluhan remaja yang ingin belajar berdakwah, berorganisasi, dan berkontribusi untuk kemajuan masjid.";
@@ -34,9 +35,9 @@ export default function TentangKamiPage() {
             ]}
             className="mb-4"
           />
-          <h1>Tentang Kami</h1>
+          <h2>Tentang Kami</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
-            Mengenal lebih dekat {siteName} — profil, landasan, dan tim pengurus.
+            Mengenal lebih dekat {siteName}: profil, landasan, dan tim pengurus.
           </p>
         </div>
       </section>
@@ -112,7 +113,7 @@ export default function TentangKamiPage() {
             <p className="text-caption font-medium text-primary">Struktur Kepengurusan</p>
             <h2>Pengurus RMI</h2>
             <p className="text-body mx-auto mt-2 max-w-xl text-foreground/70">
-              Periode kepengurusan {activePengurus[0]?.period ?? "2024–2026"}.
+              Periode kepengurusan {activePengurus[0]?.period ?? "2024-2026"}.
             </p>
           </div>
 

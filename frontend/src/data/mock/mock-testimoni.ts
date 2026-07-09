@@ -14,7 +14,7 @@ export const mockTestimoni: Testimoni[] = [
   {
     id: "tst-2",
     name: "Siti Nurhaliza",
-    role: "Ketua Bidang Dakwah 2024–2026",
+    role: "Ketua Bidang Dakwah 2024-2026",
     content:
       "RMI memberi ruang bagi remaja untuk berkontribusi nyata di masjid. Dari mengelola acara hingga bakti sosial, semua pengalaman di sini sangat berharga.",
     photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",

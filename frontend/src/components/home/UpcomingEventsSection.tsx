@@ -6,28 +6,32 @@ import { mockEvents } from "@/data/mock";
 const upcomingEvents = mockEvents
   .filter((event) => event.status === "upcoming")
   .sort((a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime())
-  .slice(0, 5);
+  .slice(0, 4);
 
 export function UpcomingEventsSection() {
   return (
-    <MotionSection className="bg-surface py-16 sm:py-20">
+    <MotionSection tone="soft" className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-caption font-medium text-primary">Agenda Terdekat</p>
-            <h2>Jadwal Kegiatan RMI</h2>
-            <p className="text-body mt-2 max-w-xl text-foreground/70">
-              Ikuti kegiatan rutin dan perayaan besar remaja masjid dalam waktu dekat.
-            </p>
+        <div className="mb-12 max-w-2xl">
+          <h2>Jadwal Kegiatan RMI</h2>
+          <p className="text-body mt-4 text-foreground/70">
+            Ikuti kegiatan rutin dan perayaan besar remaja masjid dalam waktu dekat.
+          </p>
+          <div className="mt-6">
+            <Button href="/kegiatan" variant="outline" size="sm">
+              Semua Kegiatan
+            </Button>
           </div>
-          <Button href="/kegiatan" variant="outline" size="sm">
-            Semua Kegiatan
-          </Button>
         </div>
 
-        <div className="space-y-4">
+        <div className="divide-y divide-foreground/10 border-y border-foreground/10">
           {upcomingEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <div key={event.id} className="py-4">
+              <EventCard
+                event={event}
+                className="rounded-none border-0 bg-transparent p-0 shadow-none hover:translate-y-0 hover:shadow-none sm:p-0"
+              />
+            </div>
           ))}
         </div>
       </div>

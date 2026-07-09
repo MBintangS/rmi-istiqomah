@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { ArticleList } from "@/components/articles/ArticleList";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { getArticleCategories, getPublishedArticles } from "@/lib/articles";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Artikel Islami",
   description: "Artikel dakwah, tips ibadah, dan kajian dari Remaja Masjid Istiqomah.",
-};
+  path: "/artikel",
+});
 
 export default function ArtikelIndexPage() {
   const articles = getPublishedArticles();
@@ -23,7 +24,7 @@ export default function ArtikelIndexPage() {
             ]}
             className="mb-4"
           />
-          <h1>Artikel Islami</h1>
+          <h2>Artikel Islami</h2>
           <p className="text-body mt-3 max-w-2xl text-foreground/70">
             Bacaan ringan seputar dakwah, tips ibadah, dan kajian untuk remaja muslim.
           </p>

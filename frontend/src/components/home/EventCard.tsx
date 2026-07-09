@@ -19,7 +19,7 @@ export function EventCard({ event, className }: EventCardProps) {
     <Link
       href={`/kegiatan/${event.slug}`}
       className={cn(
-        "group flex gap-3 rounded-rmi border border-foreground/10 bg-surface p-3 shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md sm:gap-5 sm:p-5",
+        "group flex gap-4 rounded-rmi border border-foreground/10 bg-surface p-3 shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md sm:gap-5 sm:p-5",
         className,
       )}
     >
@@ -27,7 +27,7 @@ export function EventCard({ event, className }: EventCardProps) {
         className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-rmi bg-primary text-white sm:h-[4.5rem] sm:w-[4.5rem]"
         aria-hidden="true"
       >
-        <span className="text-lg font-bold leading-none sm:text-2xl">{day}</span>
+        <span className="font-display text-lg font-bold leading-none sm:text-2xl">{day}</span>
         <span className="text-caption mt-0.5 font-medium uppercase">{month}</span>
       </div>
 
