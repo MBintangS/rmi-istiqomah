@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 23 |
 | **Output** | `/api/kegiatan`, `/api/agenda` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 23](./sprint-23-api-artikel-kategori.md) | [Sprint 25 →](./sprint-25-api-galeri-banner.md)
 
@@ -17,16 +18,16 @@ CRUD kegiatan + agenda upcoming endpoint.
 
 ## Task
 
-- [ ] Model `Kegiatan` + `Agenda`
-- [ ] CRUD kegiatan (sama pattern artikel)
-- [ ] CRUD agenda
-- [ ] `GET /api/agenda/upcoming` — max 5, sort by date
-- [ ] Index pada dateStart, date
+- [x] Model `Kegiatan` + `Agenda`
+- [x] CRUD kegiatan (sama pattern artikel)
+- [x] CRUD agenda
+- [x] `GET /api/agenda/upcoming` — max 5, sort by date
+- [x] Index pada dateStart, date
 
 ## Selesai Jika
 
-- [ ] Upcoming endpoint return data benar
-- [ ] Slug unik enforced
+- [x] Upcoming endpoint return data benar
+- [x] Slug unik enforced
 
 ---
 

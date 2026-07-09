@@ -1,0 +1,54 @@
+import { z } from "zod";
+
+const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "ID tidak valid");
+
+export const createKegiatanSchema = z.object({
+  title: z.string().trim().min(1, "Judul wajib diisi"),
+  description: z.string().min(1, "Deskripsi wajib diisi"),
+  dateStart: z.coerce.date(),
+  dateEnd: z.coerce.date().optional(),
+  time: z.string().trim().optional(),
+  location: z.string().trim().optional(),
+  locationMap: z.string().trim().optional(),
+  category: objectIdSchema,
+  thumbnail: z.string().url("URL thumbnail tidak valid").optional().or(z.literal("")),
+  status: z.enum(["upcoming", "ongoing", "completed"]).optional(),
+  isPublished: z.boolean().optional(),
+});
+
+export const updateKegiatanSchema = createKegiatanSchema.partial();
+
+export const kegiatanListQuerySchema = z.object({
+  page: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().positive().max(100).optional(),
+  search: z.string().trim().optional(),
+  category: z.string().trim().optional(),
+  status: z.enum(["upcoming", "ongoing", "completed"]).optional(),
+  sort: z.string().trim().optional(),
+});
+
+export const createAgendaSchema = z.object({
+  title: z.string().trim().min(1, "Judul wajib diisi"),
+  date: z.coerce.date(),
+  time: z.string().trim().optional(),
+  location: z.string().trim().optional(),
+  description: z.string().trim().optional(),
+  eventId: objectIdSchema.optional(),
+  isPublished: z.boolean().optional(),
+});
+
+export const updateAgendaSchema = createAgendaSchema.partial();
+
+export const agendaListQuerySchema = z.object({
+  page: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().positive().max(100).optional(),
+  search: z.string().trim().optional(),
+  sort: z.string().trim().optional(),
+});
+
+export type CreateKegiatanInput = z.infer<typeof createKegiatanSchema>;
+export type UpdateKegiatanInput = z.infer<typeof updateKegiatanSchema>;
+export type KegiatanListQuery = z.infer<typeof kegiatanListQuerySchema>;
+export type CreateAgendaInput = z.infer<typeof createAgendaSchema>;
+export type UpdateAgendaInput = z.infer<typeof updateAgendaSchema>;
+export type AgendaListQuery = z.infer<typeof agendaListQuerySchema>;
