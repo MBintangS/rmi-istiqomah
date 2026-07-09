@@ -2,6 +2,8 @@ import { Router } from "express";
 import agendaRoutes from "./agenda.routes";
 import artikelRoutes from "./artikel.routes";
 import authRoutes from "./auth.routes";
+import bannerRoutes from "./banner.routes";
+import galeriRoutes from "./galeri.routes";
 import healthRoutes from "./health.routes";
 import kategoriRoutes from "./kategori.routes";
 import kegiatanRoutes from "./kegiatan.routes";
@@ -14,5 +16,7 @@ router.use("/artikel", artikelRoutes);
 router.use("/kategori", kategoriRoutes);
 router.use("/kegiatan", kegiatanRoutes);
 router.use("/agenda", agendaRoutes);
+router.use("/galeri", galeriRoutes);
+router.use("/banner", bannerRoutes);
 
 export default router;

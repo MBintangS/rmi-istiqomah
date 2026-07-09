@@ -3,7 +3,7 @@
 > Referensi implementasi aktual backend Express.  
 > Spesifikasi desain lengkap: [`docs/prd/10-api-specification.md`](./prd/10-api-specification.md)
 
-**Cakupan saat ini:** Sprint 20–24 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda)
+**Cakupan saat ini:** Sprint 20–25 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner)
 
 ---
 
@@ -544,6 +544,176 @@ Detail agenda by MongoDB ObjectId.
 
 ---
 
+## Galeri
+
+### `GET /galeri`
+
+List album galeri dengan paginasi.
+
+**Auth:** Optional (publik: hanya `isPublished: true`)
+
+**Query:**
+
+| Parameter | Type | Keterangan |
+|-----------|------|------------|
+| `page`, `limit`, `search` | — | Lihat [Query Umum](#query-parameters-umum-list) |
+| `category` | string | Slug kategori tipe `galeri` |
+| `sort` | string | `createdAt`, `updatedAt`, `order`, `title` (default: `order` ASC) |
+
+**Response `200`:** array galeri + `pagination`
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "title": "Kajian Ramadhan 2026",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+          "publicId": null,
+          "caption": "Sesi kajian"
+        }
+      ],
+      "videoUrl": null,
+      "category": { "id": "...", "name": "Dokumentasi", "slug": "dokumentasi" },
+      "event": null,
+      "order": 1,
+      "isPublished": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ],
+  "pagination": { "page": 1, "limit": 10, "total": 1, "totalPages": 1 }
+}
+```
+
+### `GET /galeri/:id`
+
+Detail album galeri by MongoDB ObjectId.
+
+**Auth:** Optional (publik: hanya `isPublished: true`)
+
+### `POST /galeri`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "title": "Kajian Ramadhan 2026",
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+      "publicId": "folder/image-id",
+      "caption": "Sesi kajian"
+    }
+  ],
+  "videoUrl": "https://www.youtube.com/embed/...",
+  "category": "6a4f73465908fe972d6223c7",
+  "eventId": "6a4f73465908fe972d6223c8",
+  "order": 0,
+  "isPublished": false
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `title` | ✅ | Judul album |
+| `images` | ✅ | Array minimal 1 gambar |
+| `images[].url` | ✅ | URL gambar |
+| `images[].publicId` | — | Cloudinary public ID |
+| `images[].caption` | — | Keterangan gambar |
+| `category` | ✅ | ObjectId kategori tipe `galeri` |
+| `eventId` | — | ObjectId kegiatan terkait |
+| `videoUrl` | — | URL embed YouTube |
+| `order` | — | Urutan tampil (default: `0`) |
+| `isPublished` | — | `false` (default) |
+
+**Response `201`:** galeri + `message`
+
+### `PUT /galeri/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /galeri/:id`
+
+**Auth:** Admin
+
+---
+
+## Banner
+
+### `GET /banner`
+
+List banner untuk homepage/hero.
+
+**Auth:** Tidak
+
+**Aturan:**
+- Hanya `isActive: true`
+- Sort `order` ascending, lalu `createdAt` descending
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "title": "Banner Utama",
+      "image": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+      "link": "/kegiatan",
+      "order": 1,
+      "isActive": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
+
+### `POST /banner`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "title": "Banner Utama",
+  "image": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+  "link": "/kegiatan",
+  "order": 1,
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `title` | ✅ | Judul banner |
+| `image` | ✅ | URL gambar |
+| `link` | — | URL tujuan klik |
+| `order` | — | Urutan tampil (default: `0`) |
+| `isActive` | — | `true` (default) |
+
+**Response `201`:** banner + `message`
+
+### `PUT /banner/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /banner/:id`
+
+**Auth:** Admin
+
+---
+
 ## Seed & Testing
 
 ```bash
@@ -569,6 +739,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-09 | 25 | Galeri CRUD (images array), Banner CRUD, GET banner aktif |
 | 2026-07-09 | 20–24 | Dokumentasi awal: Health, Auth, Kategori, Artikel, Kegiatan, Agenda |
 
 ---

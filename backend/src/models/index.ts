@@ -3,6 +3,8 @@ export { Kategori, type IKategori, type KategoriDocument, type KategoriType } fr
 export { Artikel, type IArtikel, type ArtikelDocument, type ArtikelStatus } from "./Artikel.model";
 export { Kegiatan, type IKegiatan, type KegiatanDocument, type KegiatanStatus } from "./Kegiatan.model";
 export { Agenda, type IAgenda, type AgendaDocument } from "./Agenda.model";
+export { Galeri, type IGaleri, type IGaleriImage, type GaleriDocument } from "./Galeri.model";
+export { Banner, type IBanner, type BannerDocument } from "./Banner.model";
 export {
   Settings,
   type ISettings,
