@@ -1,10 +1,5 @@
-import { GalleryGrid } from "@/components/gallery/GalleryGrid";
+import { GaleriPageContent } from "@/components/galeri/GaleriPageContent";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import {
-  getGalleryCategories,
-  getGalleryEventFilters,
-  getGalleryItems,
-} from "@/lib/gallery";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
@@ -14,10 +9,6 @@ export const metadata = buildPageMetadata({
 });
 
 export default function GaleriPage() {
-  const items = getGalleryItems();
-  const categories = getGalleryCategories();
-  const events = getGalleryEventFilters();
-
   return (
     <>
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
@@ -38,7 +29,7 @@ export default function GaleriPage() {
 
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <GalleryGrid items={items} categories={categories} events={events} />
+          <GaleriPageContent />
         </div>
       </section>
     </>

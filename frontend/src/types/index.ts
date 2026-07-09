@@ -13,6 +13,17 @@ export type {
   PaginationMeta,
   ProgramDetail,
   ProgramListItem,
+  KategoriRef,
+  KegiatanListItem,
+  KegiatanDetail,
+  KegiatanListParams,
+  KegiatanListResult,
+  EventRef,
+  AgendaListItem,
+  GaleriImageItem,
+  GaleriListItem,
+  GaleriListParams,
+  GaleriListResult,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";

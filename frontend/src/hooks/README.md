@@ -11,13 +11,20 @@ src/
 ├── services/               # Fungsi fetch per modul (tanpa React)
 │   ├── health.service.ts
 │   ├── artikel.service.ts
-│   └── program.service.ts
+│   ├── program.service.ts
+│   ├── kegiatan.service.ts
+│   ├── agenda.service.ts
+│   └── galeri.service.ts
 └── hooks/                  # React Query hooks untuk komponen client
     ├── useHealth.ts
     ├── useArticles.ts
     ├── useArticle.ts
     ├── usePrograms.ts
-    └── useProgram.ts
+    ├── useProgram.ts
+    ├── useKegiatan.ts
+    ├── useKegiatanBySlug.ts
+    ├── useAgenda.ts
+    └── useGaleri.ts
 ```
 
 ## Menambah modul baru

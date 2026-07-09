@@ -1,6 +1,5 @@
-import { EventList } from "@/components/events/EventList";
+import { KegiatanPageContent } from "@/components/kegiatan/KegiatanPageContent";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { getEventCategories, getPublishedEvents } from "@/lib/events";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
@@ -10,9 +9,6 @@ export const metadata = buildPageMetadata({
 });
 
 export default function KegiatanIndexPage() {
-  const events = getPublishedEvents();
-  const categories = getEventCategories();
-
   return (
     <>
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
@@ -33,7 +29,7 @@ export default function KegiatanIndexPage() {
 
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <EventList events={events} categories={categories} />
+          <KegiatanPageContent />
         </div>
       </section>
     </>

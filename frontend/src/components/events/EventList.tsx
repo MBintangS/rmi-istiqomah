@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { EventCard } from "@/components/home/EventCard";
-import { Input, Select } from "@/components/ui";
+import { EmptyState, Input, Select } from "@/components/ui";
 import type { Kegiatan, Kategori } from "@/types";
 
 interface EventListProps {
@@ -59,9 +59,10 @@ export function EventList({ events, categories }: EventListProps) {
           ))}
         </div>
       ) : (
-        <p className="text-body rounded-rmi border border-dashed border-foreground/20 bg-surface p-8 text-center text-foreground/70">
-          Tidak ada kegiatan yang cocok dengan pencarian atau filter.
-        </p>
+        <EmptyState
+          title="Tidak ada kegiatan ditemukan"
+          description="Tidak ada kegiatan yang cocok dengan pencarian atau filter."
+        />
       )}
     </div>
   );
