@@ -5,6 +5,7 @@
 | **Grup** | D — Integrasi API |
 | **Estimasi** | 2 jam |
 | **Prasyarat** | Sprint 29 |
+| **Status** | ✅ Selesai |
 | **Output** | Ganti mock → API di artikel & program |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 29](./sprint-29-api-client-tanstack-query.md) | [Sprint 31 →](./sprint-31-integrasi-kegiatan-agenda-galeri.md)
@@ -17,16 +18,16 @@ Halaman artikel & program pakai data real.
 
 ## Task
 
-- [ ] Hook `useArticles`, `useArticle(slug)`
-- [ ] Update `/artikel` list + detail
-- [ ] Hook `usePrograms`, `useProgram(slug)`
-- [ ] Update `/program` pages
-- [ ] Tambah loading skeleton + empty state
+- [x] Hook `useArticles`, `useArticle(slug)`
+- [x] Update `/artikel` list + detail
+- [x] Hook `usePrograms`, `useProgram(slug)`
+- [x] Update `/program` pages
+- [x] Tambah loading skeleton + empty state
 
 ## Selesai Jika
 
-- [ ] Data dari MongoDB tampil
-- [ ] Loading state tampil saat fetch
+- [x] Data dari MongoDB tampil
+- [x] Loading state tampil saat fetch
 
 ---
 

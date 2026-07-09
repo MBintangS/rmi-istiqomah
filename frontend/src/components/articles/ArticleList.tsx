@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ArticleCard } from "@/components/home/ArticleCard";
-import { Input, Pagination, Select } from "@/components/ui";
+import { EmptyState, Input, Pagination, Select } from "@/components/ui";
 import type { Artikel, Kategori } from "@/types";
 
 const PAGE_SIZE = 3;
@@ -80,9 +80,11 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
           ))}
         </div>
       ) : (
-        <p className="text-body rounded-rmi border border-dashed border-foreground/20 bg-surface p-8 text-center text-foreground/70">
-          Tidak ada artikel yang cocok dengan pencarian atau filter.
-        </p>
+        <EmptyState
+          title="Tidak ada artikel"
+          description="Tidak ada artikel yang cocok dengan pencarian atau filter."
+          className="border border-dashed border-foreground/20 bg-transparent shadow-none"
+        />
       )}
 
       <Pagination

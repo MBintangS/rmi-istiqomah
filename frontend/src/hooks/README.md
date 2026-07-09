@@ -10,11 +10,14 @@ src/
 ├── lib/query-keys.ts       # Query key factory (TanStack Query)
 ├── services/               # Fungsi fetch per modul (tanpa React)
 │   ├── health.service.ts
-│   └── artikel.service.ts
+│   ├── artikel.service.ts
+│   └── program.service.ts
 └── hooks/                  # React Query hooks untuk komponen client
     ├── useHealth.ts
     ├── useArticles.ts
-    └── useArticle.ts
+    ├── useArticle.ts
+    ├── usePrograms.ts
+    └── useProgram.ts
 ```
 
 ## Menambah modul baru

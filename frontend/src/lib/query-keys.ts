@@ -9,4 +9,11 @@ export const queryKeys = {
     details: () => [...queryKeys.artikel.all, "detail"] as const,
     detail: (slug: string) => [...queryKeys.artikel.details(), slug] as const,
   },
+  program: {
+    all: ["program"] as const,
+    lists: () => [...queryKeys.program.all, "list"] as const,
+    list: () => [...queryKeys.program.lists()] as const,
+    details: () => [...queryKeys.program.all, "detail"] as const,
+    detail: (slug: string) => [...queryKeys.program.details(), slug] as const,
+  },
 } as const;

@@ -11,6 +11,8 @@ export type {
   ArtikelListResult,
   HealthData,
   PaginationMeta,
+  ProgramDetail,
+  ProgramListItem,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";

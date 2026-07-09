@@ -1,6 +1,5 @@
-import { ArticleList } from "@/components/articles/ArticleList";
+import { ArtikelPageContent } from "@/components/artikel/ArtikelPageContent";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { getArticleCategories, getPublishedArticles } from "@/lib/articles";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
@@ -10,9 +9,6 @@ export const metadata = buildPageMetadata({
 });
 
 export default function ArtikelIndexPage() {
-  const articles = getPublishedArticles();
-  const categories = getArticleCategories();
-
   return (
     <>
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
@@ -33,7 +29,7 @@ export default function ArtikelIndexPage() {
 
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <ArticleList articles={articles} categories={categories} />
+          <ArtikelPageContent />
         </div>
       </section>
     </>
