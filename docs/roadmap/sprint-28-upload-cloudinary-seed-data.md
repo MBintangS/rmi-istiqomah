@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 27 |
 | **Output** | `POST /api/upload` + seed script |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 27](./sprint-27-api-dokumen-contact-search.md) | [Sprint 29 →](./sprint-29-api-client-tanstack-query.md)
 
@@ -17,17 +18,17 @@ Upload gambar jalan + database terisi sample.
 
 ## Task
 
-- [ ] Setup Cloudinary config
-- [ ] Multer middleware + upload endpoint
-- [ ] Seed script: settings, 5 artikel, 5 kegiatan, 3 program, pengurus, galeri
-- [ ] Seed pakai gambar placeholder Cloudinary atau URL external
-- [ ] Dokumentasi API diperbarui di `docs/API.md` (endpoint baru + changelog)
+- [x] Setup Cloudinary config
+- [x] Multer middleware + upload endpoint
+- [x] Seed script: settings, 5 artikel, 5 kegiatan, 3 program, pengurus, galeri
+- [x] Seed pakai gambar placeholder Cloudinary atau URL external
+- [x] Dokumentasi API diperbarui di `docs/API.md` (endpoint baru + changelog)
 
 ## Selesai Jika
 
-- [ ] Upload return URL
-- [ ] Seed jalan tanpa error
-- [ ] Frontend bisa pakai data seed nanti
+- [x] Upload return URL
+- [x] Seed jalan tanpa error
+- [x] Frontend bisa pakai data seed nanti
 
 ---
 

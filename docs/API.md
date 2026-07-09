@@ -3,7 +3,7 @@
 > Referensi implementasi aktual backend Express.  
 > Spesifikasi desain lengkap: [`docs/prd/10-api-specification.md`](./prd/10-api-specification.md)
 
-**Cakupan saat ini:** Sprint 20–27 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner, Pengurus, Program, Testimoni, Dokumen, Contact, Search, Settings)
+**Cakupan saat ini:** Sprint 20–28 (semua endpoint backend publik + `POST /api/upload`)
 
 ---
 
@@ -1147,13 +1147,77 @@ Update pengaturan situs (partial).
 
 ---
 
+## Upload
+
+### `POST /upload`
+
+Upload gambar ke Cloudinary (admin CMS).
+
+**Auth:** Admin
+
+**Content-Type:** `multipart/form-data`
+
+**Form field:**
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `file` | ✅ | File gambar (JPEG, PNG, WebP, GIF, max 5 MB) |
+
+**Query:**
+
+| Parameter | Type | Default | Keterangan |
+|-----------|------|---------|------------|
+| `folder` | string | `rmi` | Folder di Cloudinary (`CLOUDINARY_FOLDER`) |
+
+**Response `201`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://res.cloudinary.com/your-cloud/image/upload/v123/rmi/artikel/gambar.jpg",
+    "publicId": "rmi/artikel/gambar",
+    "width": 1200,
+    "height": 800,
+    "format": "jpg",
+    "bytes": 245678
+  },
+  "message": "Gambar berhasil diupload"
+}
+```
+
+**Env yang diperlukan:**
+
+```env
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+CLOUDINARY_FOLDER=rmi
+```
+
+---
+
 ## Seed & Testing
 
 ```bash
 # Buat superadmin (sekali)
 cd backend
 npm run seed:admin
+
+# Isi database dengan sample data (artikel, kegiatan, program, dll.)
+npm run seed
+
+# Paksa seed ulang (jika sudah pernah di-seed)
+SEED_FORCE=true npm run seed
 ```
+
+Di Windows PowerShell:
+
+```powershell
+$env:SEED_FORCE="true"; npm run seed
+```
+
+**Data seed mencakup:** settings, kategori, 5 artikel, 5 kegiatan, 3 program, 6 pengurus, 3 album galeri. Gambar memakai URL placeholder Cloudinary demo.
 
 Contoh login + request admin (PowerShell):
 
@@ -1172,6 +1236,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-09 | 28 | POST /upload (Cloudinary), npm run seed |
 | 2026-07-09 | 27 | Dokumen, Contact, Search, Settings GET/PUT |
 | 2026-07-09 | 26 | Pengurus, Program (by slug), Testimoni CRUD |
 | 2026-07-09 | 25 | Galeri CRUD (images array), Banner CRUD, GET banner aktif |

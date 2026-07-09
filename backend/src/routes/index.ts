@@ -14,6 +14,7 @@ import programRoutes from "./program.routes";
 import searchRoutes from "./search.routes";
 import settingsRoutes from "./settings.routes";
 import testimoniRoutes from "./testimoni.routes";
+import uploadRoutes from "./upload.routes";
 
 const router = Router();
 
@@ -32,5 +33,6 @@ router.use("/dokumen", dokumenRoutes);
 router.use("/contact", contactRoutes);
 router.use("/search", searchRoutes);
 router.use("/settings", settingsRoutes);
+router.use("/upload", uploadRoutes);
 
 export default router;
