@@ -21,6 +21,20 @@ Saat user meminta menjalankan/melanjutkan sprint (mis. "jalankan sprint 03", "la
 - Fase visual (Sprint 08–19): pakai mock data di `frontend/src/data/mock/`
 - Fase backend (Sprint 20+): ikuti `docs/prd/09-database-schema.md` dan `10-api-specification.md`
 
+### Dokumentasi API (wajib untuk sprint backend dengan route baru)
+
+Setiap sprint backend yang menambah/mengubah endpoint di `backend/src/routes/`:
+
+1. **Update `docs/API.md`** — tambah atau revisi section endpoint yang bersangkutan (method, path, auth, body, query, response contoh, error relevan)
+2. Tambah baris di tabel **Changelog Dokumentasi** di bagian bawah `docs/API.md`
+3. Sertakan `docs/API.md` dalam commit sprint
+
+Aturan penulisan `docs/API.md`:
+- Dokumentasikan **implementasi aktual**, bukan rencana PRD
+- Satu section per modul (`## Artikel`, `## Kegiatan`, dst.)
+- Cantumkan perilaku khusus (optional auth, filter publik, rate limit, auto-generate slug)
+- Jika endpoint diubah/dihapus di sprint berikutnya, hapus atau revisi section terkait — jangan biarkan usang
+
 ## 3. Verifikasi (wajib sebelum tutup sprint)
 
 - Frontend: `cd frontend && npm run lint && npm run build`
@@ -49,6 +63,7 @@ Format pesan:
 
 Aturan commit:
 - Selalu sertakan file sprint doc yang diupdate
+- Sprint backend dengan route baru: selalu sertakan `docs/API.md`
 - Jangan commit `.env`, credentials, atau `node_modules`
 - Jangan push ke remote kecuali user minta
 - Di PowerShell: gunakan `-m` ganda, bukan heredoc

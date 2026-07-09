@@ -21,7 +21,7 @@ Upload gambar jalan + database terisi sample.
 - [ ] Multer middleware + upload endpoint
 - [ ] Seed script: settings, 5 artikel, 5 kegiatan, 3 program, pengurus, galeri
 - [ ] Seed pakai gambar placeholder Cloudinary atau URL external
-- [ ] Dokumentasi API awal di `docs/API.md`
+- [ ] Dokumentasi API diperbarui di `docs/API.md` (endpoint baru + changelog)
 
 ## Selesai Jika
 

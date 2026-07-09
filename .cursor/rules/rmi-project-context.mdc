@@ -37,7 +37,8 @@ rmi/
 | Functional reqs | `docs/prd/04-functional-requirements.md` |
 | Warna & UX | `docs/prd/06-design-ux.md` |
 | Database | `docs/prd/09-database-schema.md` |
-| API | `docs/prd/10-api-specification.md` |
+| API (desain PRD) | `docs/prd/10-api-specification.md` |
+| API (implementasi) | `docs/API.md` — update setiap sprint backend menambah route |
 
 ## Prinsip Kode
 
