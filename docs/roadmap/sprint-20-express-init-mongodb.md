@@ -6,6 +6,7 @@
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 19 (visual selesai) |
 | **Output** | `backend/` + `GET /api/health` |
+| **Status** | ✅ Selesai |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 19](./sprint-19-review-visual-responsive-pass.md) | [Sprint 21 →](./sprint-21-models-user-kategori-settings.md)
 
@@ -17,17 +18,17 @@ Backend jalan terpisah, database terkoneksi.
 
 ## Task
 
-- [ ] Init Express + TypeScript di `backend/`
-- [ ] Setup Mongoose + connect MongoDB Atlas
-- [ ] Middleware: cors, helmet, express.json
-- [ ] Error handler + standard response format
-- [ ] Endpoint `GET /api/health` return `{ status: "ok" }`
-- [ ] Buat `.env.example` backend
+- [x] Init Express + TypeScript di `backend/`
+- [x] Setup Mongoose + connect MongoDB Atlas
+- [x] Middleware: cors, helmet, express.json
+- [x] Error handler + standard response format
+- [x] Endpoint `GET /api/health` return `{ status: "ok" }`
+- [x] Buat `.env.example` backend
 
 ## Selesai Jika
 
-- [ ] `npm run dev` backend di port 5000
-- [ ] Health check return 200
+- [x] `npm run dev` backend di port 5000
+- [x] Health check return 200
 
 ---
 
