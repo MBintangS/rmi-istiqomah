@@ -1,17 +1,21 @@
-import { Button } from "@/components/ui";
+"use client";
+
+import { Button, EmptyState, SkeletonList } from "@/components/ui";
 import { MotionSection } from "@/components/home/MotionSection";
 import { ArticleCard } from "@/components/home/ArticleCard";
-import { mockArticles } from "@/data/mock";
-
-const latestArticles = mockArticles
-  .filter((article) => article.status === "published")
-  .sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  )
-  .slice(0, 4);
+import { useArticles } from "@/hooks/useArticles";
+import { getApiErrorMessage } from "@/lib/api";
+import { mapArtikelListItem } from "@/lib/mappers/artikel";
 
 export function LatestArticlesSection() {
-  const [featured, ...rest] = latestArticles;
+  const { data, isLoading, isError, error } = useArticles({
+    limit: 4,
+    sort: "-publishedAt",
+    status: "published",
+  });
+
+  const articles = (data?.items ?? []).map(mapArtikelListItem);
+  const [featured, ...rest] = articles;
 
   return (
     <MotionSection tone="slide" className="bg-surface py-24 sm:py-32">
@@ -28,18 +32,32 @@ export function LatestArticlesSection() {
           </div>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          {featured && (
-            <div className="lg:col-span-7">
-              <ArticleCard article={featured} variant="featured" />
+        {isLoading ? (
+          <SkeletonList count={4} />
+        ) : isError ? (
+          <EmptyState
+            title="Gagal memuat artikel"
+            description={getApiErrorMessage(error)}
+          />
+        ) : articles.length === 0 ? (
+          <EmptyState
+            title="Belum ada artikel"
+            description="Artikel akan tampil di sini setelah dipublikasikan."
+          />
+        ) : (
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+            {featured && (
+              <div className="lg:col-span-7">
+                <ArticleCard article={featured} variant="featured" />
+              </div>
+            )}
+            <div className="space-y-1 lg:col-span-5">
+              {rest.map((article) => (
+                <ArticleCard key={article.id} article={article} variant="list" />
+              ))}
             </div>
-          )}
-          <div className="space-y-1 lg:col-span-5">
-            {rest.map((article) => (
-              <ArticleCard key={article.id} article={article} variant="list" />
-            ))}
           </div>
-        </div>
+        )}
       </div>
     </MotionSection>
   );

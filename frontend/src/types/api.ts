@@ -136,19 +136,6 @@ export interface EventRef {
   slug: string;
 }
 
-export interface AgendaListItem {
-  id: string;
-  title: string;
-  date: string;
-  time: string | null;
-  location: string | null;
-  description: string | null;
-  isPublished: boolean;
-  event: EventRef | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface GaleriImageItem {
   url: string;
   publicId: string | null;
@@ -179,4 +166,69 @@ export interface GaleriListParams {
 export interface GaleriListResult {
   items: GaleriListItem[];
   pagination?: PaginationMeta;
+}
+
+export interface SettingsStats {
+  totalEvents: number;
+  totalMembers: number;
+  totalPengurus: number;
+  establishedYear: number;
+}
+
+export interface SettingsSocialMedia {
+  instagram: string | null;
+  facebook: string | null;
+  youtube: string | null;
+  tiktok: string | null;
+}
+
+export interface SettingsData {
+  id: string;
+  siteName: string;
+  tagline: string;
+  about: string;
+  vision: string;
+  mission: string[];
+  address: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  socialMedia: SettingsSocialMedia;
+  googleMapsEmbed: string;
+  stats: SettingsStats;
+  updatedAt: string;
+}
+
+export interface BannerListItem {
+  id: string;
+  title: string;
+  image: string;
+  link: string | null;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PengurusListItem {
+  id: string;
+  name: string;
+  position: string;
+  photo: string | null;
+  period: string | null;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TestimoniListItem {
+  id: string;
+  name: string;
+  content: string;
+  role: string | null;
+  photo: string | null;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
 }

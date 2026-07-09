@@ -1,5 +1,5 @@
-import { mockAgenda, mockEvents } from "@/data/mock";
-import type { Agenda, Kegiatan, Kategori, KegiatanStatus } from "@/types";
+import { mockEvents } from "@/data/mock";
+import type { Kegiatan, Kategori, KegiatanStatus } from "@/types";
 
 export function getPublishedEvents(): Kegiatan[] {
   return mockEvents
@@ -27,12 +27,6 @@ export function getEventCategories(): Kategori[] {
   }
 
   return Array.from(categories.values());
-}
-
-export function getUpcomingAgenda(): Agenda[] {
-  return mockAgenda
-    .filter((item) => item.isPublished)
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 export const eventStatusLabels: Record<

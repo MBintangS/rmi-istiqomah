@@ -19,11 +19,16 @@ export type {
   KegiatanListParams,
   KegiatanListResult,
   EventRef,
-  AgendaListItem,
   GaleriImageItem,
   GaleriListItem,
   GaleriListParams,
   GaleriListResult,
+  SettingsData,
+  SettingsStats,
+  SettingsSocialMedia,
+  BannerListItem,
+  PengurusListItem,
+  TestimoniListItem,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";

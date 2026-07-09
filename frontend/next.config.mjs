@@ -12,6 +12,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/agenda",
+        destination: "/kegiatan",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

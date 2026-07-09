@@ -23,15 +23,24 @@ export const queryKeys = {
     details: () => [...queryKeys.kegiatan.all, "detail"] as const,
     detail: (slug: string) => [...queryKeys.kegiatan.details(), slug] as const,
   },
-  agenda: {
-    all: ["agenda"] as const,
-    upcoming: () => [...queryKeys.agenda.all, "upcoming"] as const,
-    lists: () => [...queryKeys.agenda.all, "list"] as const,
-    list: (params?: Record<string, unknown>) => [...queryKeys.agenda.lists(), params ?? {}] as const,
-  },
   galeri: {
     all: ["galeri"] as const,
     lists: () => [...queryKeys.galeri.all, "list"] as const,
     list: (params?: GaleriListParams) => [...queryKeys.galeri.lists(), params ?? {}] as const,
+  },
+  settings: {
+    all: ["settings"] as const,
+  },
+  banner: {
+    all: ["banner"] as const,
+    list: () => [...queryKeys.banner.all, "list"] as const,
+  },
+  pengurus: {
+    all: ["pengurus"] as const,
+    list: () => [...queryKeys.pengurus.all, "list"] as const,
+  },
+  testimoni: {
+    all: ["testimoni"] as const,
+    list: () => [...queryKeys.testimoni.all, "list"] as const,
   },
 } as const;

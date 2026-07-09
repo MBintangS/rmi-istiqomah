@@ -1,4 +1,6 @@
-import { mockSettings } from "@/data/mock";
+"use client";
+
+import { useSettingsValue } from "@/hooks/useSettings";
 
 function WhatsAppIcon() {
   return (
@@ -16,7 +18,12 @@ function WhatsAppIcon() {
 }
 
 export function WhatsAppButton() {
-  const { whatsapp } = mockSettings;
+  const { whatsapp } = useSettingsValue();
+
+  if (!whatsapp) {
+    return null;
+  }
+
   const waUrl = `https://wa.me/${whatsapp}`;
 
   return (

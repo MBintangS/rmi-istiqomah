@@ -13,11 +13,6 @@ export const mainNavItems: NavItemWithChildren[] = [
   {
     label: "Program",
     href: "/program",
-    children: [
-      { label: "Isra Miraj", href: "/program/isra-miraj" },
-      { label: "Maulid Nabi", href: "/program/maulid-nabi" },
-      { label: "Sanlat", href: "/program/sanlat" },
-    ],
   },
   { label: "Galeri", href: "/galeri" },
   { label: "Artikel Islami", href: "/artikel" },

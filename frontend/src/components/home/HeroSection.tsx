@@ -3,15 +3,19 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui";
-import { mockSettings } from "@/data/mock";
+import { useBanners } from "@/hooks/useBanners";
+import { useSettingsValue } from "@/hooks/useSettings";
+import { FALLBACK_HERO_IMAGE } from "@/lib/constants";
 import { heroItem, heroOrchestration } from "@/lib/motion";
 
-const heroImage =
-  "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=1600&q=80";
-
 export function HeroSection() {
-  const { siteName, tagline } = mockSettings;
+  const settings = useSettingsValue();
+  const { data: banners } = useBanners();
   const reduce = useReducedMotion();
+
+  const heroBanner = banners?.[0];
+  const heroImage = heroBanner?.image ?? FALLBACK_HERO_IMAGE;
+  const { siteName, tagline, about, stats } = settings;
 
   return (
     <section className="relative overflow-hidden bg-background">
@@ -41,7 +45,7 @@ export function HeroSection() {
             variants={reduce ? undefined : heroItem}
             className="text-body mt-6 max-w-[38ch] text-foreground/75"
           >
-            Wadah generasi muda yang istiqomah beribadah, berdakwah, dan membangun masjid bersama.
+            {about}
           </motion.p>
           <motion.div
             variants={reduce ? undefined : heroItem}
@@ -65,7 +69,7 @@ export function HeroSection() {
           <div className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/6] lg:ml-auto lg:max-w-lg">
             <Image
               src={heroImage}
-              alt="Kegiatan remaja masjid"
+              alt={heroBanner?.title ?? "Kegiatan remaja masjid"}
               fill
               priority
               className="object-cover"
@@ -74,8 +78,8 @@ export function HeroSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-heading/50 via-transparent to-transparent" />
           </div>
           <div className="absolute -bottom-6 left-4 hidden max-w-[220px] rounded-rmi border border-foreground/10 bg-background p-4 shadow-soft sm:block lg:-left-10">
-            <p className="font-display text-2xl font-bold text-primary">2015</p>
-            <p className="text-caption mt-1 text-foreground/70">Bergerak bersama jamaah muda</p>
+            <p className="font-display text-2xl font-bold text-primary">{stats.establishedYear}</p>
+            <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
           </div>
         </motion.div>
       </div>

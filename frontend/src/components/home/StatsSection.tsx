@@ -1,5 +1,7 @@
+"use client";
+
 import { MotionSection } from "@/components/home/MotionSection";
-import { mockSettings } from "@/data/mock";
+import { useSettingsValue } from "@/hooks/useSettings";
 
 const statItems = [
   { key: "totalEvents", label: "Kegiatan", suffix: "+" },
@@ -9,7 +11,7 @@ const statItems = [
 ] as const;
 
 export function StatsSection() {
-  const { stats } = mockSettings;
+  const { stats } = useSettingsValue();
 
   return (
     <MotionSection tone="soft" className="bg-surface py-16 sm:py-20">

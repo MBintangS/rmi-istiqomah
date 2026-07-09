@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Drawer } from "@/components/ui/Drawer";
-import { mainNavItems } from "@/lib/navigation";
+import { useMainNavItems } from "@/hooks/useMainNavItems";
 import { cn } from "@/lib/utils";
 
 function MenuIcon() {
@@ -49,6 +49,7 @@ function ChevronDownIcon() {
 
 export function Navbar() {
   const pathname = usePathname();
+  const navItems = useMainNavItems();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
 
@@ -70,7 +71,7 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
-          {mainNavItems.map((item) =>
+          {navItems.map((item) =>
             item.children ? (
               <div
                 key={item.href}
@@ -135,7 +136,7 @@ export function Navbar() {
 
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Menu">
         <nav className="flex flex-col gap-1" aria-label="Navigasi mobile">
-          {mainNavItems.map((item) => (
+          {navItems.map((item) => (
             <div key={item.href}>
               <Link
                 href={item.href}

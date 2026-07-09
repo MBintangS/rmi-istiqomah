@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge, EmptyState, Skeleton } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { useKegiatanBySlug } from "@/hooks/useKegiatanBySlug";
-import { mockSettings } from "@/data/mock";
+import { useSettingsValue } from "@/hooks/useSettings";
 import { formatEventDate } from "@/lib/format-date";
 import { eventStatusLabels } from "@/lib/events";
 import { getApiErrorMessage } from "@/lib/api";
@@ -19,6 +19,7 @@ interface KegiatanDetailViewProps {
 
 export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
   const { data, isLoading, isError, error, refetch } = useKegiatanBySlug(slug);
+  const settings = useSettingsValue();
 
   if (isLoading) {
     return (
@@ -53,7 +54,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
 
   const event = mapKegiatanListItem(data);
   const status = eventStatusLabels[event.status];
-  const mapEmbed = event.locationMap ?? mockSettings.googleMapsEmbed;
+  const mapEmbed = event.locationMap ?? settings.googleMapsEmbed;
 
   const eventLd = {
     "@context": "https://schema.org",

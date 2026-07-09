@@ -13,8 +13,11 @@ src/
 │   ├── artikel.service.ts
 │   ├── program.service.ts
 │   ├── kegiatan.service.ts
-│   ├── agenda.service.ts
-│   └── galeri.service.ts
+│   ├── galeri.service.ts
+│   ├── settings.service.ts
+│   ├── banner.service.ts
+│   ├── pengurus.service.ts
+│   └── testimoni.service.ts
 └── hooks/                  # React Query hooks untuk komponen client
     ├── useHealth.ts
     ├── useArticles.ts
@@ -23,8 +26,11 @@ src/
     ├── useProgram.ts
     ├── useKegiatan.ts
     ├── useKegiatanBySlug.ts
-    ├── useAgenda.ts
-    └── useGaleri.ts
+    ├── useGaleri.ts
+    ├── useSettings.ts
+    ├── useBanners.ts
+    ├── usePengurus.ts
+    └── useTestimoni.ts
 ```
 
 ## Menambah modul baru

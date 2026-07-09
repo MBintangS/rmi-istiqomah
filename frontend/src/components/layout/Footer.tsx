@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { mockSettings } from "@/data/mock";
 import { mainNavItems } from "@/lib/navigation";
+import { useSettingsValue } from "@/hooks/useSettings";
 
 function InstagramIcon() {
   return (
@@ -42,7 +44,8 @@ const socialIcons = {
 } as const;
 
 export function Footer() {
-  const { siteName, address, phone, email, socialMedia, googleMapsEmbed } = mockSettings;
+  const { siteName, tagline, address, phone, email, socialMedia, googleMapsEmbed } =
+    useSettingsValue();
 
   return (
     <footer className="border-t border-foreground/10 bg-heading text-surface">
@@ -55,7 +58,7 @@ export function Footer() {
               </span>
               <span className="font-semibold">{siteName}</span>
             </div>
-            <p className="text-sm text-surface/70">{mockSettings.tagline}</p>
+            <p className="text-sm text-surface/70">{tagline}</p>
           </div>
 
           <div>
@@ -123,19 +126,23 @@ export function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">
               Lokasi
             </h3>
-            <div className="overflow-hidden rounded-rmi">
-              <iframe
-                src={googleMapsEmbed}
-                width="100%"
-                height="160"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Lokasi Masjid Istiqomah"
-                className="w-full"
-              />
-            </div>
+            {googleMapsEmbed ? (
+              <div className="overflow-hidden rounded-rmi">
+                <iframe
+                  src={googleMapsEmbed}
+                  width="100%"
+                  height="160"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Lokasi Masjid Istiqomah"
+                  className="w-full"
+                />
+              </div>
+            ) : (
+              <p className="text-sm text-surface/70">{address}</p>
+            )}
           </div>
         </div>
 

@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SkipToContent } from "@/components/layout/SkipToContent";
 import { Button } from "@/components/ui";
-import { mockSettings } from "@/data/mock";
+import { SITE_NAME } from "@/lib/seo";
 
 export default function NotFound() {
   return (
@@ -24,7 +24,7 @@ export default function NotFound() {
           <h1 className="mt-3">Maaf, halaman ini tidak ada</h1>
           <p className="text-body mt-4 text-foreground/70">
             Halaman yang Anda cari mungkin sudah dipindahkan atau alamat URL-nya salah.
-            Kembali ke beranda {mockSettings.siteName} untuk melanjutkan.
+            Kembali ke beranda {SITE_NAME} untuk melanjutkan.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button href="/">Kembali ke Beranda</Button>

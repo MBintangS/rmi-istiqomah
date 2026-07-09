@@ -34,7 +34,9 @@ export function PengurusCard({ pengurus, className }: PengurusCardProps) {
       <div className="space-y-1 p-5">
         <h3 className="text-lg font-semibold text-heading">{pengurus.name}</h3>
         <p className="text-caption font-medium text-primary">{pengurus.position}</p>
-        <p className="text-caption text-foreground/60">Periode {pengurus.period}</p>
+        {pengurus.period && (
+          <p className="text-caption text-foreground/60">Periode {pengurus.period}</p>
+        )}
       </div>
     </article>
   );
