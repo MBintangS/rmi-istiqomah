@@ -3,7 +3,7 @@
 > Referensi implementasi aktual backend Express.  
 > Spesifikasi desain lengkap: [`docs/prd/10-api-specification.md`](./prd/10-api-specification.md)
 
-**Cakupan saat ini:** Sprint 20–26 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner, Pengurus, Program, Testimoni)
+**Cakupan saat ini:** Sprint 20–27 (Health, Auth, Artikel, Kategori, Kegiatan, Agenda, Galeri, Banner, Pengurus, Program, Testimoni, Dokumen, Contact, Search, Settings)
 
 ---
 
@@ -919,6 +919,234 @@ List testimoni untuk homepage.
 
 ---
 
+## Dokumen
+
+### `GET /dokumen`
+
+List dokumen unduhan.
+
+**Auth:** Optional (publik: hanya `isPublished: true`)
+
+**Query:**
+
+| Parameter | Type | Keterangan |
+|-----------|------|------------|
+| `page`, `limit` | — | Lihat [Query Umum](#query-parameters-umum-list) |
+| `search` | string | Cari nama/deskripsi |
+| `category` | string | Filter kategori dokumen |
+
+**Response `200`:** array dokumen + `pagination`
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "AD/ART RMI",
+      "fileUrl": "https://example.com/adart.pdf",
+      "fileSize": null,
+      "fileType": "pdf",
+      "category": "organisasi",
+      "description": null,
+      "isPublished": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ],
+  "pagination": { "page": 1, "limit": 10, "total": 1, "totalPages": 1 }
+}
+```
+
+### `POST /dokumen`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "name": "AD/ART RMI",
+  "fileUrl": "https://example.com/adart.pdf",
+  "fileSize": 102400,
+  "fileType": "pdf",
+  "category": "organisasi",
+  "description": "Anggaran dasar dan rumah tangga",
+  "isPublished": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama dokumen |
+| `fileUrl` | ✅ | URL file (upload via Sprint 28) |
+| `fileSize`, `fileType`, `category`, `description` | — | Metadata opsional |
+| `isPublished` | — | `false` (default) |
+
+### `PUT /dokumen/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /dokumen/:id`
+
+**Auth:** Admin
+
+---
+
+## Contact
+
+### `POST /contact`
+
+Kirim pesan dari form kontak. Pesan disimpan ke database.
+
+**Auth:** Tidak
+
+**Body:**
+
+```json
+{
+  "name": "Siti",
+  "email": "siti@mail.com",
+  "subject": "Gabung RMI",
+  "message": "Saya ingin bergabung dengan RMI."
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama pengirim |
+| `email` | ✅ | Email valid |
+| `subject` | ✅ | Subjek pesan |
+| `message` | ✅ | Isi pesan |
+
+**Response `201`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "...",
+    "name": "Siti",
+    "email": "siti@mail.com",
+    "subject": "Gabung RMI",
+    "createdAt": "..."
+  },
+  "message": "Pesan berhasil dikirim"
+}
+```
+
+---
+
+## Search
+
+### `GET /search`
+
+Pencarian global artikel + kegiatan yang dipublikasikan.
+
+**Auth:** Tidak
+
+**Query:**
+
+| Parameter | Type | Default | Keterangan |
+|-----------|------|---------|------------|
+| `q` | string | — | Kata kunci (wajib) |
+| `limit` | number | `10` | Max total hasil (max 20) |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "query": "kajian",
+    "artikel": [
+      {
+        "type": "artikel",
+        "id": "...",
+        "title": "Tips Shalat Berjamaah",
+        "slug": "tips-shalat-berjamaah",
+        "excerpt": "...",
+        "thumbnail": null,
+        "publishedAt": "...",
+        "createdAt": "..."
+      }
+    ],
+    "kegiatan": [
+      {
+        "type": "kegiatan",
+        "id": "...",
+        "title": "Kajian Ahad Pagi",
+        "slug": "kajian-ahad-pagi",
+        "description": "...",
+        "thumbnail": null,
+        "dateStart": "...",
+        "status": "upcoming",
+        "createdAt": "..."
+      }
+    ],
+    "total": 2
+  }
+}
+```
+
+Hanya mencari artikel `status: published` dan kegiatan `isPublished: true`.
+
+---
+
+## Settings
+
+### `GET /settings`
+
+Pengaturan situs (singleton). Auto-create default jika belum ada.
+
+**Auth:** Tidak
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "...",
+    "siteName": "Remaja Masjid Istiqomah",
+    "tagline": "Generasi Qurani, Berakhlak Mulia",
+    "about": "...",
+    "vision": "...",
+    "mission": ["..."],
+    "address": "...",
+    "phone": "...",
+    "whatsapp": "6281234567890",
+    "email": "info@rmi-masjid.org",
+    "socialMedia": {
+      "instagram": null,
+      "facebook": null,
+      "youtube": null,
+      "tiktok": null
+    },
+    "googleMapsEmbed": "",
+    "stats": {
+      "totalEvents": 0,
+      "totalMembers": 0,
+      "totalPengurus": 0,
+      "establishedYear": 2010
+    },
+    "updatedAt": "..."
+  }
+}
+```
+
+### `PUT /settings`
+
+Update pengaturan situs (partial).
+
+**Auth:** Admin
+
+**Body:** semua field opsional — `siteName`, `tagline`, `about`, `vision`, `mission`, `address`, `phone`, `whatsapp`, `email`, `socialMedia`, `googleMapsEmbed`, `stats`
+
+**Response `200`:** settings terbaru + `message`
+
+---
+
 ## Seed & Testing
 
 ```bash
@@ -944,6 +1172,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-09 | 27 | Dokumen, Contact, Search, Settings GET/PUT |
 | 2026-07-09 | 26 | Pengurus, Program (by slug), Testimoni CRUD |
 | 2026-07-09 | 25 | Galeri CRUD (images array), Banner CRUD, GET banner aktif |
 | 2026-07-09 | 20–24 | Dokumentasi awal: Health, Auth, Kategori, Artikel, Kegiatan, Agenda |

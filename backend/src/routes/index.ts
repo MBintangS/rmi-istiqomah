@@ -3,12 +3,16 @@ import agendaRoutes from "./agenda.routes";
 import artikelRoutes from "./artikel.routes";
 import authRoutes from "./auth.routes";
 import bannerRoutes from "./banner.routes";
+import contactRoutes from "./contact.routes";
+import dokumenRoutes from "./dokumen.routes";
 import galeriRoutes from "./galeri.routes";
 import healthRoutes from "./health.routes";
 import kategoriRoutes from "./kategori.routes";
 import kegiatanRoutes from "./kegiatan.routes";
 import pengurusRoutes from "./pengurus.routes";
 import programRoutes from "./program.routes";
+import searchRoutes from "./search.routes";
+import settingsRoutes from "./settings.routes";
 import testimoniRoutes from "./testimoni.routes";
 
 const router = Router();
@@ -24,5 +28,9 @@ router.use("/banner", bannerRoutes);
 router.use("/pengurus", pengurusRoutes);
 router.use("/program", programRoutes);
 router.use("/testimoni", testimoniRoutes);
+router.use("/dokumen", dokumenRoutes);
+router.use("/contact", contactRoutes);
+router.use("/search", searchRoutes);
+router.use("/settings", settingsRoutes);
 
 export default router;
