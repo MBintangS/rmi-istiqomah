@@ -62,7 +62,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary-alt">
               Navigasi
             </h3>
             <ul className="space-y-2">
@@ -80,7 +80,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary-alt">
               Kontak
             </h3>
             <ul className="space-y-2 text-sm text-surface/70">
@@ -123,7 +123,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary-alt">
               Lokasi
             </h3>
             {googleMapsEmbed ? (
@@ -146,7 +146,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-surface/10 pt-6 text-center text-sm text-surface/50">
+        <div className="mt-10 border-t border-surface/10 pt-6 text-center text-sm text-surface/70">
           © {new Date().getFullYear()} {siteName}. All rights reserved.
         </div>
       </div>

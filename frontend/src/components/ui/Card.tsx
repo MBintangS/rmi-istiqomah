@@ -31,7 +31,13 @@ export function Card({
     >
       {image && (
         <div className="relative aspect-video w-full">
-          <Image src={image.src} alt={image.alt} fill className="object-cover" />
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 400px"
+          />
         </div>
       )}
 

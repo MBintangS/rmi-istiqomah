@@ -245,7 +245,13 @@ export function AdminKegiatanForm({ mode, initial }: AdminKegiatanFormProps) {
             {uploading && <p className="text-caption text-foreground/60">Mengupload...</p>}
             {thumbnail ? (
               <div className="relative mt-2 aspect-video overflow-hidden rounded-rmi border border-foreground/10">
-                <Image src={thumbnail} alt="Thumbnail kegiatan" fill className="object-cover" />
+                <Image
+                  src={thumbnail}
+                  alt="Thumbnail kegiatan"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 320px"
+                />
               </div>
             ) : null}
             <input type="hidden" {...register("thumbnail")} />

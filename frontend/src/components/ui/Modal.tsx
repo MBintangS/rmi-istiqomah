@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactNode, useId } from "react";
+import { ReactNode, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
-import { useBodyScrollLock, useEscapeKey } from "@/hooks/useOverlay";
+import { useBodyScrollLock, useEscapeKey, useFocusTrap } from "@/hooks/useOverlay";
 
 export interface ModalProps {
   open: boolean;
@@ -35,9 +35,11 @@ function CloseIcon() {
 
 export function Modal({ open, onClose, title, children, className }: ModalProps) {
   const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEscapeKey(onClose, open);
   useBodyScrollLock(open);
+  useFocusTrap(panelRef, open);
 
   if (!open || typeof document === "undefined") return null;
 
@@ -48,9 +50,11 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         className="absolute inset-0 bg-heading/50 backdrop-blur-sm"
         aria-label="Tutup dialog"
         onClick={onClose}
+        tabIndex={-1}
       />
 
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}

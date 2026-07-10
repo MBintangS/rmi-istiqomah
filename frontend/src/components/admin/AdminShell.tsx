@@ -6,6 +6,7 @@ import { Drawer } from "@/components/ui/Drawer";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { adminNavItems, getAdminNavItemsForRole } from "@/lib/admin-navigation";
+import { SkipToContent } from "@/components/layout/SkipToContent";
 import { useAuth } from "@/hooks/useAuth";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -26,6 +27,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-background">
+      <SkipToContent />
       <div className="hidden lg:block">
         <div className="sticky top-0 h-screen">
           <AdminSidebar />
@@ -34,7 +36,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminHeader title={title} onOpenMenu={() => setDrawerOpen(true)} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main id="main-content" className="flex-1 p-4 sm:p-6 lg:p-8">
+          {children}
+        </main>
       </div>
 
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Menu Admin">

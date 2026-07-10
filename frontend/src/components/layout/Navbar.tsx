@@ -78,11 +78,19 @@ export function Navbar() {
                 className="relative"
                 onMouseEnter={() => setProgramOpen(true)}
                 onMouseLeave={() => setProgramOpen(false)}
+                onFocus={() => setProgramOpen(true)}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                    setProgramOpen(false);
+                  }
+                }}
               >
                 <Link
                   href={item.href}
+                  aria-expanded={programOpen}
+                  aria-haspopup="true"
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                     isActive(item.href)
                       ? "bg-primary/10 text-primary"
                       : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
@@ -93,12 +101,16 @@ export function Navbar() {
                 </Link>
                 {programOpen && (
                   <div className="absolute left-0 top-full z-50 min-w-[180px] pt-2">
-                    <div className="rounded-rmi border border-foreground/10 bg-surface py-2 shadow-soft">
+                    <div
+                      className="rounded-rmi border border-foreground/10 bg-surface py-2 shadow-soft"
+                      role="menu"
+                    >
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-primary/5 hover:text-primary"
+                          role="menuitem"
+                          className="block px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-primary/5 hover:text-primary focus-visible:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
                         >
                           {child.label}
                         </Link>
@@ -112,7 +124,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                  "rounded-full px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   isActive(item.href)
                     ? "bg-primary/10 text-primary"
                     : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
@@ -126,8 +138,9 @@ export function Navbar() {
 
         <button
           type="button"
-          className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 lg:hidden"
+          className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
           aria-label="Buka menu"
+          aria-expanded={drawerOpen}
           onClick={() => setDrawerOpen(true)}
         >
           <MenuIcon />

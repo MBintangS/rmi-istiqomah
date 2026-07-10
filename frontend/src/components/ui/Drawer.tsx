@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactNode, useId } from "react";
+import { ReactNode, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
-import { useBodyScrollLock, useEscapeKey } from "@/hooks/useOverlay";
+import { useBodyScrollLock, useEscapeKey, useFocusTrap } from "@/hooks/useOverlay";
 
 export interface DrawerProps {
   open: boolean;
@@ -35,9 +35,11 @@ function CloseIcon() {
 
 export function Drawer({ open, onClose, title, children, className }: DrawerProps) {
   const titleId = useId();
+  const panelRef = useRef<HTMLElement>(null);
 
   useEscapeKey(onClose, open);
   useBodyScrollLock(open);
+  useFocusTrap(panelRef, open);
 
   if (!open || typeof document === "undefined") return null;
 
@@ -48,9 +50,11 @@ export function Drawer({ open, onClose, title, children, className }: DrawerProp
         className="absolute inset-0 bg-heading/50 backdrop-blur-sm"
         aria-label="Tutup menu"
         onClick={onClose}
+        tabIndex={-1}
       />
 
       <aside
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}

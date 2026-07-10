@@ -75,7 +75,7 @@ export function TestimonialsSection() {
                   <div>
                     <p className="font-semibold text-heading">{current.name}</p>
                     {current.role && (
-                      <p className="text-caption text-foreground/60">{current.role}</p>
+                      <p className="text-caption text-foreground/70">{current.role}</p>
                     )}
                   </div>
                 </figcaption>

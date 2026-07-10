@@ -14,7 +14,9 @@ export function HeroSection() {
   const reduce = useReducedMotion();
 
   const heroBanner = banners?.[0];
+  // Keep local fallback as first paint for LCP; swap to CMS banner after hydrate.
   const heroImage = heroBanner?.image ?? FALLBACK_HERO_IMAGE;
+  const heroAlt = heroBanner?.title ?? "Kegiatan remaja masjid";
   const { siteName, tagline, about, stats } = settings;
 
   return (
@@ -35,12 +37,8 @@ export function HeroSection() {
           >
             {tagline}
           </motion.p>
-          <motion.h1
-            variants={reduce ? undefined : heroItem}
-            className="max-w-[11ch] text-heading"
-          >
-            {siteName}
-          </motion.h1>
+          {/* Keep brand/title visible for LCP — no opacity:0 */}
+          <h1 className="max-w-[11ch] text-heading">{siteName}</h1>
           <motion.p
             variants={reduce ? undefined : heroItem}
             className="text-body mt-6 max-w-[38ch] text-foreground/75"
@@ -60,18 +58,14 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          className="relative lg:col-span-6"
-          initial={reduce ? false : { opacity: 0, x: 36 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        >
+        <div className="relative lg:col-span-6">
           <div className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/6] lg:ml-auto lg:max-w-lg">
             <Image
               src={heroImage}
-              alt={heroBanner?.title ?? "Kegiatan remaja masjid"}
+              alt={heroAlt}
               fill
               priority
+              fetchPriority="high"
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 42vw"
             />
@@ -81,7 +75,7 @@ export function HeroSection() {
             <p className="font-display text-2xl font-bold text-primary">{stats.establishedYear}</p>
             <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

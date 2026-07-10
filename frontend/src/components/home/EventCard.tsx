@@ -39,7 +39,7 @@ export function EventCard({ event, className }: EventCardProps) {
         <h3 className="text-base font-semibold leading-snug text-heading transition-colors group-hover:text-primary sm:text-lg">
           {event.title}
         </h3>
-        <time className="text-caption text-foreground/60" dateTime={event.dateStart}>
+        <time className="text-caption text-foreground/70" dateTime={event.dateStart}>
           {formattedDate}
         </time>
         <p className="text-body text-foreground/70">

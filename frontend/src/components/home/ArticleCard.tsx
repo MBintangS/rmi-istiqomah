@@ -46,7 +46,7 @@ export function ArticleCard({
         <div className="flex flex-col justify-center space-y-4 border border-foreground/10 border-t-0 p-6 md:border-l-0 md:border-t md:p-8">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="category">{article.category.name}</Badge>
-            <time className="text-caption text-foreground/60" dateTime={article.publishedAt}>
+            <time className="text-caption text-foreground/70" dateTime={article.publishedAt}>
               {formatArticleDate(article.publishedAt)}
             </time>
           </div>
@@ -76,7 +76,7 @@ export function ArticleCard({
       >
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="category">{article.category.name}</Badge>
-          <time className="text-caption text-foreground/60" dateTime={article.publishedAt}>
+          <time className="text-caption text-foreground/70" dateTime={article.publishedAt}>
             {formatArticleDate(article.publishedAt)}
           </time>
         </div>
@@ -121,7 +121,7 @@ export function ArticleCard({
       <div className="space-y-2 p-5">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="category">{article.category.name}</Badge>
-          <time className="text-caption text-foreground/60" dateTime={article.publishedAt}>
+          <time className="text-caption text-foreground/70" dateTime={article.publishedAt}>
             {formatArticleDate(article.publishedAt)}
           </time>
         </div>
