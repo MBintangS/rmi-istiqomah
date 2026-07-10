@@ -15,6 +15,11 @@ import {
   Select,
   SkeletonList,
 } from "@/components/ui";
+import {
+  AdminRowActions,
+  AdminEditButton,
+  AdminDeleteButton,
+} from "@/components/admin/AdminRowActions";
 import { useKategori } from "@/hooks/useKategori";
 import { getApiErrorMessage } from "@/lib/api";
 import { kategoriFormSchema, type KategoriFormValues } from "@/lib/cms-support-form-schema";
@@ -145,41 +150,29 @@ export function AdminKategoriList() {
           onAction={openCreate}
         />
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-surface shadow-soft">
+        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-background/60 text-caption uppercase tracking-wide text-foreground/60">
+            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
               <tr>
-                <th className="px-4 py-3 font-medium">Nama</th>
-                <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Tipe</th>
-                <th className="px-4 py-3 font-medium">Aksi</th>
+                <th className="px-3.5 py-2.5 font-medium">Nama</th>
+                <th className="px-3.5 py-2.5 font-medium">Slug</th>
+                <th className="px-3.5 py-2.5 font-medium">Tipe</th>
+                <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item) => (
-                <tr key={item.id} className="border-b border-foreground/5 last:border-0">
-                  <td className="px-4 py-3 font-medium text-heading">{item.name}</td>
-                  <td className="px-4 py-3 text-caption text-foreground/60">{item.slug}</td>
-                  <td className="px-4 py-3">
+                <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
+                  <td className="px-3.5 py-2.5 font-medium text-heading">{item.name}</td>
+                  <td className="px-3.5 py-2.5 text-caption text-foreground/60">{item.slug}</td>
+                  <td className="px-3.5 py-2.5">
                     <Badge variant="category">{TYPE_LABELS[item.type]}</Badge>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        type="button"
-                        className="text-caption font-medium text-primary hover:underline"
-                        onClick={() => openEdit(item)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="text-caption font-medium text-red-600 hover:underline"
-                        onClick={() => setDeleteTarget(item)}
-                      >
-                        Hapus
-                      </button>
-                    </div>
+                  <td className="px-3.5 py-2.5">
+                    <AdminRowActions>
+                      <AdminEditButton onClick={() => openEdit(item)} />
+                      <AdminDeleteButton onClick={() => setDeleteTarget(item)} />
+                    </AdminRowActions>
                   </td>
                 </tr>
               ))}

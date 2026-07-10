@@ -1,4 +1,5 @@
 import { AdminAgendaEditView } from "@/components/admin/AdminAgendaEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface AdminAgendaEditPageProps {
   params: { id: string };
@@ -6,12 +7,12 @@ interface AdminAgendaEditPageProps {
 
 export default function AdminAgendaEditPage({ params }: AdminAgendaEditPageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Agenda</h2>
-        <p className="text-body mt-1 text-foreground/70">Perbarui jadwal agenda.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Agenda"
+        description="Perbarui jadwal agenda."
+      />
       <AdminAgendaEditView id={params.id} />
-    </div>
+    </>
   );
 }

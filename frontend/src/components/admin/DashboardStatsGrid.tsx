@@ -35,15 +35,19 @@ export function DashboardStatsGrid() {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map((card) => (
         <Link
           key={card.key}
           href={card.href}
-          className="rounded-rmi border border-foreground/10 bg-surface p-5 shadow-soft transition-colors hover:border-primary/30"
+          className="rounded-rmi border border-foreground/10 bg-background px-4 py-3.5 transition-colors hover:border-primary/35"
         >
-          <p className="text-caption font-medium text-foreground/60">{card.label}</p>
-          <p className="mt-2 font-display text-3xl font-bold text-primary">{data[card.key]}</p>
+          <p className="text-[11px] font-medium uppercase tracking-wide text-foreground/50">
+            {card.label}
+          </p>
+          <p className="mt-1.5 font-display text-2xl font-bold tracking-tight text-heading sm:text-3xl">
+            <span className="text-primary">{data[card.key]}</span>
+          </p>
         </Link>
       ))}
     </div>

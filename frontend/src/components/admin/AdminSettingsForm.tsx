@@ -131,7 +131,7 @@ export function AdminSettingsForm() {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="mx-auto max-w-3xl space-y-8"
+      className="mx-auto max-w-3xl space-y-6 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
       noValidate
     >
       <section className="space-y-4">

@@ -1,4 +1,5 @@
 import { AdminTestimoniEditView } from "@/components/admin/AdminTestimoniEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface PageProps {
   params: { id: string };
@@ -6,12 +7,12 @@ interface PageProps {
 
 export default function AdminTestimoniEditPage({ params }: PageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Testimoni</h2>
-        <p className="mt-1 text-body text-foreground/70">Perbarui isi atau status testimoni.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Testimoni"
+        description="Perbarui isi atau status testimoni."
+      />
       <AdminTestimoniEditView id={params.id} />
-    </div>
+    </>
   );
 }

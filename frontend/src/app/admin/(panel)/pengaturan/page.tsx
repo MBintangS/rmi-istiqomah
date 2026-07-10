@@ -1,16 +1,14 @@
 import { AdminSettingsForm } from "@/components/admin/AdminSettingsForm";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 export default function AdminPengaturanPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Pengaturan Situs</h2>
-        <p className="mt-1 text-body text-foreground/70">
-          Profil, kontak, media sosial, dan statistik — perubahan langsung memengaruhi footer dan
-          halaman publik.
-        </p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Pengaturan Situs"
+        description="Profil, kontak, media sosial, dan statistik. Perubahan langsung memengaruhi footer dan halaman publik."
+      />
       <AdminSettingsForm />
-    </div>
+    </>
   );
 }

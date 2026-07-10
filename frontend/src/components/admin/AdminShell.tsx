@@ -26,18 +26,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     "Admin";
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="min-h-screen bg-surface">
       <SkipToContent />
-      <div className="hidden lg:block">
-        <div className="sticky top-0 h-screen">
-          <AdminSidebar />
-        </div>
+
+      <div className="fixed inset-y-0 left-0 z-40 hidden h-screen w-[15.5rem] bg-[#0f1609] lg:block">
+        <AdminSidebar />
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-col lg:pl-[15.5rem]">
         <AdminHeader title={title} onOpenMenu={() => setDrawerOpen(true)} />
-        <main id="main-content" className="flex-1 p-4 sm:p-6 lg:p-8">
-          {children}
+        <main id="main-content" className="flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+          <div className="mx-auto w-full max-w-6xl space-y-5">{children}</div>
         </main>
       </div>
 

@@ -90,7 +90,7 @@ export function AdminProgramForm({ mode, initial }: AdminProgramFormProps) {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="space-y-6"
+      className="space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
       noValidate
     >
       <div className="grid gap-6 lg:grid-cols-3">

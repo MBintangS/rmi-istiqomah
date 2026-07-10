@@ -1,4 +1,5 @@
 import { AdminKegiatanEditView } from "@/components/admin/AdminKegiatanEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface AdminKegiatanEditPageProps {
   params: { slug: string };
@@ -6,12 +7,12 @@ interface AdminKegiatanEditPageProps {
 
 export default function AdminKegiatanEditPage({ params }: AdminKegiatanEditPageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Kegiatan</h2>
-        <p className="text-body mt-1 text-foreground/70">Perbarui detail dan status publikasi.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Kegiatan"
+        description="Perbarui detail dan status publikasi."
+      />
       <AdminKegiatanEditView slug={params.slug} />
-    </div>
+    </>
   );
 }

@@ -30,12 +30,13 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        display: ["var(--font-syne)", "var(--font-poppins)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         rmi: "0.75rem",
       },
       boxShadow: {
-        soft: "0 4px 20px rgba(35, 48, 10, 0.08)",
+        soft: "0 8px 30px rgba(20, 32, 10, 0.06)",
       },
     },
   },

@@ -10,14 +10,18 @@ export const metadata: Metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-4 py-12">
-      <div className="w-full max-w-md rounded-rmi border border-foreground/10 bg-background p-6 shadow-soft sm:p-8">
-        <div className="mb-8 text-center">
-          <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+    <div className="relative flex min-h-screen items-center justify-center bg-surface px-4 py-12">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(78,131,10,0.08),_transparent_55%)]"
+        aria-hidden="true"
+      />
+      <div className="relative w-full max-w-md rounded-rmi border border-foreground/10 bg-background p-6 shadow-soft sm:p-8">
+        <div className="mb-8">
+          <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
             RMI
           </span>
-          <h1 className="text-2xl font-semibold text-heading">Login Admin</h1>
-          <p className="text-body mt-2 text-foreground/70">
+          <h1 className="text-2xl font-semibold tracking-tight text-heading">Login Admin</h1>
+          <p className="mt-2 text-sm text-foreground/65">
             Masuk ke panel CMS Remaja Masjid Istiqomah.
           </p>
         </div>

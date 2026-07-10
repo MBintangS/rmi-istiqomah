@@ -1,4 +1,5 @@
 import { AdminProgramEditView } from "@/components/admin/AdminProgramEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface PageProps {
   params: { slug: string };
@@ -6,12 +7,12 @@ interface PageProps {
 
 export default function AdminProgramEditPage({ params }: PageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Program</h2>
-        <p className="mt-1 text-body text-foreground/70">Perbarui konten dan status program.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Program"
+        description="Perbarui konten dan status program."
+      />
       <AdminProgramEditView slug={params.slug} />
-    </div>
+    </>
   );
 }

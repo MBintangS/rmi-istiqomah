@@ -1,13 +1,14 @@
 import { AdminTestimoniForm } from "@/components/admin/AdminTestimoniForm";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 export default function AdminTestimoniBaruPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Tambah Testimoni</h2>
-        <p className="mt-1 text-body text-foreground/70">Testimoni aktif tampil di beranda.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Tambah Testimoni"
+        description="Testimoni aktif tampil di beranda."
+      />
       <AdminTestimoniForm mode="create" />
-    </div>
+    </>
   );
 }

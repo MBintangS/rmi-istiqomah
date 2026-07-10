@@ -1,4 +1,5 @@
 import { AdminDokumenEditView } from "@/components/admin/AdminDokumenEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface PageProps {
   params: { id: string };
@@ -6,12 +7,12 @@ interface PageProps {
 
 export default function AdminDokumenEditPage({ params }: PageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Dokumen</h2>
-        <p className="mt-1 text-body text-foreground/70">Perbarui metadata atau ganti file.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Dokumen"
+        description="Perbarui metadata atau ganti file."
+      />
       <AdminDokumenEditView id={params.id} />
-    </div>
+    </>
   );
 }

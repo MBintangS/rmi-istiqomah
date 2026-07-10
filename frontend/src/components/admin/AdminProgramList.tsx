@@ -1,11 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Badge, Button, EmptyState, Modal, SkeletonList } from "@/components/ui";
+import {
+  AdminRowActions,
+  AdminEditLink,
+  AdminDeleteButton,
+  AdminToggleActiveButton,
+} from "@/components/admin/AdminRowActions";
 import { usePrograms } from "@/hooks/usePrograms";
 import { getApiErrorMessage } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
@@ -65,21 +70,21 @@ export function AdminProgramList() {
           }}
         />
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-surface shadow-soft">
+        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-background/60 text-caption uppercase tracking-wide text-foreground/60">
+            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
               <tr>
-                <th className="px-4 py-3 font-medium">Gambar</th>
-                <th className="px-4 py-3 font-medium">Nama</th>
-                <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Aksi</th>
+                <th className="px-3.5 py-2.5 font-medium">Gambar</th>
+                <th className="px-3.5 py-2.5 font-medium">Nama</th>
+                <th className="px-3.5 py-2.5 font-medium">Slug</th>
+                <th className="px-3.5 py-2.5 font-medium">Status</th>
+                <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item) => (
-                <tr key={item.id} className="border-b border-foreground/5 last:border-0">
-                  <td className="px-4 py-3">
+                <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
+                  <td className="px-3.5 py-2.5">
                     <div className="relative h-14 w-20 overflow-hidden rounded-rmi bg-primary/10">
                       {item.image ? (
                         <Image
@@ -92,29 +97,23 @@ export function AdminProgramList() {
                       ) : null}
                     </div>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-3.5 py-2.5">
                     <p className="font-medium text-heading">{item.name}</p>
                     <p className="line-clamp-1 text-caption text-foreground/50">
                       {item.description || "Tanpa deskripsi"}
                     </p>
                   </td>
-                  <td className="px-4 py-3 text-caption text-foreground/60">{item.slug}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-3.5 py-2.5 text-caption text-foreground/60">{item.slug}</td>
+                  <td className="px-3.5 py-2.5">
                     <Badge variant={item.isActive ? "success" : "warning"}>
                       {item.isActive ? "aktif" : "nonaktif"}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-wrap gap-2">
-                      <Link
-                        href={`/admin/program/${item.slug}/edit`}
-                        className="text-caption font-medium text-primary hover:underline"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        type="button"
-                        className="text-caption font-medium text-foreground/70 hover:text-primary"
+                  <td className="px-3.5 py-2.5">
+                    <AdminRowActions>
+                      <AdminEditLink href={`/admin/program/${item.slug}/edit`} />
+                      <AdminToggleActiveButton
+                        active={item.isActive}
                         disabled={toggleMutation.isPending}
                         onClick={() =>
                           toggleMutation.mutate({
@@ -122,17 +121,9 @@ export function AdminProgramList() {
                             isActive: !item.isActive,
                           })
                         }
-                      >
-                        {item.isActive ? "Nonaktifkan" : "Aktifkan"}
-                      </button>
-                      <button
-                        type="button"
-                        className="text-caption font-medium text-red-600 hover:underline"
-                        onClick={() => setDeleteTarget(item)}
-                      >
-                        Hapus
-                      </button>
-                    </div>
+                      />
+                      <AdminDeleteButton onClick={() => setDeleteTarget(item)} />
+                    </AdminRowActions>
                   </td>
                 </tr>
               ))}

@@ -1,4 +1,5 @@
 import { AdminArtikelEditView } from "@/components/admin/AdminArtikelEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface AdminArtikelEditPageProps {
   params: { slug: string };
@@ -6,12 +7,12 @@ interface AdminArtikelEditPageProps {
 
 export default function AdminArtikelEditPage({ params }: AdminArtikelEditPageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Artikel</h2>
-        <p className="text-body mt-1 text-foreground/70">Perbarui konten dan status artikel.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Artikel"
+        description="Perbarui konten dan status artikel."
+      />
       <AdminArtikelEditView slug={params.slug} />
-    </div>
+    </>
   );
 }

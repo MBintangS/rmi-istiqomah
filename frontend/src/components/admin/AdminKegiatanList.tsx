@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -14,6 +13,12 @@ import {
   Select,
   SkeletonList,
 } from "@/components/ui";
+import {
+  AdminRowActions,
+  AdminEditLink,
+  AdminDeleteButton,
+  AdminPublishButton,
+} from "@/components/admin/AdminRowActions";
 import { useKegiatan } from "@/hooks/useKegiatan";
 import { getApiErrorMessage } from "@/lib/api";
 import { formatEventDate } from "@/lib/format-date";
@@ -143,48 +148,42 @@ export function AdminKegiatanList() {
         />
       ) : (
         <>
-          <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-surface shadow-soft">
+          <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
             <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-foreground/10 bg-background/60 text-caption uppercase tracking-wide text-foreground/60">
+              <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
                 <tr>
-                  <th className="px-4 py-3 font-medium">Judul</th>
-                  <th className="px-4 py-3 font-medium">Tanggal</th>
-                  <th className="px-4 py-3 font-medium">Status</th>
-                  <th className="px-4 py-3 font-medium">Publikasi</th>
-                  <th className="px-4 py-3 font-medium">Aksi</th>
+                  <th className="px-3.5 py-2.5 font-medium">Judul</th>
+                  <th className="px-3.5 py-2.5 font-medium">Tanggal</th>
+                  <th className="px-3.5 py-2.5 font-medium">Status</th>
+                  <th className="px-3.5 py-2.5 font-medium">Publikasi</th>
+                  <th className="px-3.5 py-2.5 font-medium">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {items.map((item) => (
-                  <tr key={item.id} className="border-b border-foreground/5 last:border-0">
-                    <td className="px-4 py-3">
+                  <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
+                    <td className="px-3.5 py-2.5">
                       <p className="font-medium text-heading">{item.title}</p>
                       <p className="text-caption text-foreground/50">
-                        {item.category?.name ?? "—"} · {item.location || "Tanpa lokasi"}
+                        {item.category?.name ?? "-"} · {item.location || "Tanpa lokasi"}
                       </p>
                     </td>
-                    <td className="px-4 py-3 text-foreground/70">
+                    <td className="px-3.5 py-2.5 text-foreground/70">
                       {formatEventDate(item.dateStart)}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3.5 py-2.5">
                       <Badge variant="category">{item.status}</Badge>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3.5 py-2.5">
                       <Badge variant={item.isPublished ? "success" : "warning"}>
                         {item.isPublished ? "published" : "draft"}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap gap-2">
-                        <Link
-                          href={`/admin/kegiatan/${item.slug}/edit`}
-                          className="text-caption font-medium text-primary hover:underline"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          type="button"
-                          className="text-caption font-medium text-foreground/70 hover:text-primary"
+                    <td className="px-3.5 py-2.5">
+                      <AdminRowActions>
+                        <AdminEditLink href={`/admin/kegiatan/${item.slug}/edit`} />
+                        <AdminPublishButton
+                          published={item.isPublished}
                           disabled={publishMutation.isPending}
                           onClick={() =>
                             publishMutation.mutate({
@@ -192,17 +191,9 @@ export function AdminKegiatanList() {
                               isPublished: !item.isPublished,
                             })
                           }
-                        >
-                          {item.isPublished ? "Unpublish" : "Publish"}
-                        </button>
-                        <button
-                          type="button"
-                          className="text-caption font-medium text-red-600 hover:underline"
-                          onClick={() => setDeleteTarget(item)}
-                        >
-                          Hapus
-                        </button>
-                      </div>
+                        />
+                        <AdminDeleteButton onClick={() => setDeleteTarget(item)} />
+                      </AdminRowActions>
                     </td>
                   </tr>
                 ))}

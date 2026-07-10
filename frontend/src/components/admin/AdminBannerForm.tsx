@@ -85,7 +85,7 @@ export function AdminBannerForm({ mode, initial }: AdminBannerFormProps) {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="mx-auto max-w-2xl space-y-5"
+      className="mx-auto max-w-2xl space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
       noValidate
     >
       <div className="space-y-2">

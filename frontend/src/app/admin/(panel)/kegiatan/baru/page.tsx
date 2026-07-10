@@ -1,13 +1,14 @@
 import { AdminKegiatanForm } from "@/components/admin/AdminKegiatanForm";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 export default function AdminKegiatanBaruPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Tambah Kegiatan</h2>
-        <p className="text-body mt-1 text-foreground/70">Buat kegiatan baru untuk website publik.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Tambah Kegiatan"
+        description="Buat kegiatan baru untuk website publik."
+      />
       <AdminKegiatanForm mode="create" />
-    </div>
+    </>
   );
 }

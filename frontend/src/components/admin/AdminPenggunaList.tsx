@@ -15,6 +15,12 @@ import {
   Select,
   SkeletonList,
 } from "@/components/ui";
+import {
+  AdminRowActions,
+  AdminEditButton,
+  AdminDeleteButton,
+  AdminToggleActiveButton,
+} from "@/components/admin/AdminRowActions";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/hooks/useUsers";
 import { getApiErrorMessage } from "@/lib/api";
@@ -179,51 +185,44 @@ export function AdminPenggunaList() {
           onAction={() => setCreateOpen(true)}
         />
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-surface shadow-soft">
+        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-background/60 text-caption uppercase tracking-wide text-foreground/60">
+            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
               <tr>
-                <th className="px-4 py-3 font-medium">Nama</th>
-                <th className="px-4 py-3 font-medium">Email</th>
-                <th className="px-4 py-3 font-medium">Role</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Aksi</th>
+                <th className="px-3.5 py-2.5 font-medium">Nama</th>
+                <th className="px-3.5 py-2.5 font-medium">Email</th>
+                <th className="px-3.5 py-2.5 font-medium">Role</th>
+                <th className="px-3.5 py-2.5 font-medium">Status</th>
+                <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item) => {
                 const isSelf = currentUser?.id === item.id;
                 return (
-                  <tr key={item.id} className="border-b border-foreground/5 last:border-0">
-                    <td className="px-4 py-3">
+                  <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
+                    <td className="px-3.5 py-2.5">
                       <p className="font-medium text-heading">{item.name}</p>
                       {isSelf ? (
                         <p className="text-caption text-foreground/50">Anda</p>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 text-foreground/70">{item.email}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-3.5 py-2.5 text-foreground/70">{item.email}</td>
+                    <td className="px-3.5 py-2.5">
                       <Badge variant={item.role === "superadmin" ? "success" : "default"}>
                         {ROLE_LABELS[item.role]}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3.5 py-2.5">
                       <Badge variant={item.isActive ? "success" : "warning"}>
                         {item.isActive ? "aktif" : "nonaktif"}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          className="text-caption font-medium text-primary hover:underline"
-                          onClick={() => setEditTarget(item)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="text-caption font-medium text-foreground/70 hover:text-primary disabled:opacity-40"
+                    <td className="px-3.5 py-2.5">
+                      <AdminRowActions>
+                        <AdminEditButton onClick={() => setEditTarget(item)} />
+                        <AdminToggleActiveButton
+                          active={item.isActive}
                           disabled={toggleMutation.isPending || isSelf}
                           onClick={() =>
                             toggleMutation.mutate({
@@ -231,18 +230,12 @@ export function AdminPenggunaList() {
                               isActive: !item.isActive,
                             })
                           }
-                        >
-                          {item.isActive ? "Nonaktifkan" : "Aktifkan"}
-                        </button>
-                        <button
-                          type="button"
-                          className="text-caption font-medium text-red-600 hover:underline disabled:opacity-40"
+                        />
+                        <AdminDeleteButton
                           disabled={isSelf}
                           onClick={() => setDeleteTarget(item)}
-                        >
-                          Hapus
-                        </button>
-                      </div>
+                        />
+                      </AdminRowActions>
                     </td>
                   </tr>
                 );

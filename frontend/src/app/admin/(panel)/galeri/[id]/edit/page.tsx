@@ -1,4 +1,5 @@
 import { AdminGaleriEditView } from "@/components/admin/AdminGaleriEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface AdminGaleriEditPageProps {
   params: { id: string };
@@ -6,12 +7,12 @@ interface AdminGaleriEditPageProps {
 
 export default function AdminGaleriEditPage({ params }: AdminGaleriEditPageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Album Galeri</h2>
-        <p className="text-body mt-1 text-foreground/70">Perbarui foto dan metadata album.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Album Galeri"
+        description="Perbarui foto dan metadata album."
+      />
       <AdminGaleriEditView id={params.id} />
-    </div>
+    </>
   );
 }

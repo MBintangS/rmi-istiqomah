@@ -1,4 +1,5 @@
 import { AdminBannerEditView } from "@/components/admin/AdminBannerEditView";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 interface AdminBannerEditPageProps {
   params: { id: string };
@@ -6,12 +7,12 @@ interface AdminBannerEditPageProps {
 
 export default function AdminBannerEditPage({ params }: AdminBannerEditPageProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Edit Banner</h2>
-        <p className="text-body mt-1 text-foreground/70">Perbarui gambar, urutan, dan status aktif.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Edit Banner"
+        description="Perbarui gambar, urutan, dan status aktif."
+      />
       <AdminBannerEditView id={params.id} />
-    </div>
+    </>
   );
 }

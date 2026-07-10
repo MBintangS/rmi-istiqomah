@@ -58,8 +58,18 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        <div className="relative lg:col-span-6">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/6] lg:ml-auto lg:max-w-lg">
+        <motion.div
+          className="relative lg:col-span-6"
+          initial={reduce ? false : { x: 40 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        >
+          <motion.div
+            className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/6] lg:ml-auto lg:max-w-lg"
+            initial={reduce ? false : { scale: 1.06 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          >
             <Image
               src={heroImage}
               alt={heroAlt}
@@ -70,12 +80,17 @@ export function HeroSection() {
               sizes="(max-width: 1024px) 100vw, 42vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-heading/50 via-transparent to-transparent" />
-          </div>
-          <div className="absolute -bottom-6 left-4 hidden max-w-[220px] rounded-rmi border border-foreground/10 bg-background p-4 shadow-soft sm:block lg:-left-10">
+          </motion.div>
+          <motion.div
+            className="absolute -bottom-6 left-4 hidden max-w-[220px] rounded-rmi border border-foreground/10 bg-background p-4 shadow-soft sm:block lg:-left-10"
+            initial={reduce ? false : { y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
+          >
             <p className="font-display text-2xl font-bold text-primary">{stats.establishedYear}</p>
             <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

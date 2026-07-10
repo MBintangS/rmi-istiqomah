@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui";
 import { Drawer } from "@/components/ui/Drawer";
 import { useMainNavItems } from "@/hooks/useMainNavItems";
 import { cn } from "@/lib/utils";
@@ -134,17 +135,25 @@ export function Navbar() {
               </Link>
             ),
           )}
+          <Button href="/admin/login" size="sm" className="ml-2">
+            Login
+          </Button>
         </nav>
 
-        <button
-          type="button"
-          className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
-          aria-label="Buka menu"
-          aria-expanded={drawerOpen}
-          onClick={() => setDrawerOpen(true)}
-        >
-          <MenuIcon />
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <Button href="/admin/login" size="sm" variant="outline">
+            Login
+          </Button>
+          <button
+            type="button"
+            className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="Buka menu"
+            aria-expanded={drawerOpen}
+            onClick={() => setDrawerOpen(true)}
+          >
+            <MenuIcon />
+          </button>
+        </div>
       </div>
 
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Menu">
@@ -184,6 +193,11 @@ export function Navbar() {
               )}
             </div>
           ))}
+          <div className="mt-4 border-t border-foreground/10 pt-4">
+            <Button href="/admin/login" className="w-full">
+              Login
+            </Button>
+          </div>
         </nav>
       </Drawer>
     </header>

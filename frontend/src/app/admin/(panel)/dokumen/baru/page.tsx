@@ -1,13 +1,14 @@
 import { AdminDokumenForm } from "@/components/admin/AdminDokumenForm";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 export default function AdminDokumenBaruPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Tambah Dokumen</h2>
-        <p className="mt-1 text-body text-foreground/70">Upload file dan atur status publikasi.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Tambah Dokumen"
+        description="Upload file dan atur status publikasi."
+      />
       <AdminDokumenForm mode="create" />
-    </div>
+    </>
   );
 }

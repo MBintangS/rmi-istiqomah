@@ -1,13 +1,14 @@
 import { AdminGaleriForm } from "@/components/admin/AdminGaleriForm";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 
 export default function AdminGaleriBaruPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-heading">Tambah Album Galeri</h2>
-        <p className="text-body mt-1 text-foreground/70">Upload satu atau lebih foto sekaligus.</p>
-      </div>
+    <>
+      <AdminPageHeader
+        title="Tambah Album Galeri"
+        description="Upload satu atau lebih foto sekaligus."
+      />
       <AdminGaleriForm mode="create" />
-    </div>
+    </>
   );
 }
