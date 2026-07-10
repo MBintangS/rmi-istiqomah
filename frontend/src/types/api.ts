@@ -332,6 +332,36 @@ export interface TestimoniListItem {
   createdAt: string;
 }
 
+export interface TestimoniWritePayload {
+  name: string;
+  content: string;
+  role?: string;
+  photo?: string;
+  order?: number;
+  isActive?: boolean;
+}
+
+export interface KategoriWritePayload {
+  name: string;
+  type: "artikel" | "kegiatan" | "galeri";
+  slug?: string;
+}
+
+export interface SettingsWritePayload {
+  siteName?: string;
+  tagline?: string;
+  about?: string;
+  vision?: string;
+  mission?: string[];
+  address?: string;
+  phone?: string;
+  whatsapp?: string;
+  email?: string;
+  socialMedia?: Partial<SettingsSocialMedia>;
+  googleMapsEmbed?: string;
+  stats?: Partial<SettingsStats>;
+}
+
 export interface DokumenListItem {
   id: string;
   name: string;

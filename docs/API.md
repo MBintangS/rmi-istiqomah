@@ -234,6 +234,26 @@ Buat kategori baru. Slug auto-generate dari `name` jika `slug` tidak dikirim.
 
 **Response `201`:** object kategori + `message`
 
+### `PUT /kategori/:id`
+
+Perbarui kategori. Slug hanya diubah jika field `slug` dikirim.
+
+**Auth:** Admin
+
+**Body:** partial — `name`, `type`, `slug`
+
+**Response `200`:** object kategori + `message`
+
+### `DELETE /kategori/:id`
+
+Hapus kategori. Gagal jika masih dipakai artikel, kegiatan, atau galeri.
+
+**Auth:** Admin
+
+**Response `200`:** `{ id }` + `message`
+
+**Error `400`:** kategori masih dipakai konten
+
 ---
 
 ## Artikel
@@ -1305,6 +1325,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-10 | 39 | PUT/DELETE /kategori/:id (blokir hapus jika masih dipakai) |
 | 2026-07-10 | 38 | POST /upload/file (dokumen raw Cloudinary); catatan fileUrl dokumen |
 | 2026-07-10 | 37 | GET /banner optional auth (admin lihat semua) |
 | 2026-07-10 | 35 | GET /dashboard/stats (admin) |

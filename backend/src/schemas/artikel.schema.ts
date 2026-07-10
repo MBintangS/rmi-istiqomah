@@ -30,6 +30,12 @@ export const createKategoriSchema = z.object({
   slug: z.string().trim().min(1).optional(),
 });
 
+export const updateKategoriSchema = z.object({
+  name: z.string().trim().min(1, "Nama kategori wajib diisi").optional(),
+  type: z.enum(["artikel", "kegiatan", "galeri"]).optional(),
+  slug: z.string().trim().min(1).optional(),
+});
+
 export const kategoriListQuerySchema = z.object({
   type: z.enum(["artikel", "kegiatan", "galeri"]).optional(),
 });
@@ -38,4 +44,5 @@ export type CreateArtikelInput = z.infer<typeof createArtikelSchema>;
 export type UpdateArtikelInput = z.infer<typeof updateArtikelSchema>;
 export type ArtikelListQuery = z.infer<typeof artikelListQuerySchema>;
 export type CreateKategoriInput = z.infer<typeof createKategoriSchema>;
+export type UpdateKategoriInput = z.infer<typeof updateKategoriSchema>;
 export type KategoriListQuery = z.infer<typeof kategoriListQuerySchema>;

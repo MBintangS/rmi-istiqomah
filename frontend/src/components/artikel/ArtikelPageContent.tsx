@@ -3,26 +3,54 @@
 import { ArticleList } from "@/components/articles/ArticleList";
 import { EmptyState, SkeletonList } from "@/components/ui";
 import { useArticles } from "@/hooks/useArticles";
+import { useKategori } from "@/hooks/useKategori";
 import { getApiErrorMessage } from "@/lib/api";
-import {
-  getArticleCategoriesFromList,
-  mapArtikelListItem,
-} from "@/lib/mappers/artikel";
+import { mapArtikelListItem } from "@/lib/mappers/artikel";
+import type { Kategori } from "@/types";
 
 export function ArtikelPageContent() {
-  const { data, isLoading, isError, error, refetch } = useArticles({ limit: 50, sort: "-createdAt" });
+  const {
+    data,
+    isLoading: articlesLoading,
+    isError: articlesError,
+    error: articlesErr,
+    refetch: refetchArticles,
+  } = useArticles({ limit: 50, sort: "-createdAt" });
+  const {
+    data: kategoriData,
+    isLoading: kategoriLoading,
+    isError: kategoriError,
+    error: kategoriErr,
+    refetch: refetchKategori,
+  } = useKategori("artikel");
+
+  const isLoading = articlesLoading || kategoriLoading;
 
   if (isLoading) {
     return <SkeletonList count={6} />;
   }
 
-  if (isError) {
+  if (articlesError) {
     return (
       <EmptyState
         title="Gagal memuat artikel"
-        description={getApiErrorMessage(error, "Periksa koneksi dan pastikan backend API berjalan.")}
+        description={getApiErrorMessage(
+          articlesErr,
+          "Periksa koneksi dan pastikan backend API berjalan.",
+        )}
         actionLabel="Coba lagi"
-        onAction={() => refetch()}
+        onAction={() => refetchArticles()}
+      />
+    );
+  }
+
+  if (kategoriError) {
+    return (
+      <EmptyState
+        title="Gagal memuat kategori"
+        description={getApiErrorMessage(kategoriErr)}
+        actionLabel="Coba lagi"
+        onAction={() => refetchKategori()}
       />
     );
   }
@@ -38,7 +66,12 @@ export function ArtikelPageContent() {
     );
   }
 
-  const categories = getArticleCategoriesFromList(articles);
+  const categories: Kategori[] = (kategoriData ?? []).map((item) => ({
+    id: item.id,
+    name: item.name,
+    slug: item.slug,
+    type: item.type,
+  }));
 
   return <ArticleList articles={articles} categories={categories} />;
 }

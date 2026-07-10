@@ -13,6 +13,8 @@ export const adminNavItems: AdminNavItem[] = [
   { label: "Pengurus", href: "/admin/pengurus" },
   { label: "Program", href: "/admin/program" },
   { label: "Dokumen", href: "/admin/dokumen" },
+  { label: "Testimoni", href: "/admin/testimoni" },
+  { label: "Kategori", href: "/admin/kategori" },
   { label: "Pengguna", href: "/admin/pengguna" },
   { label: "Pengaturan", href: "/admin/pengaturan" },
 ];
