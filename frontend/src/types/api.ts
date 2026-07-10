@@ -265,3 +265,22 @@ export interface ContactSubmitData {
   subject: string;
   createdAt: string;
 }
+
+export type AuthRole = "admin" | "superadmin";
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: AuthRole;
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface LoginResult {
+  token: string;
+  user: AuthUser;
+}

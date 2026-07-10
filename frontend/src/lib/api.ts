@@ -1,4 +1,5 @@
 import axios, { type AxiosError, isAxiosError } from "axios";
+import { getAuthToken } from "@/lib/auth-token";
 import type { ApiErrorResponse, ApiSuccessResponse } from "@/types/api";
 
 export const API_BASE_URL =
@@ -10,6 +11,14 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
   timeout: 15_000,
+});
+
+api.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export class ApiRequestError extends Error {

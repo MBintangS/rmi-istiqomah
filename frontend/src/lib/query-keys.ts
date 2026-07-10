@@ -48,4 +48,8 @@ export const queryKeys = {
     lists: () => [...queryKeys.dokumen.all, "list"] as const,
     list: (params?: DokumenListParams) => [...queryKeys.dokumen.lists(), params ?? {}] as const,
   },
+  auth: {
+    all: ["auth"] as const,
+    me: () => [...queryKeys.auth.all, "me"] as const,
+  },
 } as const;

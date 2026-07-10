@@ -1,4 +1,5 @@
 export { useDokumen } from "./useDokumen";
+export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";
 export { useMainNavItems } from "./useMainNavItems";
 export { usePengurus } from "./usePengurus";

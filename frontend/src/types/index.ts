@@ -33,6 +33,10 @@ export type {
   DokumenListParams,
   DokumenListResult,
   ContactSubmitData,
+  AuthRole,
+  AuthUser,
+  LoginPayload,
+  LoginResult,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";
