@@ -16,11 +16,13 @@ import searchRoutes from "./search.routes";
 import settingsRoutes from "./settings.routes";
 import testimoniRoutes from "./testimoni.routes";
 import uploadRoutes from "./upload.routes";
+import usersRoutes from "./users.routes";
 
 const router = Router();
 
 router.use(healthRoutes);
 router.use("/auth", authRoutes);
+router.use("/users", usersRoutes);
 router.use("/artikel", artikelRoutes);
 router.use("/kategori", kategoriRoutes);
 router.use("/kegiatan", kegiatanRoutes);

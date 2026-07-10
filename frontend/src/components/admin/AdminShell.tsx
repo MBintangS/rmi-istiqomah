@@ -5,18 +5,24 @@ import { useState } from "react";
 import { Drawer } from "@/components/ui/Drawer";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
-import { adminNavItems } from "@/lib/admin-navigation";
+import { adminNavItems, getAdminNavItemsForRole } from "@/lib/admin-navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const current = adminNavItems.find(
+  const navItems = getAdminNavItemsForRole(user?.role);
+  const current = navItems.find(
     (item) =>
       pathname === item.href ||
       (item.href !== "/admin/dashboard" && pathname.startsWith(item.href)),
   );
-  const title = current?.label ?? "Admin";
+  const title =
+    current?.label ??
+    adminNavItems.find((item) => item.href === pathname)?.label ??
+    "Admin";
 
   return (
     <div className="flex min-h-screen bg-background">

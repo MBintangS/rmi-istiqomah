@@ -9,6 +9,7 @@ export { useMainNavItems } from "./useMainNavItems";
 export { usePengurus } from "./usePengurus";
 export { useSettings, useSettingsValue } from "./useSettings";
 export { useTestimoni } from "./useTestimoni";
+export { useUsers } from "./useUsers";
 export { useArticle } from "./useArticle";
 export { useArticles } from "./useArticles";
 export { useGaleri } from "./useGaleri";

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { adminNavItems } from "@/lib/admin-navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { getAdminNavItemsForRole } from "@/lib/admin-navigation";
 import { cn } from "@/lib/utils";
 
 interface AdminSidebarProps {
@@ -11,6 +12,8 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
   const pathname = usePathname();
+  const { user } = useAuth();
+  const navItems = getAdminNavItemsForRole(user?.role);
 
   return (
     <aside className="flex h-full w-64 flex-col border-r border-foreground/10 bg-heading text-surface">
@@ -25,7 +28,7 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
       </div>
 
       <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Navigasi admin">
-        {adminNavItems.map((item) => {
+        {navItems.map((item) => {
           const active =
             pathname === item.href ||
             (item.href !== "/admin/dashboard" && pathname.startsWith(item.href));

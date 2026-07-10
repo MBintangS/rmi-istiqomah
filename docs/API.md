@@ -179,6 +179,89 @@ Profil user dari token.
 
 ---
 
+## Pengguna
+
+Semua endpoint di bawah ini **Super Admin only**.
+
+### `GET /users`
+
+List semua akun admin.
+
+**Auth:** Super Admin
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "Super Admin RMI",
+      "email": "admin@rmi-masjid.org",
+      "role": "superadmin",
+      "isActive": true,
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "updatedAt": "2026-07-09T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+### `POST /users`
+
+Buat akun admin baru.
+
+**Auth:** Super Admin
+
+**Body:**
+
+```json
+{
+  "name": "Admin Konten",
+  "email": "konten@rmi-masjid.org",
+  "password": "PasswordBaru123",
+  "role": "admin",
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama pengguna |
+| `email` | ✅ | Unik |
+| `password` | ✅ | Minimal 8 karakter |
+| `role` | ✅ | `admin` atau `superadmin` |
+| `isActive` | — | Default `true` |
+
+**Response `201`:** object user (tanpa password) + `message`
+
+### `PUT /users/:id`
+
+Perbarui pengguna. Password opsional (hanya diubah jika dikirim).
+
+**Auth:** Super Admin
+
+**Body:** partial — `name`, `email`, `password`, `role`, `isActive`
+
+**Aturan:**
+- Tidak bisa menonaktifkan / mengubah role akun sendiri
+- Minimal satu superadmin aktif harus tetap ada
+
+**Response `200`:** object user + `message`
+
+### `DELETE /users/:id`
+
+Hapus pengguna.
+
+**Auth:** Super Admin
+
+**Aturan:** tidak bisa menghapus akun sendiri; minimal satu superadmin aktif
+
+**Response `200`:** `{ id }` + `message`
+
+---
+
 ## Kategori
 
 ### `GET /kategori`
@@ -1325,6 +1408,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-10 | 40 | GET/POST/PUT/DELETE /users (Super Admin only) |
 | 2026-07-10 | 39 | PUT/DELETE /kategori/:id (blokir hapus jika masih dipakai) |
 | 2026-07-10 | 38 | POST /upload/file (dokumen raw Cloudinary); catatan fileUrl dokumen |
 | 2026-07-10 | 37 | GET /banner optional auth (admin lihat semua) |

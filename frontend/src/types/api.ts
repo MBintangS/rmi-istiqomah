@@ -404,6 +404,32 @@ export interface AuthUser {
   role: AuthRole;
 }
 
+export interface AdminUserListItem {
+  id: string;
+  name: string;
+  email: string;
+  role: AuthRole;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserCreatePayload {
+  name: string;
+  email: string;
+  password: string;
+  role: AuthRole;
+  isActive?: boolean;
+}
+
+export interface UserUpdatePayload {
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: AuthRole;
+  isActive?: boolean;
+}
+
 export interface LoginPayload {
   email: string;
   password: string;
