@@ -1,6 +1,8 @@
 export { useDokumen } from "./useDokumen";
 export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";
+export { useDashboardStats } from "./useDashboardStats";
+export { useKategori } from "./useKategori";
 export { useMainNavItems } from "./useMainNavItems";
 export { usePengurus } from "./usePengurus";
 export { useSettings, useSettingsValue } from "./useSettings";

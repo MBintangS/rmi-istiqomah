@@ -284,3 +284,43 @@ export interface LoginResult {
   token: string;
   user: AuthUser;
 }
+
+export interface DashboardStats {
+  totalArtikel: number;
+  publishedArtikel: number;
+  draftArtikel: number;
+  totalKegiatan: number;
+  publishedKegiatan: number;
+  totalGaleri: number;
+  totalPengurus: number;
+  totalProgram: number;
+  totalDokumen: number;
+  totalMessages: number;
+}
+
+export interface KategoriItem {
+  id: string;
+  name: string;
+  slug: string;
+  type: "artikel" | "kegiatan" | "galeri";
+}
+
+export interface ArtikelWritePayload {
+  title: string;
+  content: string;
+  category: string;
+  thumbnail?: string;
+  status?: "draft" | "published";
+  excerpt?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+}
+
+export interface UploadResult {
+  url: string;
+  publicId: string;
+  width: number;
+  height: number;
+  format: string;
+  bytes: number;
+}

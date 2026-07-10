@@ -97,3 +97,32 @@ export async function apiPost<T, B = unknown>(
   const { data } = await api.post<ApiSuccessResponse<T>>(url, body);
   return data;
 }
+
+export async function apiPut<T, B = unknown>(
+  url: string,
+  body?: B,
+): Promise<ApiSuccessResponse<T>> {
+  const { data } = await api.put<ApiSuccessResponse<T>>(url, body);
+  return data;
+}
+
+export async function apiDelete<T>(url: string): Promise<ApiSuccessResponse<T>> {
+  const { data } = await api.delete<ApiSuccessResponse<T>>(url);
+  return data;
+}
+
+export async function apiUpload<T>(
+  url: string,
+  file: File,
+  params?: Record<string, string>,
+): Promise<ApiSuccessResponse<T>> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const { data } = await api.post<ApiSuccessResponse<T>>(url, formData, {
+    params,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return data;
+}

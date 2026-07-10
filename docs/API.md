@@ -1037,6 +1037,36 @@ Kirim pesan dari form kontak. Pesan disimpan ke database.
 
 ---
 
+## Dashboard
+
+### `GET /dashboard/stats`
+
+Statistik ringkas untuk panel admin.
+
+**Auth:** Admin
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "totalArtikel": 12,
+    "publishedArtikel": 10,
+    "draftArtikel": 2,
+    "totalKegiatan": 8,
+    "publishedKegiatan": 6,
+    "totalGaleri": 5,
+    "totalPengurus": 12,
+    "totalProgram": 3,
+    "totalDokumen": 4,
+    "totalMessages": 7
+  }
+}
+```
+
+---
+
 ## Search
 
 ### `GET /search`
@@ -1236,6 +1266,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-10 | 35 | GET /dashboard/stats (admin) |
 | 2026-07-09 | 28 | POST /upload (Cloudinary), npm run seed |
 | 2026-07-09 | 27 | Dokumen, Contact, Search, Settings GET/PUT |
 | 2026-07-09 | 26 | Pengurus, Program (by slug), Testimoni CRUD |

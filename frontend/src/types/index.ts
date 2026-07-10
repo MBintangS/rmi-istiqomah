@@ -37,6 +37,10 @@ export type {
   AuthUser,
   LoginPayload,
   LoginResult,
+  DashboardStats,
+  KategoriItem,
+  ArtikelWritePayload,
+  UploadResult,
 } from "./api";
 export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";

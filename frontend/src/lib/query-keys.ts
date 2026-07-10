@@ -52,4 +52,12 @@ export const queryKeys = {
     all: ["auth"] as const,
     me: () => [...queryKeys.auth.all, "me"] as const,
   },
+  dashboard: {
+    all: ["dashboard"] as const,
+    stats: () => [...queryKeys.dashboard.all, "stats"] as const,
+  },
+  kategori: {
+    all: ["kategori"] as const,
+    list: (type?: string) => [...queryKeys.kategori.all, "list", type ?? "all"] as const,
+  },
 } as const;
