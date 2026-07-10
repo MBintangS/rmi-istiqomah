@@ -74,3 +74,48 @@ export async function uploadImageBuffer(
     upload.end(buffer);
   });
 }
+
+export interface CloudinaryFileUploadResult {
+  url: string;
+  publicId: string;
+  format: string;
+  bytes: number;
+  resourceType: string;
+}
+
+export async function uploadFileBuffer(
+  buffer: Buffer,
+  options?: { folder?: string; filename?: string },
+): Promise<CloudinaryFileUploadResult> {
+  configureCloudinary();
+
+  const folder = options?.folder ?? process.env.CLOUDINARY_FOLDER ?? "rmi";
+
+  return new Promise((resolve, reject) => {
+    const upload = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        resource_type: "raw",
+        public_id: options?.filename
+          ? options.filename.replace(/\.[^.]+$/, "").replace(/[^\w-]+/g, "-")
+          : undefined,
+      },
+      (error, result) => {
+        if (error || !result) {
+          reject(error ?? new Error("Upload file ke Cloudinary gagal"));
+          return;
+        }
+
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+          format: result.format,
+          bytes: result.bytes,
+          resourceType: result.resource_type,
+        });
+      },
+    );
+
+    upload.end(buffer);
+  });
+}

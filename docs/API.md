@@ -980,7 +980,7 @@ List dokumen unduhan.
 | Field | Required | Keterangan |
 |-------|----------|------------|
 | `name` | ✅ | Nama dokumen |
-| `fileUrl` | ✅ | URL file (upload via Sprint 28) |
+| `fileUrl` | ✅ | URL file (upload via `POST /upload/file`) |
 | `fileSize`, `fileType`, `category`, `description` | — | Metadata opsional |
 | `isPublished` | — | `false` (default) |
 
@@ -1217,6 +1217,44 @@ Upload gambar ke Cloudinary (admin CMS).
 }
 ```
 
+### `POST /upload/file`
+
+Upload file dokumen ke Cloudinary (admin CMS). Resource type: `raw`.
+
+**Auth:** Admin
+
+**Content-Type:** `multipart/form-data`
+
+**Form field:**
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `file` | ✅ | PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, ZIP (max 10 MB) |
+
+**Query:**
+
+| Parameter | Type | Default | Keterangan |
+|-----------|------|---------|------------|
+| `folder` | string | `dokumen` | Folder di Cloudinary |
+
+**Response `201`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://res.cloudinary.com/your-cloud/raw/upload/v123/rmi/dokumen/adart.pdf",
+    "publicId": "rmi/dokumen/adart",
+    "format": "pdf",
+    "bytes": 102400,
+    "resourceType": "raw",
+    "originalName": "adart.pdf",
+    "mimeType": "application/pdf"
+  },
+  "message": "File berhasil diupload"
+}
+```
+
 **Env yang diperlukan:**
 
 ```env
@@ -1267,6 +1305,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-10 | 38 | POST /upload/file (dokumen raw Cloudinary); catatan fileUrl dokumen |
 | 2026-07-10 | 37 | GET /banner optional auth (admin lihat semua) |
 | 2026-07-10 | 35 | GET /dashboard/stats (admin) |
 | 2026-07-09 | 28 | POST /upload (Cloudinary), npm run seed |

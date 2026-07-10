@@ -239,6 +239,34 @@ export interface BannerWritePayload {
   isActive?: boolean;
 }
 
+export interface PengurusWritePayload {
+  name: string;
+  position: string;
+  photo?: string;
+  period?: string;
+  order?: number;
+  isActive?: boolean;
+}
+
+export interface ProgramWritePayload {
+  name: string;
+  description?: string;
+  content?: string;
+  image?: string;
+  icon?: string;
+  isActive?: boolean;
+}
+
+export interface DokumenWritePayload {
+  name: string;
+  fileUrl: string;
+  fileSize?: number;
+  fileType?: string;
+  category?: string;
+  description?: string;
+  isPublished?: boolean;
+}
+
 export interface SettingsStats {
   totalEvents: number;
   totalMembers: number;
@@ -390,8 +418,11 @@ export interface ArtikelWritePayload {
 export interface UploadResult {
   url: string;
   publicId: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   format: string;
   bytes: number;
+  resourceType?: string;
+  originalName?: string;
+  mimeType?: string;
 }

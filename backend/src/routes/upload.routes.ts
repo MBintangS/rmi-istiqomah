@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { uploadImage } from "../controllers/upload.controller";
+import { uploadFile, uploadImage } from "../controllers/upload.controller";
 import { authenticate, requireAdmin } from "../middleware/auth";
-import { imageUpload } from "../middleware/upload";
+import { documentUpload, imageUpload } from "../middleware/upload";
 import { asyncHandler } from "../utils/asyncHandler";
 
 const router = Router();
@@ -12,6 +12,14 @@ router.post(
   requireAdmin,
   imageUpload.single("file"),
   asyncHandler(uploadImage),
+);
+
+router.post(
+  "/file",
+  authenticate,
+  requireAdmin,
+  documentUpload.single("file"),
+  asyncHandler(uploadFile),
 );
 
 export default router;

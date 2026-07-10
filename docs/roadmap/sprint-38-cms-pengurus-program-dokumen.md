@@ -5,6 +5,7 @@
 | **Grup** | E — CMS Admin Panel |
 | **Estimasi** | 2–3 jam |
 | **Prasyarat** | Sprint 37 |
+| **Status** | ✅ Selesai |
 | **Output** | 3 modul CRUD |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 37](./sprint-37-cms-galeri-banner.md) | [Sprint 39 →](./sprint-39-cms-testimoni-kategori-pengaturan.md)
@@ -17,14 +18,14 @@ Sisa modul konten admin.
 
 ## Task
 
-- [ ] CRUD pengurus dengan foto upload
-- [ ] CRUD program dengan rich content
-- [ ] CRUD dokumen dengan file upload
+- [x] CRUD pengurus dengan foto upload
+- [x] CRUD program dengan rich content
+- [x] CRUD dokumen dengan file upload
 
 ## Selesai Jika
 
-- [ ] Pengurus tampil di tentang-kami
-- [ ] Dokumen bisa diunduh publik
+- [x] Pengurus tampil di tentang-kami
+- [x] Dokumen bisa diunduh publik
 
 ---
 
