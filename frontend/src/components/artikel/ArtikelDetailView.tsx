@@ -4,7 +4,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/home/ArticleCard";
 import { ShareButtons } from "@/components/articles/ShareButtons";
-import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge, EmptyState, Skeleton } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { useArticle, useArticles } from "@/hooks";
@@ -15,7 +14,6 @@ import {
   mapArtikelDetail,
   mapArtikelListItem,
 } from "@/lib/mappers/artikel";
-import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 interface ArtikelDetailViewProps {
   slug: string;
@@ -66,20 +64,8 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
   const relatedArticles = getRelatedArticles(allArticles, article, 3);
   const articlePath = `/artikel/${article.slug}`;
 
-  const articleLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.excerpt,
-    datePublished: article.publishedAt,
-    author: { "@type": "Organization", name: SITE_NAME },
-    image: article.thumbnail || undefined,
-    mainEntityOfPage: `${SITE_URL}${articlePath}`,
-  };
-
   return (
     <>
-      <JsonLd data={articleLd} />
       <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb

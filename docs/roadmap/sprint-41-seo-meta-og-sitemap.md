@@ -5,6 +5,7 @@
 | **Grup** | F — SEO & Launch |
 | **Estimasi** | 2 jam |
 | **Prasyarat** | Sprint 33 |
+| **Status** | ✅ Selesai |
 | **Output** | Metadata dinamis per halaman |
 
 **Navigasi:** [Indeks](./README.md) | [← Sprint 40](./sprint-40-cms-manajemen-pengguna.md) | [Sprint 42 →](./sprint-42-performance-accessibility.md)
@@ -17,16 +18,16 @@ Website siap diindeks Google.
 
 ## Task
 
-- [ ] Next.js `generateMetadata` per halaman
-- [ ] OG image default + per artikel
-- [ ] Auto sitemap.xml + robots.txt
-- [ ] JSON-LD Organization di homepage
-- [ ] JSON-LD Article di detail artikel
+- [x] Next.js `generateMetadata` per halaman
+- [x] OG image default + per artikel
+- [x] Auto sitemap.xml + robots.txt
+- [x] JSON-LD Organization di homepage
+- [x] JSON-LD Article di detail artikel
 
 ## Selesai Jika
 
-- [ ] View page source: meta tags ada
-- [ ] sitemap.xml accessible
+- [x] View page source: meta tags ada
+- [x] sitemap.xml accessible
 
 ---
 
