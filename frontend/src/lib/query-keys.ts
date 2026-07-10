@@ -1,4 +1,10 @@
-import type { ArtikelListParams, DokumenListParams, GaleriListParams, KegiatanListParams } from "@/types/api";
+import type {
+  ArtikelListParams,
+  AgendaListParams,
+  DokumenListParams,
+  GaleriListParams,
+  KegiatanListParams,
+} from "@/types/api";
 
 export const queryKeys = {
   health: ["health"] as const,
@@ -22,6 +28,13 @@ export const queryKeys = {
     list: (params?: KegiatanListParams) => [...queryKeys.kegiatan.lists(), params ?? {}] as const,
     details: () => [...queryKeys.kegiatan.all, "detail"] as const,
     detail: (slug: string) => [...queryKeys.kegiatan.details(), slug] as const,
+  },
+  agenda: {
+    all: ["agenda"] as const,
+    lists: () => [...queryKeys.agenda.all, "list"] as const,
+    list: (params?: AgendaListParams) => [...queryKeys.agenda.lists(), params ?? {}] as const,
+    details: () => [...queryKeys.agenda.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.agenda.details(), id] as const,
   },
   galeri: {
     all: ["galeri"] as const,

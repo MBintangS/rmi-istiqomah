@@ -7,6 +7,7 @@ export const adminNavItems: AdminNavItem[] = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Artikel", href: "/admin/artikel" },
   { label: "Kegiatan", href: "/admin/kegiatan" },
+  { label: "Agenda", href: "/admin/agenda" },
   { label: "Galeri", href: "/admin/galeri" },
   { label: "Banner", href: "/admin/banner" },
   { label: "Pengurus", href: "/admin/pengurus" },

@@ -1,3 +1,4 @@
+export { useAgendaList, useAgendaById } from "./useAgendaList";
 export { useDokumen } from "./useDokumen";
 export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";

@@ -145,7 +145,7 @@ export async function updateKegiatan(req: Request, res: Response): Promise<void>
   if (data.title !== undefined) kegiatan.title = data.title;
   if (data.description !== undefined) kegiatan.description = data.description;
   if (data.dateStart !== undefined) kegiatan.dateStart = data.dateStart;
-  if (data.dateEnd !== undefined) kegiatan.dateEnd = data.dateEnd;
+  if (data.dateEnd !== undefined) kegiatan.dateEnd = data.dateEnd ?? undefined;
   if (data.time !== undefined) kegiatan.time = data.time;
   if (data.location !== undefined) kegiatan.location = data.location;
   if (data.locationMap !== undefined) kegiatan.locationMap = data.locationMap || undefined;
