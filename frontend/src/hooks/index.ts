@@ -1,5 +1,6 @@
 export { useAgendaList, useAgendaById } from "./useAgendaList";
 export { useDokumen } from "./useDokumen";
+export { useGaleriById } from "./useGaleriById";
 export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";
 export { useDashboardStats } from "./useDashboardStats";

@@ -650,10 +650,11 @@ Detail album galeri by MongoDB ObjectId.
 
 List banner untuk homepage/hero.
 
-**Auth:** Tidak
+**Auth:** Optional (admin melihat semua; publik: hanya `isActive: true`)
 
 **Aturan:**
-- Hanya `isActive: true`
+- Publik: hanya `isActive: true`
+- Admin (Bearer token): semua banner
 - Sort `order` ascending, lalu `createdAt` descending
 
 **Response `200`:**
@@ -1266,6 +1267,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-10 | 37 | GET /banner optional auth (admin lihat semua) |
 | 2026-07-10 | 35 | GET /dashboard/stats (admin) |
 | 2026-07-09 | 28 | POST /upload (Cloudinary), npm run seed |
 | 2026-07-09 | 27 | Dokumen, Contact, Search, Settings GET/PUT |

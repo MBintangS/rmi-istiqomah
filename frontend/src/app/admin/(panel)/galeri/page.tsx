@@ -1,10 +1,15 @@
+import { AdminGaleriList } from "@/components/admin/AdminGaleriList";
+
 export default function AdminGaleriPage() {
   return (
-    <div className="rounded-rmi border border-dashed border-foreground/20 bg-surface p-8 text-center">
-      <h2 className="text-xl font-semibold text-heading">Galeri</h2>
-      <p className="text-body mt-2 text-foreground/70">
-        Modul CRUD galeri akan tersedia di Sprint 37.
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-heading">Kelola Galeri</h2>
+        <p className="text-body mt-1 text-foreground/70">
+          Upload banyak foto per album untuk halaman galeri dan preview beranda.
+        </p>
+      </div>
+      <AdminGaleriList />
     </div>
   );
 }

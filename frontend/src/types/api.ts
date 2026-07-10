@@ -217,6 +217,28 @@ export interface GaleriListResult {
   pagination?: PaginationMeta;
 }
 
+export interface GaleriWritePayload {
+  title: string;
+  images: Array<{
+    url: string;
+    publicId?: string;
+    caption?: string;
+  }>;
+  videoUrl?: string;
+  category: string;
+  eventId?: string;
+  order?: number;
+  isPublished?: boolean;
+}
+
+export interface BannerWritePayload {
+  title: string;
+  image: string;
+  link?: string;
+  order?: number;
+  isActive?: boolean;
+}
+
 export interface SettingsStats {
   totalEvents: number;
   totalMembers: number;

@@ -28,6 +28,8 @@ export type {
   GaleriListItem,
   GaleriListParams,
   GaleriListResult,
+  GaleriWritePayload,
+  BannerWritePayload,
   SettingsData,
   SettingsStats,
   SettingsSocialMedia,

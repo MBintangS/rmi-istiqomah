@@ -40,13 +40,15 @@ export const queryKeys = {
     all: ["galeri"] as const,
     lists: () => [...queryKeys.galeri.all, "list"] as const,
     list: (params?: GaleriListParams) => [...queryKeys.galeri.lists(), params ?? {}] as const,
-  },
-  settings: {
-    all: ["settings"] as const,
+    details: () => [...queryKeys.galeri.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.galeri.details(), id] as const,
   },
   banner: {
     all: ["banner"] as const,
     list: () => [...queryKeys.banner.all, "list"] as const,
+  },
+  settings: {
+    all: ["settings"] as const,
   },
   pengurus: {
     all: ["pengurus"] as const,
