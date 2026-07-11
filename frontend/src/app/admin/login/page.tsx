@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
+import { RmiLogo } from "@/components/brand/RmiLogo";
 import { Spinner } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -17,9 +18,9 @@ export default function AdminLoginPage() {
       />
       <div className="relative w-full max-w-md rounded-rmi border border-foreground/10 bg-background p-6 shadow-soft sm:p-8">
         <div className="mb-8">
-          <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-            RMI
-          </span>
+          <div className="mb-4">
+            <RmiLogo size={44} priority />
+          </div>
           <h1 className="text-2xl font-semibold tracking-tight text-heading">Login Admin</h1>
           <p className="mt-2 text-sm text-foreground/65">
             Masuk ke panel CMS Remaja Masjid Istiqomah.

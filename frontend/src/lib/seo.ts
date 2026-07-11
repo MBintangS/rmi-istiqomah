@@ -75,7 +75,7 @@ export function organizationJsonLd(options?: {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.svg`,
+    logo: `${SITE_URL}/logo.png`,
     description: DEFAULT_DESCRIPTION,
   };
 
@@ -119,7 +119,7 @@ export function articleJsonLd(article: {
       name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.svg`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
   };

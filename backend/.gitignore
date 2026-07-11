@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# build
+dist/
+build/
+coverage/
+
+# env / secrets (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# keys
+*.pem
+*.key
+
+# logs
+*.log
+npm-debug.log*
+
+# uploads / temp
+uploads/
+tmp/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

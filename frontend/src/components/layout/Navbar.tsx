@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { RmiLogo } from "@/components/brand/RmiLogo";
 import { Button } from "@/components/ui";
 import { Drawer } from "@/components/ui/Drawer";
 import { useMainNavItems } from "@/hooks/useMainNavItems";
@@ -62,10 +63,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-2">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-white">
-            RMI
-          </span>
+        <Link href="/" className="flex min-w-0 items-center gap-2.5">
+          <RmiLogo size={36} priority />
           <span className="hidden truncate font-display text-sm font-semibold tracking-tight text-heading sm:inline">
             Remaja Masjid Istiqomah
           </span>

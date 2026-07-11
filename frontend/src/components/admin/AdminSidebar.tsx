@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RmiLogo } from "@/components/brand/RmiLogo";
 import { useAuth } from "@/hooks/useAuth";
 import {
   adminNavGroupLabels,
@@ -44,9 +45,7 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
   return (
     <aside className="flex h-full w-full flex-col border-r border-foreground/10 bg-[#0f1609] text-surface">
       <div className="flex h-14 items-center gap-2.5 border-b border-white/10 px-4">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white">
-          RMI
-        </span>
+        <RmiLogo size={32} />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold tracking-tight">CMS Admin</p>
           <p className="truncate text-[11px] text-white/50">Remaja Masjid Istiqomah</p>

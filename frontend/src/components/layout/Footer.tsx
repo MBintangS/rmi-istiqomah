@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { RmiLogo } from "@/components/brand/RmiLogo";
 import { mainNavItems } from "@/lib/navigation";
 import { useSettingsValue } from "@/hooks/useSettings";
 
@@ -52,10 +53,8 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 lg:col-span-1">
-            <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
-                RMI
-              </span>
+            <div className="flex items-center gap-2.5">
+              <RmiLogo size={36} />
               <span className="font-semibold">{siteName}</span>
             </div>
             <p className="text-sm text-surface/70">{tagline}</p>
