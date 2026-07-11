@@ -1,0 +1,34 @@
+# Blueprint opsional untuk backend RMI di Render.
+# Secret (MONGODB_URI, JWT_SECRET, Cloudinary, CORS_ORIGIN) diisi di Dashboard.
+# Docs: docs/DEPLOYMENT.md
+
+services:
+  - type: web
+    name: rmi-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CLOUDINARY_FOLDER
+        value: rmi-prod
+      - key: SEED_FORCE
+        value: "false"
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
