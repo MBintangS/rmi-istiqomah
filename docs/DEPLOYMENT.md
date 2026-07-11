@@ -2,12 +2,12 @@
 
 Panduan deploy production monorepo Remaja Masjid Istiqomah.
 
-| Layer | Platform | Root directory |
-|-------|----------|----------------|
-| Frontend | [Vercel](https://vercel.com) | `frontend` |
-| Backend | [Render](https://render.com) | `backend` |
-| Database | MongoDB Atlas | DB `rmi-prod` |
-| Media | Cloudinary | folder `rmi-prod` |
+| Layer | Platform | Root directory | Production |
+|-------|----------|----------------|------------|
+| Frontend | [Vercel](https://vercel.com) | `frontend` | https://rmi-istiqomah.vercel.app |
+| Backend | [Render](https://render.com) | `backend` | https://rmi-istiqomah-api.onrender.com |
+| Database | MongoDB Atlas | DB `rmi-prod` | — |
+| Media | Cloudinary | folder `rmi-prod` | — |
 
 HTTPS disediakan otomatis oleh Vercel dan Render pada URL default. Domain custom bersifat opsional.
 

@@ -12,7 +12,7 @@
 | Environment | URL |
 |-------------|-----|
 | Development | `http://localhost:5000/api` |
-| Production | URL Render + `/api` — lihat [DEPLOYMENT.md](./DEPLOYMENT.md) |
+| Production | `https://rmi-istiqomah-api.onrender.com/api` |
 
 Jalankan backend:
 
@@ -1408,7 +1408,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
-| 2026-07-11 | 43 | Base URL production → rujuk DEPLOYMENT.md (Render) |
+| 2026-07-11 | 43 | Base URL production: https://rmi-istiqomah-api.onrender.com/api |
 | 2026-07-10 | 40 | GET/POST/PUT/DELETE /users (Super Admin only) |
 | 2026-07-10 | 39 | PUT/DELETE /kategori/:id (blokir hapus jika masih dipakai) |
 | 2026-07-10 | 38 | POST /upload/file (dokumen raw Cloudinary); catatan fileUrl dokumen |

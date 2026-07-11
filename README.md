@@ -16,9 +16,10 @@ rmi/
 
 | | URL |
 |---|-----|
-| Website | *(isi setelah deploy Vercel)* |
-| API | *(isi setelah deploy Render)* |
-| Admin | `{Website}/admin/login` |
+| Website | https://rmi-istiqomah.vercel.app |
+| API | https://rmi-istiqomah-api.onrender.com/api |
+| Admin | https://rmi-istiqomah.vercel.app/admin/login |
+| Health | https://rmi-istiqomah-api.onrender.com/api/health |
 
 Panduan lengkap: [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)
 
