@@ -1,14 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { mockSettings } from "@/data/mock";
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { devFallbackSettings } from "@/lib/dev-fallback";
 import { mapSettingsData } from "@/lib/mappers/settings";
 import { queryKeys } from "@/lib/query-keys";
 import { fetchSettings } from "@/services/settings.service";
 import type { SiteSettings } from "@/types";
-
-const placeholderSettings = devFallbackSettings;
 
 export function useSettings() {
   return useQuery({
@@ -17,22 +15,17 @@ export function useSettings() {
       const data = await fetchSettings();
       return mapSettingsData(data);
     },
-    placeholderData: placeholderSettings,
     staleTime: 5 * 60 * 1000,
   });
 }
 
 export function useSettingsValue(): SiteSettings {
+  const mounted = useHasMounted();
   const { data } = useSettings();
-  return data ?? mapSettingsData({
-    id: "mock",
-    ...mockSettings,
-    socialMedia: {
-      instagram: mockSettings.socialMedia.instagram ?? null,
-      facebook: mockSettings.socialMedia.facebook ?? null,
-      youtube: mockSettings.socialMedia.youtube ?? null,
-      tiktok: mockSettings.socialMedia.tiktok ?? null,
-    },
-    updatedAt: new Date(0).toISOString(),
-  });
+
+  if (!mounted) {
+    return devFallbackSettings;
+  }
+
+  return data ?? devFallbackSettings;
 }

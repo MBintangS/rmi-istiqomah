@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { defaultViewport, fadeIn, softRise, slideUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,9 @@ const toneVariants: Record<Exclude<MotionTone, "none">, Variants> = {
   soft: softRise,
 };
 
+/** If whileInView never fires (mobile IO / overflow quirks), reveal anyway. */
+const IN_VIEW_FALLBACK_MS = 900;
+
 export function MotionSection({
   children,
   className,
@@ -26,6 +30,13 @@ export function MotionSection({
   id,
 }: MotionSectionProps) {
   const reduce = useReducedMotion();
+  const [forceVisible, setForceVisible] = useState(false);
+
+  useEffect(() => {
+    if (reduce || tone === "none") return;
+    const timer = window.setTimeout(() => setForceVisible(true), IN_VIEW_FALLBACK_MS);
+    return () => window.clearTimeout(timer);
+  }, [reduce, tone]);
 
   if (tone === "none" || reduce) {
     return (
@@ -40,6 +51,7 @@ export function MotionSection({
       id={id}
       initial="hidden"
       whileInView="visible"
+      animate={forceVisible ? "visible" : undefined}
       viewport={defaultViewport}
       variants={toneVariants[tone]}
       className={cn(className)}

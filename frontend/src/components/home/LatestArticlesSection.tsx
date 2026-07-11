@@ -8,7 +8,7 @@ import { getApiErrorMessage } from "@/lib/api";
 import { mapArtikelListItem } from "@/lib/mappers/artikel";
 
 export function LatestArticlesSection() {
-  const { data, isLoading, isError, error } = useArticles({
+  const { data, isPending, isError, error } = useArticles({
     limit: 4,
     sort: "-publishedAt",
     status: "published",
@@ -32,7 +32,7 @@ export function LatestArticlesSection() {
           </div>
         </div>
 
-        {isLoading ? (
+        {isPending ? (
           <SkeletonList count={4} />
         ) : isError ? (
           <EmptyState

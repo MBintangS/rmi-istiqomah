@@ -9,7 +9,7 @@ import { getGalleryPreviewImages } from "@/lib/mappers/galeri";
 import { cn } from "@/lib/utils";
 
 export function GalleryPreviewSection() {
-  const { data, isLoading, isError } = useGaleri({ limit: 20, sort: "order" });
+  const { data, isPending, isError } = useGaleri({ limit: 20, sort: "order" });
   const previewImages = getGalleryPreviewImages(data?.items ?? [], 5);
 
   return (
@@ -30,7 +30,7 @@ export function GalleryPreviewSection() {
           </div>
         </div>
 
-        {isLoading ? (
+        {isPending ? (
           <div className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] sm:gap-4 md:grid-cols-4">
             {Array.from({ length: 5 }).map((_, index) => (
               <Skeleton

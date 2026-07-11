@@ -4,6 +4,7 @@ export { useGaleriById } from "./useGaleriById";
 export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";
 export { useDashboardStats } from "./useDashboardStats";
+export { useHasMounted } from "./useHasMounted";
 export { useKategori } from "./useKategori";
 export { useMainNavItems } from "./useMainNavItems";
 export { usePengurus } from "./usePengurus";

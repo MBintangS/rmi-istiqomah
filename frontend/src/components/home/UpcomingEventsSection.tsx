@@ -8,7 +8,7 @@ import { getApiErrorMessage } from "@/lib/api";
 import { mapKegiatanListItem } from "@/lib/mappers/kegiatan";
 
 export function UpcomingEventsSection() {
-  const { data, isLoading, isError, error } = useKegiatan({
+  const { data, isPending, isError, error } = useKegiatan({
     status: "upcoming",
     limit: 4,
     sort: "dateStart",
@@ -31,7 +31,7 @@ export function UpcomingEventsSection() {
           </div>
         </div>
 
-        {isLoading ? (
+        {isPending ? (
           <SkeletonList count={3} />
         ) : isError ? (
           <EmptyState

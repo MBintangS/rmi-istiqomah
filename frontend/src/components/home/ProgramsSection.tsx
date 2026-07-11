@@ -10,7 +10,7 @@ import { mapProgramListItem } from "@/lib/mappers/program";
 import { cn } from "@/lib/utils";
 
 export function ProgramsSection() {
-  const { data, isLoading, isError, error } = usePrograms();
+  const { data, isPending, isError, error } = usePrograms();
   const programs = (data ?? []).map(mapProgramListItem).slice(0, 3);
 
   return (
@@ -28,7 +28,7 @@ export function ProgramsSection() {
           </div>
         </div>
 
-        {isLoading ? (
+        {isPending ? (
           <SkeletonList count={3} />
         ) : isError ? (
           <EmptyState

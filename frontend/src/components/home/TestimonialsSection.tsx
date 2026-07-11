@@ -10,7 +10,7 @@ import { mapTestimoniListItem } from "@/lib/mappers/testimoni";
 import { cn } from "@/lib/utils";
 
 export function TestimonialsSection() {
-  const { data, isLoading, isError, error } = useTestimoni();
+  const { data, isPending, isError, error } = useTestimoni();
   const testimonials = useMemo(
     () => (data ?? []).map(mapTestimoniListItem).sort((a, b) => a.order - b.order),
     [data],
@@ -35,7 +35,7 @@ export function TestimonialsSection() {
         <div className="max-w-4xl">
           <h2 className="max-w-[12ch]">Kata Mereka tentang RMI</h2>
 
-          {isLoading ? (
+          {isPending ? (
             <div className="mt-10 space-y-4">
               <Skeleton variant="text" lines={3} />
               <Skeleton className="h-12 w-48 rounded-rmi" />

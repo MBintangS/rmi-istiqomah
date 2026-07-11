@@ -59,4 +59,9 @@ export const heroItem: Variants = {
   },
 };
 
-export const defaultViewport = { once: true, margin: "-80px" as const, amount: 0.25 };
+/** Mobile-friendly: tall sections often never hit amount:0.25 with negative margin. */
+export const defaultViewport = {
+  once: true,
+  amount: 0.05,
+  margin: "0px 0px -40px 0px" as const,
+};

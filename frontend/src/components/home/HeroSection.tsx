@@ -4,18 +4,22 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui";
 import { useBanners } from "@/hooks/useBanners";
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { useSettingsValue } from "@/hooks/useSettings";
-import { FALLBACK_HERO_IMAGE } from "@/lib/constants";
+import { FALLBACK_PLACHOLDER_IMAGE } from "@/lib/constants";
 import { heroItem, heroOrchestration } from "@/lib/motion";
 
 export function HeroSection() {
+  const mounted = useHasMounted();
   const settings = useSettingsValue();
   const { data: banners } = useBanners();
-  const reduce = useReducedMotion();
+  const prefersReduced = useReducedMotion();
+  // Prefer-reduced-motion is unknown on the server — apply only after mount.
+  const reduce = mounted && !!prefersReduced;
 
-  const heroBanner = banners?.[0];
-  // Keep local fallback as first paint for LCP; swap to CMS banner after hydrate.
-  const heroImage = heroBanner?.image ?? FALLBACK_HERO_IMAGE;
+  // Same image on SSR + first client paint; swap to CMS banner after mount.
+  const heroBanner = mounted ? banners?.[0] : undefined;
+  const heroImage = heroBanner?.image || FALLBACK_PLACHOLDER_IMAGE;
   const heroAlt = heroBanner?.title ?? "Kegiatan remaja masjid";
   const { siteName, tagline, about, stats } = settings;
 
