@@ -9,7 +9,6 @@ const galeriImageSchema = z.object({
 export const galeriFormSchema = z.object({
   title: z.string().trim().min(3, "Judul minimal 3 karakter"),
   images: z.array(galeriImageSchema).min(1, "Minimal satu gambar"),
-  videoUrl: z.string().optional(),
   category: z.string().min(1, "Kategori wajib dipilih"),
   eventId: z.string().optional(),
   order: z.number().int().min(0),

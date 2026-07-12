@@ -53,7 +53,6 @@ export function AdminGaleriForm({ mode, initial }: AdminGaleriFormProps) {
           publicId: item.publicId ?? undefined,
           caption: item.caption ?? "",
         })) ?? [],
-      videoUrl: initial?.videoUrl ?? "",
       category: initial?.category?.id ?? "",
       eventId: initial?.event?.id ?? "",
       order: initial?.order ?? 0,
@@ -79,7 +78,6 @@ export function AdminGaleriForm({ mode, initial }: AdminGaleriFormProps) {
           publicId: item.publicId,
           caption: item.caption || undefined,
         })),
-        videoUrl: values.videoUrl || undefined,
         category: values.category,
         eventId: values.eventId || undefined,
         order: values.order,
@@ -239,11 +237,6 @@ export function AdminGaleriForm({ mode, initial }: AdminGaleriFormProps) {
                 </option>
               ))}
             </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="videoUrl">Video YouTube Embed</Label>
-            <Input id="videoUrl" placeholder="https://www.youtube.com/embed/..." {...register("videoUrl")} />
           </div>
 
           <div className="space-y-2">
