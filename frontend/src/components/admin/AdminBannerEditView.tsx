@@ -1,3 +1,5 @@
+"use client";
+
 import { AdminBannerForm } from "@/components/admin/AdminBannerForm";
 import { EmptyState, Skeleton, Spinner } from "@/components/ui";
 import { useBanners } from "@/hooks/useBanners";
