@@ -562,6 +562,7 @@ List album galeri dengan paginasi.
 |-----------|------|------------|
 | `page`, `limit`, `search` | — | Lihat [Query Umum](#query-parameters-umum-list) |
 | `category` | string | Slug kategori tipe `galeri` |
+| `eventId` | ObjectId | Filter album terkait kegiatan |
 | `sort` | string | `createdAt`, `updatedAt`, `order`, `title` (default: `order` ASC) |
 
 **Response `200`:** array galeri + `pagination`
@@ -1430,6 +1431,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | GET /galeri: query eventId untuk filter kegiatan terkait |
 | 2026-07-12 | — | PUT /settings: Super Admin only |
 | 2026-07-12 | — | POST/PUT/DELETE pengurus, program, testimoni: Super Admin only |
 | 2026-07-12 | — | GET /stats/count (total artikel/kegiatan/galeri publik); hapus stats dari PUT /settings |

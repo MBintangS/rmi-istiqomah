@@ -174,6 +174,7 @@ export interface GaleriListParams {
   limit?: number;
   search?: string;
   category?: string;
+  eventId?: string;
   sort?: string;
 }
 

@@ -25,6 +25,7 @@ export const galeriListQuerySchema = z.object({
   limit: z.coerce.number().int().positive().max(100).optional(),
   search: z.string().trim().optional(),
   category: z.string().trim().optional(),
+  eventId: objectIdSchema.optional(),
   sort: z.string().trim().optional(),
 });
 

@@ -40,6 +40,10 @@ function buildGaleriFilter(query: GaleriListQuery, isAdmin: boolean): FilterQuer
     filter.title = regex;
   }
 
+  if (query.eventId) {
+    filter.eventId = query.eventId;
+  }
+
   return filter;
 }
 

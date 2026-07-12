@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Badge, EmptyState, Skeleton } from "@/components/ui";
+import { Badge, EmptyState } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { useKegiatanBySlug } from "@/hooks/useKegiatanBySlug";
 import { useSettingsValue } from "@/hooks/useSettings";
@@ -13,6 +13,8 @@ import { getApiErrorMessage } from "@/lib/api";
 import { mapKegiatanListItem } from "@/lib/mappers/kegiatan";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import { KegiatanDokumentasi } from "@/components/kegiatan/KegiatanDokumentasi";
+import { KegiatanDetailSkeleton } from "@/components/kegiatan/KegiatanDetailSkeleton";
 
 interface KegiatanDetailViewProps {
   slug: string;
@@ -23,12 +25,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
   const settings = useSettingsValue();
 
   if (isLoading) {
-    return (
-      <div className="space-y-8">
-        <Skeleton className="aspect-[21/9] w-full rounded-rmi" />
-        <Skeleton variant="text" lines={6} />
-      </div>
-    );
+    return <KegiatanDetailSkeleton />;
   }
 
   if (isError) {
@@ -115,16 +112,18 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
           <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
             <div className="space-y-6 lg:col-span-2">
               <div>
-                <h2 className="mb-4">Deskripsi Kegiatan</h2>
+                <h3 className="mb-4">Deskripsi Kegiatan</h3>
                 <div
                   className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: event.description }}
                 />
               </div>
 
+              <KegiatanDokumentasi eventId={event.id} eventTitle={event.title} />
+
               {event.location && (
                 <div>
-                  <h2 className="mb-4">Lokasi</h2>
+                  <h3 className="mb-4">Lokasi</h3>
                   <p className="text-body mb-4 text-foreground/80">{event.location}</p>
                   <div className="relative aspect-video overflow-hidden rounded-rmi border border-foreground/10 bg-surface">
                     <iframe
