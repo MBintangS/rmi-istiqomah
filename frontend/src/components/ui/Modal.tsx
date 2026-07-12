@@ -17,8 +17,8 @@ function CloseIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -44,10 +44,10 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-heading/50 backdrop-blur-sm"
+        className="modal-backdrop absolute inset-0 bg-heading/55 backdrop-blur-[2px]"
         aria-label="Tutup dialog"
         onClick={onClose}
         tabIndex={-1}
@@ -59,27 +59,32 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}
         className={cn(
-          "relative z-10 w-full max-w-md rounded-rmi bg-surface p-6 shadow-soft",
+          "modal-panel relative z-10 flex max-h-[min(92dvh,40rem)] w-full flex-col overflow-hidden rounded-t-2xl border border-foreground/10 bg-background shadow-[0_24px_64px_rgba(20,32,10,0.18)] sm:max-w-md sm:rounded-rmi",
           className,
         )}
       >
-        <div className="mb-4 flex items-start justify-between gap-4">
-          {title && (
-            <h2 id={titleId} className="text-lg font-semibold text-heading">
+        <div className="flex shrink-0 items-start gap-3 border-b border-foreground/10 px-5 py-4 sm:px-6">
+          {title ? (
+            <h2
+              id={titleId}
+              className="min-w-0 flex-1 pt-0.5 font-display text-base font-semibold tracking-tight text-heading sm:text-lg"
+            >
               {title}
             </h2>
+          ) : (
+            <span className="flex-1" />
           )}
           <button
             type="button"
             onClick={onClose}
             aria-label="Tutup"
-            className="ml-auto rounded-full p-1.5 text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-foreground/55 transition-colors hover:bg-surface hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
           >
             <CloseIcon />
           </button>
         </div>
 
-        {children}
+        <div className="overflow-y-auto px-5 py-5 sm:px-6">{children}</div>
       </div>
     </div>,
     document.body,
