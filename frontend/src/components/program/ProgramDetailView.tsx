@@ -9,6 +9,7 @@ import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapProgramDetail } from "@/lib/mappers/program";
+import { ProgramRelatedKegiatan } from "@/components/program/ProgramRelatedKegiatan";
 
 interface ProgramDetailViewProps {
   slug: string;
@@ -154,6 +155,8 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
           </div>
         </div>
       </section>
+
+      <ProgramRelatedKegiatan programName={program.name} programSlug={program.slug} />
     </>
   );
 }
