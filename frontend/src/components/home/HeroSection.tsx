@@ -41,7 +41,7 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid min-h-[100dvh] max-w-6xl items-center gap-12 px-4 pb-16 pt-24 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-20">
+      <div className="relative mx-auto grid min-h-[100dvh] max-w-6xl items-center gap-12 px-4 pb-4 pt-24 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-20">
         <motion.div
           className="relative lg:col-span-6"
           initial={reduce ? false : "hidden"}
