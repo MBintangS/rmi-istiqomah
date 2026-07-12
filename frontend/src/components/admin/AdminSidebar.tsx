@@ -52,7 +52,10 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
         </div>
       </div>
 
-      <nav className="flex-1 space-y-5 overflow-y-auto px-2.5 py-4" aria-label="Navigasi admin">
+      <nav
+        className="scrollbar-sidebar flex-1 space-y-5 overflow-y-auto px-2.5 py-4"
+        aria-label="Navigasi admin"
+      >
         {grouped.map(({ group, items }) => (
           <div key={group}>
             <p className="mb-1.5 px-2.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">
