@@ -96,6 +96,10 @@ export function AdminLoginForm() {
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "Masuk..." : "Masuk"}
       </Button>
+
+      <Button href="/" variant="outline" className="w-full">
+        Kembali ke Beranda
+      </Button>
     </form>
   );
 }
