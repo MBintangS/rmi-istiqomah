@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import type { FilterQuery } from "mongoose";
+import { Types } from "mongoose";
 import { AppError } from "../middleware/errorHandler";
 import { Galeri, type IGaleri, Kategori, Kegiatan } from "../models";
 import type {
@@ -40,8 +41,8 @@ function buildGaleriFilter(query: GaleriListQuery, isAdmin: boolean): FilterQuer
     filter.title = regex;
   }
 
-  if (query.eventId) {
-    filter.eventId = query.eventId;
+  if (query.eventId && Types.ObjectId.isValid(query.eventId)) {
+    filter.eventId = new Types.ObjectId(query.eventId);
   }
 
   return filter;

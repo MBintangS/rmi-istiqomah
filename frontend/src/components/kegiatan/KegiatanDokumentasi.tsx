@@ -22,7 +22,9 @@ export function KegiatanDokumentasi({ eventId, eventTitle }: KegiatanDokumentasi
     { enabled: Boolean(eventId) },
   );
 
-  const photos = flattenGaleriItems(data?.items ?? []).slice(0, 3);
+  const photos = flattenGaleriItems(
+    (data?.items ?? []).filter((album) => album.event?.id === eventId),
+  ).slice(0, 3);
 
   if (isLoading) {
     return (
