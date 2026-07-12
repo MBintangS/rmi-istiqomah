@@ -117,11 +117,11 @@ export function AdminSettingsForm() {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="mx-auto max-w-3xl space-y-6 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
+      className="mx-auto max-w-3xl space-y-6 rounded-rmi border border-foreground/10 bg-background p-4 shadow-[0_1px_2px_rgba(20,32,10,0.04)] sm:p-5"
       noValidate
     >
       <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-heading">Profil Situs</h3>
+        <h3 className="font-display text-base font-semibold tracking-tight text-heading">Profil Situs</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2 sm:col-span-2">
             <Label htmlFor="siteName" required>
@@ -173,7 +173,7 @@ export function AdminSettingsForm() {
       </section>
 
       <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-heading">Kontak</h3>
+        <h3 className="font-display text-base font-semibold tracking-tight text-heading">Kontak</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2 sm:col-span-2">
             <Label htmlFor="address" required>
@@ -220,7 +220,7 @@ export function AdminSettingsForm() {
       </section>
 
       <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-heading">Media Sosial</h3>
+        <h3 className="font-display text-base font-semibold tracking-tight text-heading">Media Sosial</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="instagram">Instagram</Label>
@@ -241,7 +241,7 @@ export function AdminSettingsForm() {
         </div>
       </section>
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3 border-t border-foreground/10 pt-4">
         <Button type="submit" disabled={isSubmitting || saveMutation.isPending}>
           {saveMutation.isPending ? "Menyimpan..." : "Simpan Pengaturan"}
         </Button>

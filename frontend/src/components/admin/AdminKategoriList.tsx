@@ -20,6 +20,7 @@ import {
   AdminEditButton,
   AdminDeleteButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { useKategori } from "@/hooks/useKategori";
 import { getApiErrorMessage } from "@/lib/api";
 import { kategoriFormSchema, type KategoriFormValues } from "@/lib/cms-support-form-schema";
@@ -117,8 +118,8 @@ export function AdminKategoriList() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="space-y-5">
+      <AdminToolbar>
         <Select
           value={typeFilter}
           onChange={(event) => setTypeFilter(event.target.value as "" | KategoriItem["type"])}
@@ -131,35 +132,40 @@ export function AdminKategoriList() {
           <option value="galeri">Galeri</option>
         </Select>
         <Button onClick={openCreate}>Tambah Kategori</Button>
-      </div>
+      </AdminToolbar>
 
       {isLoading ? (
-        <SkeletonList count={4} />
+        <AdminPanel padding="sm">
+          <SkeletonList count={4} />
+        </AdminPanel>
       ) : isError ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Gagal memuat kategori"
           description={getApiErrorMessage(error)}
           actionLabel="Coba lagi"
           onAction={() => refetch()}
         />
+        </AdminPanel>
       ) : items.length === 0 ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Belum ada kategori"
           description="Buat kategori untuk artikel, kegiatan, atau galeri."
           actionLabel="Tambah Kategori"
           onAction={openCreate}
         />
+        </AdminPanel>
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
-          <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+        <AdminDataTable>
+            <AdminTableHead>
               <tr>
                 <th className="px-3.5 py-2.5 font-medium">Nama</th>
                 <th className="px-3.5 py-2.5 font-medium">Slug</th>
                 <th className="px-3.5 py-2.5 font-medium">Tipe</th>
                 <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
-            </thead>
+            </AdminTableHead>
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
@@ -177,8 +183,7 @@ export function AdminKategoriList() {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
+          </AdminDataTable>
       )}
 
       <Modal

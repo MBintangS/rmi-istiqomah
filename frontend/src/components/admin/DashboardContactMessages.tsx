@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AdminPanel } from "@/components/admin/AdminChrome";
+import { AdminPanel, AdminTableHead } from "@/components/admin/AdminChrome";
 import { Button, EmptyState, Modal, SkeletonList } from "@/components/ui";
 import { useContactMessages } from "@/hooks/useContactMessages";
 import { getApiErrorMessage } from "@/lib/api";
@@ -53,7 +53,7 @@ export function DashboardContactMessages() {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+              <AdminTableHead>
                 <tr>
                   <th className="px-3.5 py-2.5 font-medium">Tanggal</th>
                   <th className="px-3.5 py-2.5 font-medium">Pengirim</th>
@@ -62,7 +62,7 @@ export function DashboardContactMessages() {
                   <th className="px-3.5 py-2.5 font-medium">Pesan</th>
                   <th className="px-3.5 py-2.5 font-medium">Aksi</th>
                 </tr>
-              </thead>
+              </AdminTableHead>
               <tbody>
                 {items.map((item) => (
                   <tr

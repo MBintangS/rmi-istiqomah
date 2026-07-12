@@ -19,6 +19,7 @@ import {
   AdminDeleteButton,
   AdminPublishButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { useGaleri } from "@/hooks/useGaleri";
 import { getApiErrorMessage } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
@@ -70,8 +71,8 @@ export function AdminGaleriList() {
   const totalPages = data?.pagination?.totalPages ?? 1;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="space-y-5">
+      <AdminToolbar>
         <form
           className="flex flex-1 gap-2"
           onSubmit={(event) => {
@@ -92,19 +93,24 @@ export function AdminGaleriList() {
           </Button>
         </form>
         <Button href="/admin/galeri/baru">Tambah Album</Button>
-      </div>
+      </AdminToolbar>
 
       {isLoading ? (
-        <SkeletonList count={5} />
+        <AdminPanel padding="sm">
+          <SkeletonList count={5} />
+        </AdminPanel>
       ) : isError ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Gagal memuat galeri"
           description={getApiErrorMessage(error)}
           actionLabel="Coba lagi"
           onAction={() => refetch()}
         />
+        </AdminPanel>
       ) : items.length === 0 ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Belum ada album"
           description="Upload foto kegiatan untuk ditampilkan di halaman galeri."
           actionLabel="Tambah Album"
@@ -112,11 +118,11 @@ export function AdminGaleriList() {
             window.location.href = "/admin/galeri/baru";
           }}
         />
+        </AdminPanel>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
-            <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+          <AdminDataTable>
+            <AdminTableHead>
                 <tr>
                   <th className="px-3.5 py-2.5 font-medium">Preview</th>
                   <th className="px-3.5 py-2.5 font-medium">Judul</th>
@@ -125,7 +131,7 @@ export function AdminGaleriList() {
                   <th className="px-3.5 py-2.5 font-medium">Status</th>
                   <th className="px-3.5 py-2.5 font-medium">Aksi</th>
                 </tr>
-              </thead>
+              </AdminTableHead>
               <tbody>
                 {items.map((item) => {
                   const preview = item.images[0];
@@ -179,8 +185,7 @@ export function AdminGaleriList() {
                   );
                 })}
               </tbody>
-            </table>
-          </div>
+            </AdminDataTable>
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}

@@ -11,6 +11,7 @@ import {
   AdminDeleteButton,
   AdminToggleActiveButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { usePengurus } from "@/hooks/usePengurus";
 import { getApiErrorMessage } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
@@ -46,22 +47,27 @@ export function AdminPengurusList() {
   const items = data ?? [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end">
+    <div className="space-y-5">
+      <AdminToolbar className="sm:justify-end">
         <Button href="/admin/pengurus/baru">Tambah Pengurus</Button>
-      </div>
+      </AdminToolbar>
 
       {isLoading ? (
-        <SkeletonList count={4} />
+        <AdminPanel padding="sm">
+          <SkeletonList count={4} />
+        </AdminPanel>
       ) : isError ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Gagal memuat pengurus"
           description={getApiErrorMessage(error)}
           actionLabel="Coba lagi"
           onAction={() => refetch()}
         />
+        </AdminPanel>
       ) : items.length === 0 ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Belum ada pengurus"
           description="Pengurus aktif akan tampil di halaman Tentang Kami."
           actionLabel="Tambah Pengurus"
@@ -69,10 +75,10 @@ export function AdminPengurusList() {
             window.location.href = "/admin/pengurus/baru";
           }}
         />
+        </AdminPanel>
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
-          <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+        <AdminDataTable>
+            <AdminTableHead>
               <tr>
                 <th className="px-3.5 py-2.5 font-medium">Foto</th>
                 <th className="px-3.5 py-2.5 font-medium">Nama</th>
@@ -81,7 +87,7 @@ export function AdminPengurusList() {
                 <th className="px-3.5 py-2.5 font-medium">Status</th>
                 <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
-            </thead>
+            </AdminTableHead>
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
@@ -128,8 +134,7 @@ export function AdminPengurusList() {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
+          </AdminDataTable>
       )}
 
       <Modal open={Boolean(deleteTarget)} onClose={() => setDeleteTarget(null)} title="Hapus pengurus?">

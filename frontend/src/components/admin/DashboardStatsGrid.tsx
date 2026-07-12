@@ -59,7 +59,7 @@ export function DashboardStatsGrid() {
             key={card.key}
             href={card.href}
             className={cn(
-              "group relative overflow-hidden rounded-rmi border border-foreground/10 bg-background",
+              "group relative overflow-hidden rounded-rmi border border-foreground/10 bg-background shadow-[0_1px_2px_rgba(20,32,10,0.04)]",
               "px-4 py-3.5 transition-colors hover:border-primary/40 hover:bg-primary/[0.03]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
             )}

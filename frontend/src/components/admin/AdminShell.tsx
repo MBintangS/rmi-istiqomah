@@ -35,8 +35,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-h-screen min-w-0 flex-col lg:pl-[15.5rem]">
         <AdminHeader title={title} onOpenMenu={() => setDrawerOpen(true)} />
-        <main id="main-content" className="flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
-          <div className="mx-auto w-full max-w-6xl space-y-5">{children}</div>
+        <main
+          id="main-content"
+          className="relative flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8"
+        >
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,_rgba(78,131,10,0.06),_transparent_65%)]"
+            aria-hidden="true"
+          />
+          <div className="relative mx-auto w-full max-w-6xl space-y-5">{children}</div>
         </main>
       </div>
 

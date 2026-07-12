@@ -19,6 +19,7 @@ import {
   AdminDeleteButton,
   AdminPublishButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { useArticles } from "@/hooks/useArticles";
 import { getApiErrorMessage } from "@/lib/api";
 import { formatEventDate } from "@/lib/format-date";
@@ -76,8 +77,8 @@ export function AdminArtikelList() {
   const totalPages = pagination?.totalPages ?? 1;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="space-y-5">
+      <AdminToolbar>
         <div className="flex flex-1 flex-col gap-3 sm:flex-row">
           <form
             className="flex flex-1 gap-2"
@@ -113,19 +114,24 @@ export function AdminArtikelList() {
           </Select>
         </div>
         <Button href="/admin/artikel/baru">Tambah Artikel</Button>
-      </div>
+      </AdminToolbar>
 
       {isLoading ? (
-        <SkeletonList count={5} />
+        <AdminPanel padding="sm">
+          <SkeletonList count={5} />
+        </AdminPanel>
       ) : isError ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Gagal memuat artikel"
           description={getApiErrorMessage(error)}
           actionLabel="Coba lagi"
           onAction={() => refetch()}
         />
+        </AdminPanel>
       ) : items.length === 0 ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Belum ada artikel"
           description="Buat artikel pertama untuk ditampilkan di website."
           actionLabel="Tambah Artikel"
@@ -133,11 +139,11 @@ export function AdminArtikelList() {
             window.location.href = "/admin/artikel/baru";
           }}
         />
+        </AdminPanel>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
-            <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+          <AdminDataTable>
+            <AdminTableHead>
                 <tr>
                   <th className="px-3.5 py-2.5 font-medium">Judul</th>
                   <th className="px-3.5 py-2.5 font-medium">Author</th>
@@ -146,7 +152,7 @@ export function AdminArtikelList() {
                   <th className="px-3.5 py-2.5 font-medium">Diperbarui</th>
                   <th className="px-3.5 py-2.5 font-medium">Aksi</th>
                 </tr>
-              </thead>
+              </AdminTableHead>
               <tbody>
                 {items.map((item) => (
                   <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
@@ -187,8 +193,7 @@ export function AdminArtikelList() {
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+            </AdminDataTable>
 
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </>

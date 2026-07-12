@@ -22,7 +22,7 @@ export function DashboardWelcome() {
   const roleLabel = user?.role === "superadmin" ? "Super Admin" : "Admin";
 
   return (
-    <section className="relative overflow-hidden rounded-rmi border border-foreground/10 bg-background">
+    <section className="relative overflow-hidden rounded-rmi border border-foreground/10 bg-background shadow-[0_1px_2px_rgba(20,32,10,0.04)]">
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-1 bg-primary"
         aria-hidden="true"

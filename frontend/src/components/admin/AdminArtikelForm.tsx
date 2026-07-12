@@ -111,7 +111,7 @@ export function AdminArtikelForm({ mode, initial }: AdminArtikelFormProps) {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
+      className="space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 shadow-[0_1px_2px_rgba(20,32,10,0.04)] sm:p-5"
       noValidate
     >
       <div className="grid gap-6 lg:grid-cols-3">
@@ -212,7 +212,7 @@ export function AdminArtikelForm({ mode, initial }: AdminArtikelFormProps) {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 border-t border-foreground/10 pt-4">
         <Button type="submit" disabled={isSubmitting || saveMutation.isPending || uploading}>
           {saveMutation.isPending ? "Menyimpan..." : mode === "create" ? "Buat Artikel" : "Simpan Perubahan"}
         </Button>

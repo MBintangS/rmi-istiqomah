@@ -21,6 +21,7 @@ import {
   AdminDeleteButton,
   AdminToggleActiveButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/hooks/useUsers";
 import { getApiErrorMessage } from "@/lib/api";
@@ -150,8 +151,8 @@ export function AdminPenggunaList() {
   const items = data ?? [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end">
+    <div className="space-y-5">
+      <AdminToolbar className="sm:justify-end">
         <Button
           onClick={() => {
             createForm.reset({
@@ -166,28 +167,33 @@ export function AdminPenggunaList() {
         >
           Tambah Pengguna
         </Button>
-      </div>
+      </AdminToolbar>
 
       {isLoading ? (
-        <SkeletonList count={4} />
+        <AdminPanel padding="sm">
+          <SkeletonList count={4} />
+        </AdminPanel>
       ) : isError ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Gagal memuat pengguna"
           description={getApiErrorMessage(error)}
           actionLabel="Coba lagi"
           onAction={() => refetch()}
         />
+        </AdminPanel>
       ) : items.length === 0 ? (
-        <EmptyState
+        <AdminPanel>
+          <EmptyState
           title="Belum ada pengguna"
           description="Buat akun admin baru untuk mengelola CMS."
           actionLabel="Tambah Pengguna"
           onAction={() => setCreateOpen(true)}
         />
+        </AdminPanel>
       ) : (
-        <div className="overflow-x-auto rounded-rmi border border-foreground/10 bg-background">
-          <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
+        <AdminDataTable>
+            <AdminTableHead>
               <tr>
                 <th className="px-3.5 py-2.5 font-medium">Nama</th>
                 <th className="px-3.5 py-2.5 font-medium">Email</th>
@@ -195,7 +201,7 @@ export function AdminPenggunaList() {
                 <th className="px-3.5 py-2.5 font-medium">Status</th>
                 <th className="px-3.5 py-2.5 font-medium">Aksi</th>
               </tr>
-            </thead>
+            </AdminTableHead>
             <tbody>
               {items.map((item) => {
                 const isSelf = currentUser?.id === item.id;
@@ -241,8 +247,7 @@ export function AdminPenggunaList() {
                 );
               })}
             </tbody>
-          </table>
-        </div>
+          </AdminDataTable>
       )}
 
       <Modal open={createOpen} onClose={() => setCreateOpen(false)} title="Tambah Pengguna">

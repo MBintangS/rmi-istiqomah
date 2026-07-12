@@ -85,7 +85,7 @@ export function AdminBannerForm({ mode, initial }: AdminBannerFormProps) {
   return (
     <form
       onSubmit={handleSubmit((values) => saveMutation.mutate(values))}
-      className="mx-auto max-w-2xl space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 sm:p-5"
+      className="mx-auto max-w-2xl space-y-5 rounded-rmi border border-foreground/10 bg-background p-4 shadow-[0_1px_2px_rgba(20,32,10,0.04)] sm:p-5"
       noValidate
     >
       <div className="space-y-2">
@@ -154,7 +154,7 @@ export function AdminBannerForm({ mode, initial }: AdminBannerFormProps) {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 border-t border-foreground/10 pt-4">
         <Button type="submit" disabled={isSubmitting || saveMutation.isPending || uploading}>
           {saveMutation.isPending
             ? "Menyimpan..."

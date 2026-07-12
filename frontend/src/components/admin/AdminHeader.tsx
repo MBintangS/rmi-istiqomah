@@ -21,13 +21,13 @@ export function AdminHeader({ title, onOpenMenu }: AdminHeaderProps) {
   const roleLabel = user?.role === "superadmin" ? "Super Admin" : "Admin";
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-foreground/10 bg-background/95 px-4 backdrop-blur-md sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-foreground/10 bg-background/90 px-4 backdrop-blur-md sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
         {onOpenMenu && (
           <button
             type="button"
             onClick={onOpenMenu}
-            className="rounded-md p-2 text-heading transition-colors hover:bg-surface lg:hidden"
+            className="rounded-md p-2 text-heading transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
             aria-label="Buka menu"
           >
             <svg
@@ -48,18 +48,20 @@ export function AdminHeader({ title, onOpenMenu }: AdminHeaderProps) {
             </svg>
           </button>
         )}
-        <div className="min-w-0">
-          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-foreground/45">
+        <div className="min-w-0 border-l border-foreground/10 pl-3">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/40">
             Panel CMS
           </p>
-          <h1 className="truncate text-base font-semibold tracking-tight text-heading">{title}</h1>
+          <h1 className="truncate font-display text-base font-semibold tracking-tight text-heading">
+            {title}
+          </h1>
         </div>
       </div>
 
       <div className="flex items-center gap-2.5 sm:gap-3">
-        <div className="hidden text-right sm:block">
-          <p className="text-sm font-medium text-heading">{user?.name}</p>
-          <p className="text-[11px] text-foreground/55">{roleLabel}</p>
+        <div className="hidden rounded-rmi border border-foreground/10 bg-surface/70 px-3 py-1.5 text-right sm:block">
+          <p className="text-sm font-medium leading-tight text-heading">{user?.name}</p>
+          <p className="text-[11px] text-foreground/50">{roleLabel}</p>
         </div>
         <span
           className="hidden h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary sm:inline-flex"
