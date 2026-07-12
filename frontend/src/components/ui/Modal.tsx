@@ -47,7 +47,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
     <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
       <button
         type="button"
-        className="modal-backdrop absolute inset-0 bg-heading/55 backdrop-blur-[2px]"
+        className="modal-backdrop absolute inset-0 bg-black/55 backdrop-blur-[2px]"
         aria-label="Tutup dialog"
         onClick={onClose}
         tabIndex={-1}
