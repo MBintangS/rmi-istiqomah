@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  /* Primary - hijau RMI */
-  --color-primary: #4e830a;
-  --color-primary-dark: #3c5e0a;
-  --color-primary-light: #6b9129;
+  /* Primary - hijau RMI (RGB channels for Tailwind opacity: bg-primary/10) */
+  --color-primary: 78 131 10;
+  --color-primary-dark: 60 94 10;
+  --color-primary-light: 107 145 41;
 
   /* Secondary - emas */
-  --color-secondary: #d4af37;
-  --color-secondary-alt: #c0a34e;
+  --color-secondary: 212 175 55;
+  --color-secondary-alt: 192 163 78;
 
   /* White modern neutrals */
-  --color-background: #ffffff;
-  --color-surface: #f4f5f2;
-  --color-foreground: #1f2937;
-  --color-heading: #14200a;
+  --color-background: 255 255 255;
+  --color-surface: 244 245 242;
+  --color-foreground: 31 41 55;
+  --color-heading: 20 32 10;
 
   /* Accent greens */
-  --color-accent-green: #94a658;
-  --color-accent-green-2: #477909;
-  --color-accent-green-3: #598712;
+  --color-accent-green: 148 166 88;
+  --color-accent-green-2: 71 121 9;
+  --color-accent-green-3: 89 135 18;
 }
 
 @layer base {
@@ -51,7 +51,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid rgb(var(--color-primary));
     outline-offset: 2px;
   }
 
@@ -102,10 +102,15 @@
     animation: modal-panel-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  .page-hero {
+    animation: page-hero-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .modal-backdrop,
     .modal-panel,
-    .drawer-slide-in {
+    .drawer-slide-in,
+    .page-hero {
       animation: none;
     }
   }
@@ -137,5 +142,16 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes page-hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

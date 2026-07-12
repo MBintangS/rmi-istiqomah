@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const withAlpha = (cssVar: string) => `rgb(var(${cssVar}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,22 +12,22 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "var(--color-primary)",
-          dark: "var(--color-primary-dark)",
-          light: "var(--color-primary-light)",
+          DEFAULT: withAlpha("--color-primary"),
+          dark: withAlpha("--color-primary-dark"),
+          light: withAlpha("--color-primary-light"),
         },
         secondary: {
-          DEFAULT: "var(--color-secondary)",
-          alt: "var(--color-secondary-alt)",
+          DEFAULT: withAlpha("--color-secondary"),
+          alt: withAlpha("--color-secondary-alt"),
         },
-        background: "var(--color-background)",
-        surface: "var(--color-surface)",
-        foreground: "var(--color-foreground)",
-        heading: "var(--color-heading)",
+        background: withAlpha("--color-background"),
+        surface: withAlpha("--color-surface"),
+        foreground: withAlpha("--color-foreground"),
+        heading: withAlpha("--color-heading"),
         accent: {
-          green: "var(--color-accent-green)",
-          "green-2": "var(--color-accent-green-2)",
-          "green-3": "var(--color-accent-green-3)",
+          green: withAlpha("--color-accent-green"),
+          "green-2": withAlpha("--color-accent-green-2"),
+          "green-3": withAlpha("--color-accent-green-3"),
         },
       },
       fontFamily: {
