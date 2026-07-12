@@ -6,7 +6,6 @@ export const artikelFormSchema = z.object({
   category: z.string().min(1, "Kategori wajib dipilih"),
   thumbnail: z.string().optional(),
   status: z.enum(["draft", "published"]),
-  excerpt: z.string().optional(),
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),
 });

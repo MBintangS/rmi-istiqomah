@@ -1,3 +1,4 @@
+export { RichTextContent, richTextContentClassName } from "./RichTextContent";
 export { Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from "./Breadcrumb";
 export { Drawer, type DrawerProps } from "./Drawer";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { Button, EmptyState } from "@/components/ui";
+import { Button, EmptyState, RichTextContent } from "@/components/ui";
 import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
@@ -82,10 +82,7 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
               <div>
                 <h2 className="mb-4">Tentang Program</h2>
                 {program.content ? (
-                  <div
-                    className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: program.content }}
-                  />
+                  <RichTextContent html={program.content} />
                 ) : (
                   <p className="text-body text-foreground/80">{program.description}</p>
                 )}

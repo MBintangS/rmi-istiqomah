@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Badge, EmptyState } from "@/components/ui";
+import { Badge, EmptyState, RichTextContent } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { useKegiatanBySlug } from "@/hooks/useKegiatanBySlug";
 import { useSettingsValue } from "@/hooks/useSettings";
@@ -113,10 +113,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
             <div className="space-y-6 lg:col-span-2">
               <div>
                 <h3 className="mb-4">Deskripsi Kegiatan</h3>
-                <div
-                  className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: event.description }}
-                />
+                <RichTextContent html={event.description} />
               </div>
 
               <KegiatanDokumentasi eventId={event.id} eventTitle={event.title} />

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/home/ArticleCard";
 import { ShareButtons } from "@/components/articles/ShareButtons";
-import { Badge, EmptyState } from "@/components/ui";
+import { Badge, EmptyState, RichTextContent } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ArtikelDetailSkeleton } from "@/components/artikel/ArtikelDetailSkeleton";
 import { useArticle, useArticles } from "@/hooks";
@@ -94,10 +94,7 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
 
           {/* <p className="text-body mb-8 text-lg text-foreground/80">{article.excerpt}</p> */}
 
-          <div
-            className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+          <RichTextContent html={article.content} />
 
           <ShareButtons title={article.title} path={articlePath} className="mt-10 border-t border-foreground/10 pt-6" />
         </div>
