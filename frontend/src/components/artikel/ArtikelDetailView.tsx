@@ -101,7 +101,7 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
             />
           </div>
 
-          <p className="text-body mb-8 text-lg text-foreground/80">{article.excerpt}</p>
+          {/* <p className="text-body mb-8 text-lg text-foreground/80">{article.excerpt}</p> */}
 
           <div
             className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
