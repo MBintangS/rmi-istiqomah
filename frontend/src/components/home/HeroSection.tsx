@@ -14,10 +14,8 @@ export function HeroSection() {
   const settings = useSettingsValue();
   const { data: banners } = useBanners();
   const prefersReduced = useReducedMotion();
-  // Prefer-reduced-motion is unknown on the server — apply only after mount.
   const reduce = mounted && !!prefersReduced;
 
-  // Same image on SSR + first client paint; swap to CMS banner after mount.
   const heroBanner = mounted ? banners?.[0] : undefined;
   const heroImage = heroBanner?.image || PLACEHOLDER_IMAGE;
   const heroAlt = heroBanner?.title ?? "Kegiatan remaja masjid";
@@ -25,30 +23,53 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-background">
-      <div className="absolute inset-y-0 right-0 hidden w-[46%] bg-surface lg:block" aria-hidden="true" />
-      <div className="absolute -right-24 top-24 hidden h-72 w-72 rounded-full bg-primary/10 blur-3xl lg:block" aria-hidden="true" />
+      {/* Right panel - green atmosphere like PageHero */}
+      <div
+        className="absolute inset-y-0 right-0 hidden w-[46%] bg-white lg:block"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] bg-[radial-gradient(ellipse_at_top_right,_rgba(78,131,10,0.14),_transparent_55%)] lg:block"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -right-16 bottom-8 hidden h-64 w-64 rounded-full bg-primary/10 blur-3xl lg:block"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute right-[8%] top-28 hidden h-40 w-40 rounded-full bg-primary/[0.08] blur-2xl lg:block"
+        aria-hidden="true"
+      />
 
-      <div className="relative mx-auto grid min-h-[100dvh] max-w-6xl items-center gap-10 px-4 pb-16 pt-24 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:pb-20">
+      <div className="relative mx-auto grid min-h-[100dvh] max-w-6xl items-center gap-12 px-4 pb-16 pt-24 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-20">
         <motion.div
-          className="lg:col-span-6"
+          className="relative lg:col-span-6"
           initial={reduce ? false : "hidden"}
           animate="visible"
           variants={reduce ? undefined : heroOrchestration}
         >
+          <div
+            className="mb-6 h-1 w-12 rounded-full bg-primary"
+            aria-hidden="true"
+          />
+
           <motion.p
             variants={reduce ? undefined : heroItem}
-            className="mb-5 text-sm font-medium uppercase tracking-[0.22em] text-primary"
+            className="mb-4 text-[11px] font-medium uppercase tracking-[0.18em] text-primary sm:text-xs"
           >
             {tagline}
           </motion.p>
-          {/* Keep brand/title visible for LCP — no opacity:0 */}
-          <h1 className="max-w-[11ch] text-heading">{siteName}</h1>
+
+          {/* Keep brand visible for LCP — no opacity:0 */}
+          <h1 className="max-w-[12ch] text-heading">{siteName}</h1>
+
           <motion.p
             variants={reduce ? undefined : heroItem}
-            className="text-body mt-6 max-w-[38ch] text-foreground/75"
+            className="text-body mt-6 max-w-[40ch] text-foreground/70"
           >
             {about}
           </motion.p>
+
           <motion.div
             variants={reduce ? undefined : heroItem}
             className="mt-9 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row"
@@ -64,36 +85,46 @@ export function HeroSection() {
 
         <motion.div
           className="relative lg:col-span-6"
-          initial={reduce ? false : { x: 40 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          initial={reduce ? false : { opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
         >
-          <motion.div
-            className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/6] lg:ml-auto lg:max-w-lg"
-            initial={reduce ? false : { scale: 1.06 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          >
-            <Image
-              src={heroImage}
-              alt={heroAlt}
-              fill
-              priority
-              fetchPriority="high"
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 42vw"
+          <div className="relative mb-8 lg:mb-6 lg:ml-auto lg:max-w-md">
+            <div
+              className="absolute -inset-3 hidden rounded-rmi border border-primary/20 lg:block"
+              aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-heading/50 via-transparent to-transparent" />
-          </motion.div>
-          <motion.div
-            className="absolute -bottom-6 left-4 hidden max-w-[220px] rounded-rmi border border-foreground/10 bg-background p-4 shadow-soft sm:block lg:-left-10"
-            initial={reduce ? false : { y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
-          >
-            <p className="font-display text-2xl font-bold text-primary">{siteName}</p>
-            <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
-          </motion.div>
+            <motion.div
+              className="relative aspect-[4/5] overflow-hidden rounded-rmi bg-primary/10 sm:aspect-[5/6]"
+              initial={reduce ? false : { scale: 1.04 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+            >
+              <Image
+                src={heroImage}
+                alt={heroAlt}
+                fill
+                priority
+                fetchPriority="high"
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 28rem"
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-heading/35 via-transparent to-transparent"
+                aria-hidden="true"
+              />
+            </motion.div>
+
+            <motion.div
+              className="absolute -bottom-5 left-3 z-10 max-w-[220px] rounded-rmi border border-foreground/10 bg-background/95 p-4 shadow-soft backdrop-blur-sm sm:-bottom-6 sm:left-4 lg:-left-10"
+              initial={reduce ? false : { y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            >
+              <p className="font-display text-xl font-bold text-primary sm:text-2xl">{siteName}</p>
+              <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
