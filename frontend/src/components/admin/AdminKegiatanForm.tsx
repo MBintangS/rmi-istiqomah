@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { Button, Input, Label, Select, Spinner, Textarea } from "@/components/ui";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { Button, Input, Label, Select, Spinner } from "@/components/ui";
 import { useKategori } from "@/hooks/useKategori";
 import { getApiErrorMessage } from "@/lib/api";
 import { dateInputToIso, toDateInputValue } from "@/lib/date-input";
@@ -30,6 +31,7 @@ export function AdminKegiatanForm({ mode, initial }: AdminKegiatanFormProps) {
 
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     watch,
@@ -129,14 +131,17 @@ export function AdminKegiatanForm({ mode, initial }: AdminKegiatanFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" required>
-              Deskripsi
-            </Label>
-            <Textarea
-              id="description"
-              rows={6}
-              error={Boolean(errors.description)}
-              {...register("description")}
+            <Label required>Deskripsi</Label>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={Boolean(errors.description)}
+                />
+              )}
             />
             {errors.description && (
               <p className="text-caption text-red-600">{errors.description.message}</p>

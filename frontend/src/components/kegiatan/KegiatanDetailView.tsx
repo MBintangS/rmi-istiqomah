@@ -56,12 +56,13 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
   const event = mapKegiatanListItem(data);
   const status = eventStatusLabels[event.status];
   const mapEmbed = event.locationMap ?? settings.googleMapsEmbed;
+  const plainDescription = event.description.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
   const eventLd = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: event.title,
-    description: event.description,
+    description: plainDescription,
     startDate: event.dateStart,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -95,7 +96,6 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
             <Badge variant="category">{event.category.name}</Badge>
           </div>
           <h2 className="mt-3">{event.title}</h2>
-          <p className="text-body mt-3 max-w-2xl text-foreground/70">{event.description}</p>
         </div>
       </section>
 
@@ -116,7 +116,10 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
             <div className="space-y-6 lg:col-span-2">
               <div>
                 <h2 className="mb-4">Deskripsi Kegiatan</h2>
-                <p className="text-body text-foreground/80">{event.description}</p>
+                <div
+                  className="text-body space-y-4 text-foreground/80 [&_p]:leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: event.description }}
+                />
               </div>
 
               {event.location && (
