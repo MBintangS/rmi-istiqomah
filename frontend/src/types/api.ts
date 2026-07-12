@@ -376,6 +376,17 @@ export interface ContactSubmitData {
   name: string;
   email: string;
   subject: string;
+  whatsapp: string | null;
+  createdAt: string;
+}
+
+export interface ContactMessageListItem {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  whatsapp: string | null;
   createdAt: string;
 }
 

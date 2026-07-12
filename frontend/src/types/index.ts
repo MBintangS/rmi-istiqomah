@@ -44,6 +44,7 @@ export type {
   DokumenListParams,
   DokumenListResult,
   ContactSubmitData,
+  ContactMessageListItem,
   AuthRole,
   AuthUser,
   AdminUserListItem,

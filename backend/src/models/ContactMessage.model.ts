@@ -5,6 +5,7 @@ export interface IContactMessage {
   email: string;
   subject: string;
   message: string;
+  whatsapp?: string | null;
   createdAt?: Date;
 }
 
@@ -32,6 +33,11 @@ const contactMessageSchema = new Schema<IContactMessage>(
       type: String,
       required: [true, "Pesan wajib diisi"],
       trim: true,
+    },
+    whatsapp: {
+      type: String,
+      trim: true,
+      default: null,
     },
   },
   {

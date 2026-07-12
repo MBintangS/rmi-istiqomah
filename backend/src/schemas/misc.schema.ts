@@ -24,6 +24,11 @@ export const contactFormSchema = z.object({
   email: z.string().trim().email("Email tidak valid"),
   subject: z.string().trim().min(1, "Subjek wajib diisi"),
   message: z.string().trim().min(1, "Pesan wajib diisi"),
+  whatsapp: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value && value.length > 0 ? value : undefined)),
 });
 
 export const searchQuerySchema = z.object({

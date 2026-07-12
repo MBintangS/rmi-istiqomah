@@ -22,11 +22,16 @@ export function ContactForm() {
       email: "",
       subject: "",
       message: "",
+      whatsapp: "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: submitContact,
+    mutationFn: (values: ContactFormValues) =>
+      submitContact({
+        ...values,
+        whatsapp: values.whatsapp?.trim() || undefined,
+      }),
     onSuccess: (response) => {
       toast.success(response.message ?? "Pesan berhasil dikirim");
       reset();
@@ -62,6 +67,18 @@ export function ContactForm() {
           {...register("email")}
         />
         {errors.email && <p className="text-caption text-red-600">{errors.email.message}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="whatsapp">Nomor WhatsApp</Label>
+        <Input
+          id="whatsapp"
+          type="tel"
+          placeholder="08xxxxxxxxxx"
+          error={Boolean(errors.whatsapp)}
+          {...register("whatsapp")}
+        />
+        {errors.whatsapp && <p className="text-caption text-red-600">{errors.whatsapp.message}</p>}
       </div>
 
       <div className="space-y-2">

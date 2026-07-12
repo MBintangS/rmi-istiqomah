@@ -71,6 +71,10 @@ export const queryKeys = {
     all: ["dashboard"] as const,
     stats: () => [...queryKeys.dashboard.all, "stats"] as const,
   },
+  contact: {
+    all: ["contact"] as const,
+    list: () => [...queryKeys.contact.all, "list"] as const,
+  },
   kategori: {
     all: ["kategori"] as const,
     list: (type?: string) => [...queryKeys.kategori.all, "list", type ?? "all"] as const,

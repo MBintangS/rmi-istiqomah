@@ -1072,6 +1072,31 @@ List dokumen unduhan.
 
 ## Contact
 
+### `GET /contact`
+
+List pesan masuk dari form kontak (terbaru dulu).
+
+**Auth:** Admin
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "name": "Siti",
+      "email": "siti@mail.com",
+      "subject": "Gabung RMI",
+      "message": "Saya ingin bergabung dengan RMI.",
+      "whatsapp": "081234567890",
+      "createdAt": "..."
+    }
+  ]
+}
+```
+
 ### `POST /contact`
 
 Kirim pesan dari form kontak. Pesan disimpan ke database.
@@ -1085,7 +1110,8 @@ Kirim pesan dari form kontak. Pesan disimpan ke database.
   "name": "Siti",
   "email": "siti@mail.com",
   "subject": "Gabung RMI",
-  "message": "Saya ingin bergabung dengan RMI."
+  "message": "Saya ingin bergabung dengan RMI.",
+  "whatsapp": "081234567890"
 }
 ```
 
@@ -1095,6 +1121,7 @@ Kirim pesan dari form kontak. Pesan disimpan ke database.
 | `email` | ✅ | Email valid |
 | `subject` | ✅ | Subjek pesan |
 | `message` | ✅ | Isi pesan |
+| `whatsapp` | — | Nomor WhatsApp (opsional) |
 
 **Response `201`:**
 
@@ -1106,6 +1133,7 @@ Kirim pesan dari form kontak. Pesan disimpan ke database.
     "name": "Siti",
     "email": "siti@mail.com",
     "subject": "Gabung RMI",
+    "whatsapp": "081234567890",
     "createdAt": "..."
   },
   "message": "Pesan berhasil dikirim"
@@ -1381,6 +1409,8 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | POST/GET /contact: field whatsapp opsional |
+| 2026-07-12 | — | GET /contact (admin list pesan kontak) |
 | 2026-07-12 | — | GET/POST/PUT/DELETE /donasi (rekening donasi) |
 | 2026-07-12 | — | Hapus modul Agenda (pakai Kegiatan saja) |
 | 2026-07-11 | 43 | Base URL production: https://rmi-istiqomah-api.onrender.com/api |
