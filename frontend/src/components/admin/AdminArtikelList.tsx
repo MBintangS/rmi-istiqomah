@@ -140,6 +140,7 @@ export function AdminArtikelList() {
               <thead className="border-b border-foreground/10 bg-surface/80 text-[11px] font-medium uppercase tracking-wide text-foreground/55">
                 <tr>
                   <th className="px-3.5 py-2.5 font-medium">Judul</th>
+                  <th className="px-3.5 py-2.5 font-medium">Author</th>
                   <th className="px-3.5 py-2.5 font-medium">Kategori</th>
                   <th className="px-3.5 py-2.5 font-medium">Status</th>
                   <th className="px-3.5 py-2.5 font-medium">Diperbarui</th>
@@ -152,6 +153,9 @@ export function AdminArtikelList() {
                     <td className="px-3.5 py-2.5">
                       <p className="font-medium text-heading">{item.title}</p>
                       <p className="text-caption text-foreground/50">/{item.slug}</p>
+                    </td>
+                    <td className="px-3.5 py-2.5 text-foreground/70">
+                      {item.author?.name ?? "-"}
                     </td>
                     <td className="px-3.5 py-2.5 text-foreground/70">
                       {item.category?.name ?? "-"}
