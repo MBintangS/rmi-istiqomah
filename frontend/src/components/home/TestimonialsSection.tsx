@@ -108,7 +108,7 @@ export function TestimonialsSection() {
           <div className="mt-14">
             <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="relative lg:col-span-2">
-                <div className="relative mx-auto aspect-[4/5] w-full max-w-[5rem] overflow-hidden rounded-rmi bg-primary/10 sm:max-w-[6rem] lg:mx-0 lg:max-w-[6.5rem]">
+                <div className="relative aspect-[4/5] w-full max-w-[5rem] overflow-hidden rounded-rmi bg-primary/10 sm:max-w-[6rem] lg:mx-0 lg:max-w-[6.5rem]">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={current.id}
