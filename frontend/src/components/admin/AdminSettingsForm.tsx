@@ -38,10 +38,6 @@ export function AdminSettingsForm() {
       youtube: "",
       tiktok: "",
       googleMapsEmbed: "",
-      totalEvents: 0,
-      totalMembers: 0,
-      totalPengurus: 0,
-      establishedYear: 2010,
     },
   });
 
@@ -62,10 +58,6 @@ export function AdminSettingsForm() {
       youtube: data.socialMedia.youtube ?? "",
       tiktok: data.socialMedia.tiktok ?? "",
       googleMapsEmbed: data.googleMapsEmbed ?? "",
-      totalEvents: data.stats.totalEvents,
-      totalMembers: data.stats.totalMembers,
-      totalPengurus: data.stats.totalPengurus,
-      establishedYear: data.stats.establishedYear,
     });
   }, [data, reset]);
 
@@ -91,12 +83,6 @@ export function AdminSettingsForm() {
           tiktok: values.tiktok || undefined,
         },
         googleMapsEmbed: values.googleMapsEmbed || "",
-        stats: {
-          totalEvents: values.totalEvents,
-          totalMembers: values.totalMembers,
-          totalPengurus: values.totalPengurus,
-          establishedYear: values.establishedYear,
-        },
       }),
     onSuccess: (response) => {
       toast.success(response.message ?? "Pengaturan berhasil disimpan");
@@ -251,56 +237,6 @@ export function AdminSettingsForm() {
           <div className="space-y-2">
             <Label htmlFor="tiktok">TikTok</Label>
             <Input id="tiktok" placeholder="https://tiktok.com/..." {...register("tiktok")} />
-          </div>
-        </div>
-      </section>
-
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-heading">Statistik</h3>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="totalEvents" required>
-              Total Kegiatan
-            </Label>
-            <Input
-              id="totalEvents"
-              type="number"
-              min={0}
-              {...register("totalEvents", { valueAsNumber: true })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="totalMembers" required>
-              Total Anggota
-            </Label>
-            <Input
-              id="totalMembers"
-              type="number"
-              min={0}
-              {...register("totalMembers", { valueAsNumber: true })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="totalPengurus" required>
-              Total Pengurus
-            </Label>
-            <Input
-              id="totalPengurus"
-              type="number"
-              min={0}
-              {...register("totalPengurus", { valueAsNumber: true })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="establishedYear" required>
-              Tahun Berdiri
-            </Label>
-            <Input
-              id="establishedYear"
-              type="number"
-              min={1900}
-              {...register("establishedYear", { valueAsNumber: true })}
-            />
           </div>
         </div>
       </section>

@@ -44,10 +44,6 @@ export const settingsFormSchema = z.object({
   youtube: z.string().optional(),
   tiktok: z.string().optional(),
   googleMapsEmbed: z.string().optional(),
-  totalEvents: z.number().int().min(0),
-  totalMembers: z.number().int().min(0),
-  totalPengurus: z.number().int().min(0),
-  establishedYear: z.number().int().min(1900).max(2100),
 });
 
 export type SettingsFormValues = z.infer<typeof settingsFormSchema>;

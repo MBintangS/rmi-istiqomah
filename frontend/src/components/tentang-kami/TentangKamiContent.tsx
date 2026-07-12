@@ -11,7 +11,7 @@ import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapPengurusListItem } from "@/lib/mappers/pengurus";
 
 export function TentangKamiContent() {
-  const { siteName, about, vision, mission, stats } = useSettingsValue();
+  const { siteName, about, vision, mission } = useSettingsValue();
   const { data: banners } = useBanners();
   const { data: pengurusData, isLoading, isError, error } = usePengurus();
 
@@ -38,9 +38,9 @@ export function TentangKamiContent() {
             <h2>{siteName}</h2>
             <p className="text-body text-foreground/80">{about}</p>
             <p className="text-body text-foreground/80">
-              Sejak {stats.establishedYear}, {siteName} telah menjadi motor penggerak kegiatan
-              keagamaan dan sosial di lingkungan masjid, dengan fokus pada pembinaan karakter remaja
-              muslim yang aktif, kreatif, dan berakhlak mulia.
+              {siteName} menjadi motor penggerak kegiatan keagamaan dan sosial di lingkungan
+              masjid, dengan fokus pada pembinaan karakter remaja muslim yang aktif, kreatif, dan
+              berakhlak mulia.
             </p>
           </div>
         </div>

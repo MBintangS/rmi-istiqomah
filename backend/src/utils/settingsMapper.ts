@@ -17,7 +17,6 @@ export function formatSettings(settings: SettingsLike) {
     email: settings.email,
     socialMedia: settings.socialMedia,
     googleMapsEmbed: settings.googleMapsEmbed,
-    stats: settings.stats,
     updatedAt: settings.updatedAt,
   };
 }

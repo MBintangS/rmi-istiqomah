@@ -72,10 +72,6 @@ export async function updateSettings(req: Request, res: Response): Promise<void>
     settings.socialMedia = { ...settings.socialMedia, ...data.socialMedia };
   }
 
-  if (data.stats) {
-    settings.stats = { ...settings.stats, ...data.stats };
-  }
-
   await settings.save();
 
   sendSuccess(res, formatSettings(settings), { message: "Pengaturan berhasil diperbarui" });

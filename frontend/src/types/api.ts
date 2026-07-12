@@ -232,18 +232,17 @@ export interface DokumenWritePayload {
   isPublished?: boolean;
 }
 
-export interface SettingsStats {
-  totalEvents: number;
-  totalMembers: number;
-  totalPengurus: number;
-  establishedYear: number;
-}
-
 export interface SettingsSocialMedia {
   instagram: string | null;
   facebook: string | null;
   youtube: string | null;
   tiktok: string | null;
+}
+
+export interface PublicContentCounts {
+  totalArtikel: number;
+  totalKegiatan: number;
+  totalGaleri: number;
 }
 
 export interface SettingsData {
@@ -259,7 +258,6 @@ export interface SettingsData {
   email: string;
   socialMedia: SettingsSocialMedia;
   googleMapsEmbed: string;
-  stats: SettingsStats;
   updatedAt: string;
 }
 
@@ -343,7 +341,6 @@ export interface SettingsWritePayload {
   email?: string;
   socialMedia?: Partial<SettingsSocialMedia>;
   googleMapsEmbed?: string;
-  stats?: Partial<SettingsStats>;
 }
 
 export interface DokumenListItem {

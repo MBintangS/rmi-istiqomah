@@ -19,6 +19,5 @@ export function mapSettingsData(data: SettingsData): SiteSettings {
       tiktok: data.socialMedia.tiktok ?? undefined,
     },
     googleMapsEmbed: data.googleMapsEmbed,
-    stats: data.stats,
   };
 }

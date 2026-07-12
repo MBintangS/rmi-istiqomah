@@ -43,13 +43,6 @@ const socialMediaSchema = z.object({
   tiktok: z.string().trim().optional(),
 });
 
-const siteStatsSchema = z.object({
-  totalEvents: z.coerce.number().int().nonnegative().optional(),
-  totalMembers: z.coerce.number().int().nonnegative().optional(),
-  totalPengurus: z.coerce.number().int().nonnegative().optional(),
-  establishedYear: z.coerce.number().int().optional(),
-});
-
 export const updateSettingsSchema = z.object({
   siteName: z.string().trim().min(1).optional(),
   tagline: z.string().trim().min(1).optional(),
@@ -62,7 +55,6 @@ export const updateSettingsSchema = z.object({
   email: z.string().trim().email().optional(),
   socialMedia: socialMediaSchema.optional(),
   googleMapsEmbed: z.string().optional(),
-  stats: siteStatsSchema.optional(),
 });
 
 export type CreateDokumenInput = z.infer<typeof createDokumenSchema>;

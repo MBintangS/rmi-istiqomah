@@ -21,7 +21,7 @@ export function HeroSection() {
   const heroBanner = mounted ? banners?.[0] : undefined;
   const heroImage = heroBanner?.image || PLACEHOLDER_IMAGE;
   const heroAlt = heroBanner?.title ?? "Kegiatan remaja masjid";
-  const { siteName, tagline, about, stats } = settings;
+  const { siteName, tagline, about } = settings;
 
   return (
     <section className="relative overflow-hidden bg-background">
@@ -91,7 +91,7 @@ export function HeroSection() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
           >
-            <p className="font-display text-2xl font-bold text-primary">{stats.establishedYear}</p>
+            <p className="font-display text-2xl font-bold text-primary">{siteName}</p>
             <p className="text-caption mt-1 text-foreground/70">{tagline}</p>
           </motion.div>
         </motion.div>

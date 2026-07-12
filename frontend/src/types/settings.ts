@@ -5,13 +5,6 @@ export interface SocialMedia {
   tiktok?: string;
 }
 
-export interface SiteStats {
-  totalEvents: number;
-  totalMembers: number;
-  totalPengurus: number;
-  establishedYear: number;
-}
-
 export interface SiteSettings {
   siteName: string;
   tagline: string;
@@ -24,7 +17,6 @@ export interface SiteSettings {
   email: string;
   socialMedia: SocialMedia;
   googleMapsEmbed: string;
-  stats: SiteStats;
 }
 
 export interface GaleriImage {

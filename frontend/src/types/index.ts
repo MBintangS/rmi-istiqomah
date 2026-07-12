@@ -34,8 +34,8 @@ export type {
   KategoriWritePayload,
   SettingsWritePayload,
   SettingsData,
-  SettingsStats,
   SettingsSocialMedia,
+  PublicContentCounts,
   BannerListItem,
   PengurusListItem,
   TestimoniListItem,
@@ -61,4 +61,4 @@ export type { Artikel, ArtikelStatus, Kategori, KategoriType } from "./artikel";
 export type { Dokumen } from "./dokumen";
 export type { Kegiatan, KegiatanStatus } from "./kegiatan";
 export type { Banner, Pengurus, Program, Testimoni } from "./program";
-export type { Galeri, GaleriImage, SiteSettings, SiteStats, SocialMedia } from "./settings";
+export type { Galeri, GaleriImage, SiteSettings, SocialMedia } from "./settings";

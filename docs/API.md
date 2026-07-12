@@ -1142,6 +1142,31 @@ Kirim pesan dari form kontak. Pesan disimpan ke database.
 
 ---
 
+## Stats (publik)
+
+### `GET /stats/count`
+
+Hitung konten terbit untuk statistik halaman publik (beranda).
+
+**Auth:** Tidak
+
+**Aturan:** Hanya yang published (`artikel.status = published`, `kegiatan.isPublished = true`). `totalGaleri` = jumlah **gambar** di semua album galeri yang terbit (bukan jumlah album).
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "totalArtikel": 10,
+    "totalKegiatan": 6,
+    "totalGaleri": 5
+  }
+}
+```
+
+---
+
 ## Dashboard
 
 ### `GET /dashboard/stats`
@@ -1259,12 +1284,6 @@ Pengaturan situs (singleton). Auto-create default jika belum ada.
       "tiktok": null
     },
     "googleMapsEmbed": "",
-    "stats": {
-      "totalEvents": 0,
-      "totalMembers": 0,
-      "totalPengurus": 0,
-      "establishedYear": 2010
-    },
     "updatedAt": "..."
   }
 }
@@ -1276,7 +1295,9 @@ Update pengaturan situs (partial).
 
 **Auth:** Admin
 
-**Body:** semua field opsional — `siteName`, `tagline`, `about`, `vision`, `mission`, `address`, `phone`, `whatsapp`, `email`, `socialMedia`, `googleMapsEmbed`, `stats`
+**Body:** semua field opsional — `siteName`, `tagline`, `about`, `vision`, `mission`, `address`, `phone`, `whatsapp`, `email`, `socialMedia`, `googleMapsEmbed`
+
+> Statistik publik (total artikel/kegiatan/galeri) dihitung otomatis via `GET /stats/count`, bukan dari pengaturan.
 
 **Response `200`:** settings terbaru + `message`
 
@@ -1409,6 +1430,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | GET /stats/count (total artikel/kegiatan/galeri publik); hapus stats dari PUT /settings |
 | 2026-07-12 | — | POST/GET /contact: field whatsapp opsional |
 | 2026-07-12 | — | GET /contact (admin list pesan kontak) |
 | 2026-07-12 | — | GET/POST/PUT/DELETE /donasi (rekening donasi) |
