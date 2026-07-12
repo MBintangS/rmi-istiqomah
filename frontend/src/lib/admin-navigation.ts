@@ -31,7 +31,6 @@ export const adminNavItems: AdminNavItem[] = [
   { label: "Dashboard", href: "/admin/dashboard", group: "utama" },
   { label: "Artikel", href: "/admin/artikel", group: "konten" },
   { label: "Kegiatan", href: "/admin/kegiatan", group: "konten" },
-  { label: "Agenda", href: "/admin/agenda", group: "konten" },
   { label: "Galeri", href: "/admin/galeri", group: "media" },
   { label: "Banner", href: "/admin/banner", group: "media" },
   { label: "Pengurus", href: "/admin/pengurus", group: "organisasi" },

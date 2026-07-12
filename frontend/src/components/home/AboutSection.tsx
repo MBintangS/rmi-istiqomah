@@ -19,10 +19,10 @@ export function AboutSection() {
     : PLACEHOLDER_IMAGE;
 
   return (
-    <MotionSection tone="slide" className="bg-background py-24 sm:py-32">
+    <MotionSection tone="slide" className="bg-background py-16 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-rmi lg:col-span-5">
+        <div className="grid items-start gap-14 sm:grid-cols-12 sm:gap-16">
+          <div className="hidden sm:block relative aspect-[4/5] overflow-hidden rounded-rmi sm:lg:col-span-5">
             <Image
               src={aboutImage}
               alt="Aktivitas Remaja Masjid Istiqomah"
@@ -32,8 +32,8 @@ export function AboutSection() {
             />
           </div>
 
-          <div className="space-y-10 lg:col-span-7">
-            <div className="space-y-5">
+          <div className="space-y-10 sm:lg:col-span-7">
+            <div className="space-y-5 sm:lg:col-span-7">
               <h2 className="max-w-[14ch]">Kenali Remaja Masjid Istiqomah</h2>
               <p className="text-body max-w-[58ch] text-foreground/75">{about}</p>
               <Button href="/tentang-kami" variant="outline">

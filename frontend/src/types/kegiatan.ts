@@ -18,15 +18,3 @@ export interface Kegiatan {
   isPublished: boolean;
   createdAt: string;
 }
-
-export interface Agenda {
-  id: string;
-  title: string;
-  date: string;
-  time?: string;
-  location: string;
-  description: string;
-  eventId?: string;
-  isPublished: boolean;
-  createdAt: string;
-}

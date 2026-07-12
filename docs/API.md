@@ -35,7 +35,7 @@ Token didapat dari `POST /api/auth/login`. Role yang diizinkan untuk operasi adm
 
 ### Optional Auth
 
-Beberapa endpoint GET menerima token opsional. Jika token admin valid dikirim, response bisa menyertakan data non-publik (mis. artikel `draft`, kegiatan/agenda belum dipublish). Tanpa token, hanya data publik yang dikembalikan.
+Beberapa endpoint GET menerima token opsional. Jika token admin valid dikirim, response bisa menyertakan data non-publik (mis. artikel `draft`, kegiatan belum dipublish). Tanpa token, hanya data publik yang dikembalikan.
 
 ---
 
@@ -543,105 +543,6 @@ Slug auto-generate dari `title`.
 **Auth:** Admin — body partial
 
 ### `DELETE /kegiatan/:id`
-
-**Auth:** Admin
-
----
-
-## Agenda
-
-### `GET /agenda/upcoming`
-
-Agenda terdekat untuk beranda.
-
-**Auth:** Tidak
-
-**Aturan:**
-- Hanya `isPublished: true`
-- `date` ≥ hari ini (00:00 lokal server)
-- Sort `date` ascending
-- Maksimal **5** item
-
-**Response `200`:**
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": "...",
-      "title": "Agenda Besok",
-      "date": "2026-07-10T09:00:00.000Z",
-      "time": null,
-      "location": null,
-      "description": null,
-      "isPublished": true,
-      "event": null,
-      "createdAt": "...",
-      "updatedAt": "..."
-    }
-  ]
-}
-```
-
-Field `event` terisi jika terhubung ke kegiatan:
-
-```json
-"event": { "id": "...", "title": "Kajian Ahad Pagi", "slug": "kajian-ahad-pagi" }
-```
-
-### `GET /agenda`
-
-List agenda dengan paginasi.
-
-**Auth:** Optional (publik: hanya `isPublished: true`)
-
-**Query:**
-
-| Parameter | Type | Keterangan |
-|-----------|------|------------|
-| `page`, `limit`, `search` | — | Lihat [Query Umum](#query-parameters-umum-list) |
-| `sort` | string | `createdAt`, `updatedAt`, `date`, `title` (default: `date` ASC) |
-
-### `GET /agenda/:id`
-
-Detail agenda by MongoDB ObjectId.
-
-**Auth:** Optional (publik: hanya `isPublished: true`)
-
-### `POST /agenda`
-
-**Auth:** Admin
-
-**Body:**
-
-```json
-{
-  "title": "Agenda Besok",
-  "date": "2026-07-10T09:00:00.000Z",
-  "time": "09:00 WIB",
-  "location": "Masjid Istiqomah",
-  "description": "Deskripsi singkat",
-  "eventId": "6a4f73465908fe972d6223c8",
-  "isPublished": true
-}
-```
-
-| Field | Required | Keterangan |
-|-------|----------|------------|
-| `title` | ✅ | Judul agenda |
-| `date` | ✅ | ISO 8601 date |
-| `time`, `location`, `description` | — | Opsional |
-| `eventId` | — | ObjectId kegiatan terkait |
-| `isPublished` | — | `false` (default) |
-
-**Response `201`:** agenda + `message`
-
-### `PUT /agenda/:id`
-
-**Auth:** Admin — body partial
-
-### `DELETE /agenda/:id`
 
 **Auth:** Admin
 
@@ -1408,6 +1309,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | Hapus modul Agenda (pakai Kegiatan saja) |
 | 2026-07-11 | 43 | Base URL production: https://rmi-istiqomah-api.onrender.com/api |
 | 2026-07-10 | 40 | GET/POST/PUT/DELETE /users (Super Admin only) |
 | 2026-07-10 | 39 | PUT/DELETE /kategori/:id (blokir hapus jika masih dipakai) |

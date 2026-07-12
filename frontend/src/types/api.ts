@@ -150,41 +150,6 @@ export interface EventRef {
   slug: string;
 }
 
-export interface AgendaListItem {
-  id: string;
-  title: string;
-  date: string;
-  time: string | null;
-  location: string | null;
-  description: string | null;
-  isPublished: boolean;
-  event: EventRef | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface AgendaListParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  sort?: string;
-}
-
-export interface AgendaListResult {
-  items: AgendaListItem[];
-  pagination?: PaginationMeta;
-}
-
-export interface AgendaWritePayload {
-  title: string;
-  date: string;
-  time?: string;
-  location?: string;
-  description?: string;
-  eventId?: string;
-  isPublished?: boolean;
-}
-
 export interface GaleriImageItem {
   url: string;
   publicId: string | null;

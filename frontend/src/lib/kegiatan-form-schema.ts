@@ -26,15 +26,3 @@ export const kegiatanFormSchema = z
   );
 
 export type KegiatanFormValues = z.infer<typeof kegiatanFormSchema>;
-
-export const agendaFormSchema = z.object({
-  title: z.string().trim().min(3, "Judul minimal 3 karakter"),
-  date: z.string().min(1, "Tanggal wajib diisi"),
-  time: z.string().optional(),
-  location: z.string().optional(),
-  description: z.string().optional(),
-  eventId: z.string().optional(),
-  isPublished: z.boolean(),
-});
-
-export type AgendaFormValues = z.infer<typeof agendaFormSchema>;
