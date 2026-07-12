@@ -4,12 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { Button, EmptyState, Skeleton } from "@/components/ui";
+import { Button, EmptyState } from "@/components/ui";
 import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapProgramDetail } from "@/lib/mappers/program";
 import { ProgramRelatedKegiatan } from "@/components/program/ProgramRelatedKegiatan";
+import { ProgramDetailSkeleton } from "@/components/program/ProgramDetailSkeleton";
 
 interface ProgramDetailViewProps {
   slug: string;
@@ -19,12 +20,7 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
   const { data, isLoading, isError, error, refetch } = useProgram(slug);
 
   if (isLoading) {
-    return (
-      <div className="space-y-8">
-        <Skeleton className="aspect-[21/9] w-full rounded-rmi" />
-        <Skeleton variant="text" lines={8} />
-      </div>
-    );
+    return <ProgramDetailSkeleton />;
   }
 
   if (isError) {
