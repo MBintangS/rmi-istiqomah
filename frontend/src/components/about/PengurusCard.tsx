@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Pengurus } from "@/types";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 interface PengurusCardProps {
@@ -16,19 +17,13 @@ export function PengurusCard({ pengurus, className }: PengurusCardProps) {
       )}
     >
       <div className="relative mx-auto mt-6 aspect-square w-28 overflow-hidden rounded-full bg-primary/10 sm:w-32">
-        {pengurus.photo ? (
-          <Image
-            src={pengurus.photo}
-            alt={pengurus.name}
-            fill
-            className="object-cover"
-            sizes="128px"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-2xl font-semibold text-primary">
-            {pengurus.name.charAt(0)}
-          </div>
-        )}
+        <Image
+          src={pengurus.photo || PLACEHOLDER_IMAGE}
+          alt={pengurus.name}
+          fill
+          className="object-cover"
+          sizes="128px"
+        />
       </div>
 
       <div className="space-y-1 p-5">

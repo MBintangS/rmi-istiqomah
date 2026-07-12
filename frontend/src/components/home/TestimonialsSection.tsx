@@ -7,6 +7,7 @@ import { MotionSection } from "@/components/home/MotionSection";
 import { useTestimoni } from "@/hooks/useTestimoni";
 import { getApiErrorMessage } from "@/lib/api";
 import { mapTestimoniListItem } from "@/lib/mappers/testimoni";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function TestimonialsSection() {
@@ -58,19 +59,13 @@ export function TestimonialsSection() {
                 </blockquote>
                 <figcaption className="mt-8 flex items-center gap-4">
                   <div className="relative h-12 w-12 overflow-hidden rounded-full bg-primary/10">
-                    {current.photo ? (
-                      <Image
-                        src={current.photo}
-                        alt={current.name}
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-primary">
-                        {current.name.charAt(0)}
-                      </div>
-                    )}
+                    <Image
+                      src={current.photo || PLACEHOLDER_IMAGE}
+                      alt={current.name}
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
                   </div>
                   <div>
                     <p className="font-semibold text-heading">{current.name}</p>

@@ -6,6 +6,7 @@ import { Button, EmptyState, Skeleton } from "@/components/ui";
 import { MotionSection } from "@/components/home/MotionSection";
 import { useGaleri } from "@/hooks/useGaleri";
 import { getGalleryPreviewImages } from "@/lib/mappers/galeri";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function GalleryPreviewSection() {
@@ -56,7 +57,7 @@ export function GalleryPreviewSection() {
                 )}
               >
                 <Image
-                  src={image.url}
+                  src={image.url || PLACEHOLDER_IMAGE}
                   alt={image.caption}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

@@ -11,6 +11,7 @@ import { formatEventDate } from "@/lib/format-date";
 import { eventStatusLabels } from "@/lib/events";
 import { getApiErrorMessage } from "@/lib/api";
 import { mapKegiatanListItem } from "@/lib/mappers/kegiatan";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 interface KegiatanDetailViewProps {
@@ -73,7 +74,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
       name: SITE_NAME,
       url: SITE_URL,
     },
-    image: event.thumbnail || undefined,
+    image: event.thumbnail || PLACEHOLDER_IMAGE,
   };
 
   return (
@@ -102,7 +103,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="relative mb-10 aspect-video overflow-hidden rounded-rmi shadow-soft sm:aspect-[21/9]">
             <Image
-              src={event.thumbnail}
+              src={event.thumbnail || PLACEHOLDER_IMAGE}
               alt={event.title}
               fill
               className="object-cover"

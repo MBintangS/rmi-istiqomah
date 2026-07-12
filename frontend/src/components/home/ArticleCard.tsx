@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui";
 import type { Artikel } from "@/types";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { formatArticleDate } from "@/lib/format-date";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +18,7 @@ export function ArticleCard({
   className,
   variant = "card",
 }: ArticleCardProps) {
-  const hasThumbnail = Boolean(article.thumbnail);
+  const thumbnail = article.thumbnail || PLACEHOLDER_IMAGE;
 
   if (variant === "featured") {
     return (
@@ -29,19 +30,13 @@ export function ArticleCard({
         )}
       >
         <div className="relative aspect-[16/11] overflow-hidden bg-primary/10 md:aspect-auto md:min-h-[20rem]">
-          {hasThumbnail ? (
-            <Image
-              src={article.thumbnail}
-              alt={article.title}
-              fill
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <span className="text-caption font-medium text-primary/60">Artikel RMI</span>
-            </div>
-          )}
+          <Image
+            src={thumbnail}
+            alt={article.title}
+            fill
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </div>
         <div className="flex flex-col justify-center space-y-4 border border-foreground/10 border-t-0 p-6 md:border-l-0 md:border-t md:p-8">
           <div className="flex flex-wrap items-center gap-2">
@@ -103,19 +98,13 @@ export function ArticleCard({
       )}
     >
       <div className="relative aspect-video w-full overflow-hidden bg-primary/10">
-        {hasThumbnail ? (
-          <Image
-            src={article.thumbnail}
-            alt={article.title}
-            fill
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <span className="text-caption font-medium text-primary/60">Artikel RMI</span>
-          </div>
-        )}
+        <Image
+          src={thumbnail}
+          alt={article.title}
+          fill
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
 
       <div className="space-y-2 p-5">

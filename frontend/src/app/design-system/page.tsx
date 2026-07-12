@@ -1,7 +1,7 @@
 import { Badge, Button, Card, EmptyState, Input, Label, Select, Skeleton, SkeletonList, Spinner, Textarea } from "@/components/ui";
 import { MotionPreview } from "@/components/ui/MotionPreview";
 import { OverlayPreview } from "@/components/ui/OverlayPreview";
-import { mockArticles, mockEvents, mockPrograms, mockSettings } from "@/data/mock";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const colors = [
   { name: "primary", className: "bg-primary", hex: "#4e830a" },
@@ -31,12 +31,8 @@ export default function DesignSystemPage() {
         </header>
 
         <section className="space-y-4">
-          <h2>Motion &amp; Mock Data</h2>
+          <h2>Motion</h2>
           <MotionPreview />
-          <div className="rounded-rmi bg-surface p-4 text-caption text-foreground/70 shadow-soft">
-            Mock: {mockArticles.length} artikel · {mockEvents.length} kegiatan ·{" "}
-            {mockPrograms.length} program · tagline &quot;{mockSettings.tagline}&quot;
-          </div>
         </section>
 
         <section className="space-y-4">
@@ -177,7 +173,7 @@ export default function DesignSystemPage() {
           <div className="grid gap-6 sm:grid-cols-2">
             <Card
               image={{
-                src: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=800&q=80",
+                src: PLACEHOLDER_IMAGE,
                 alt: "Kegiatan remaja masjid",
               }}
               title="Isra Miraj"

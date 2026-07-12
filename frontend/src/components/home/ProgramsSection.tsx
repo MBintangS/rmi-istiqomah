@@ -6,6 +6,7 @@ import { Button, EmptyState, SkeletonList } from "@/components/ui";
 import { MotionSection } from "@/components/home/MotionSection";
 import { usePrograms } from "@/hooks/usePrograms";
 import { getApiErrorMessage } from "@/lib/api";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapProgramListItem } from "@/lib/mappers/program";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +54,7 @@ export function ProgramsSection() {
               >
                 <div className="relative aspect-[16/10] md:col-span-5 md:aspect-auto md:min-h-[280px]">
                   <Image
-                    src={program.image}
+                    src={program.image || PLACEHOLDER_IMAGE}
                     alt={program.name}
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

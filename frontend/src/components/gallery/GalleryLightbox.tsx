@@ -4,6 +4,7 @@ import Image from "next/image";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef } from "react";
 import { useBodyScrollLock, useEscapeKey, useFocusTrap } from "@/hooks/useOverlay";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import type { FlatGalleryItem } from "@/lib/gallery";
 import { cn } from "@/lib/utils";
 
@@ -115,7 +116,7 @@ export function GalleryLightbox({
 
         <div className="relative z-10 h-full max-h-[75vh] w-full max-w-5xl">
           <Image
-            src={item.url}
+            src={item.url || PLACEHOLDER_IMAGE}
             alt={item.caption || `Foto ${activeIndex + 1}`}
             fill
             className="object-contain"

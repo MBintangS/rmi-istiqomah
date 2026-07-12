@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import type { GaleriListItem } from "@/types/api";
 import type { FlatGalleryItem } from "@/lib/gallery";
 import type { GaleriImage } from "@/types";
@@ -9,7 +10,7 @@ export function flattenGaleriItems(albums: GaleriListItem[]): FlatGalleryItem[] 
     .flatMap((album) =>
       album.images.map((image, index) => ({
         id: `${album.id}-${index}`,
-        url: image.url,
+        url: image.url || PLACEHOLDER_IMAGE,
         caption: image.caption || album.title,
         category: album.category?.slug,
         categoryLabel: album.category?.name,

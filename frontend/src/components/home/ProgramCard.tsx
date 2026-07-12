@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Program } from "@/types";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 interface ProgramCardProps {
@@ -20,7 +21,7 @@ export function ProgramCard({ program, className, featured = false }: ProgramCar
       )}
     >
       <Image
-        src={program.image}
+        src={program.image || PLACEHOLDER_IMAGE}
         alt={program.name}
         fill
         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import type { ArtikelDetail, ArtikelListItem } from "@/types/api";
 import type { Artikel, Kategori } from "@/types";
 
@@ -17,7 +18,7 @@ export function mapArtikelListItem(item: ArtikelListItem): Artikel {
     content: "",
     excerpt: item.excerpt,
     category: mapCategory(item.category),
-    thumbnail: item.thumbnail ?? "",
+    thumbnail: item.thumbnail || PLACEHOLDER_IMAGE,
     status: item.status,
     author: item.author?.name ?? "RMI",
     metaTitle: item.metaTitle ?? undefined,

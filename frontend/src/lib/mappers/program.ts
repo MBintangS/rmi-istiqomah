@@ -9,7 +9,7 @@ export function mapProgramListItem(item: ProgramListItem): Program {
     slug: item.slug,
     description: item.description ?? "",
     content: "",
-    image: item.image ?? PLACEHOLDER_IMAGE,
+    image: item.image || PLACEHOLDER_IMAGE,
     icon: item.icon ?? undefined,
     schedule: [],
     galleryImages: [],

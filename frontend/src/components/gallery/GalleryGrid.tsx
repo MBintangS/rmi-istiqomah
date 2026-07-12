@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Select } from "@/components/ui";
 import { GalleryLightbox } from "@/components/gallery/GalleryLightbox";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import type { FlatGalleryItem } from "@/lib/gallery";
 
 interface GalleryGridProps {
@@ -72,7 +73,7 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
               aria-label={`Buka foto: ${item.caption}`}
             >
               <Image
-                src={item.url}
+                src={item.url || PLACEHOLDER_IMAGE}
                 alt={item.caption}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"

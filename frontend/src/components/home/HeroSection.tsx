@@ -6,7 +6,7 @@ import { Button } from "@/components/ui";
 import { useBanners } from "@/hooks/useBanners";
 import { useHasMounted } from "@/hooks/useHasMounted";
 import { useSettingsValue } from "@/hooks/useSettings";
-import { FALLBACK_PLACHOLDER_IMAGE } from "@/lib/constants";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { heroItem, heroOrchestration } from "@/lib/motion";
 
 export function HeroSection() {
@@ -19,7 +19,7 @@ export function HeroSection() {
 
   // Same image on SSR + first client paint; swap to CMS banner after mount.
   const heroBanner = mounted ? banners?.[0] : undefined;
-  const heroImage = heroBanner?.image || FALLBACK_PLACHOLDER_IMAGE;
+  const heroImage = heroBanner?.image || PLACEHOLDER_IMAGE;
   const heroAlt = heroBanner?.title ?? "Kegiatan remaja masjid";
   const { siteName, tagline, about, stats } = settings;
 

@@ -6,7 +6,7 @@ import { MotionSection } from "@/components/home/MotionSection";
 import { useBanners } from "@/hooks/useBanners";
 import { useHasMounted } from "@/hooks/useHasMounted";
 import { useSettingsValue } from "@/hooks/useSettings";
-import { FALLBACK_PLACHOLDER_IMAGE } from "@/lib/constants";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 export function AboutSection() {
   const mounted = useHasMounted();
@@ -15,8 +15,8 @@ export function AboutSection() {
 
   // Keep SSR/client first paint identical (always an <img>, same fallback src).
   const aboutImage = mounted
-    ? (banners?.[1]?.image ?? banners?.[0]?.image ?? FALLBACK_PLACHOLDER_IMAGE)
-    : FALLBACK_PLACHOLDER_IMAGE;
+    ? (banners?.[1]?.image ?? banners?.[0]?.image ?? PLACEHOLDER_IMAGE)
+    : PLACEHOLDER_IMAGE;
 
   return (
     <MotionSection tone="slide" className="bg-background py-24 sm:py-32">

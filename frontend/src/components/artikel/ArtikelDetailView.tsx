@@ -14,6 +14,7 @@ import {
   mapArtikelDetail,
   mapArtikelListItem,
 } from "@/lib/mappers/artikel";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 interface ArtikelDetailViewProps {
   slug: string;
@@ -89,18 +90,16 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
 
       <article className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {article.thumbnail && (
-            <div className="relative mb-8 aspect-video overflow-hidden rounded-rmi shadow-soft">
-              <Image
-                src={article.thumbnail}
-                alt={article.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 768px"
-                priority
-              />
-            </div>
-          )}
+          <div className="relative mb-8 aspect-video overflow-hidden rounded-rmi shadow-soft">
+            <Image
+              src={article.thumbnail || PLACEHOLDER_IMAGE}
+              alt={article.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
 
           <p className="text-body mb-8 text-lg text-foreground/80">{article.excerpt}</p>
 

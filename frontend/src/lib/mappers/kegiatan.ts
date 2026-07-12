@@ -34,7 +34,7 @@ export function mapKegiatanListItem(item: KegiatanListItem): Kegiatan {
     location: item.location ?? "",
     locationMap: item.locationMap ?? undefined,
     category: mapCategory(item.category),
-    thumbnail: item.thumbnail ?? PLACEHOLDER_IMAGE,
+    thumbnail: item.thumbnail || PLACEHOLDER_IMAGE,
     status: item.status,
     isPublished: item.isPublished,
     createdAt: item.createdAt,

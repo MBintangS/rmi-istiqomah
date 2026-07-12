@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button, EmptyState, Skeleton } from "@/components/ui";
 import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapProgramDetail } from "@/lib/mappers/program";
 
 interface ProgramDetailViewProps {
@@ -70,7 +71,7 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="relative mb-10 aspect-video overflow-hidden rounded-rmi shadow-soft sm:aspect-[21/9]">
             <Image
-              src={program.image}
+              src={program.image || PLACEHOLDER_IMAGE}
               alt={program.name}
               fill
               className="object-cover"
@@ -103,7 +104,7 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
                         className="relative aspect-square overflow-hidden rounded-rmi bg-primary/10"
                       >
                         <Image
-                          src={image}
+                          src={image || PLACEHOLDER_IMAGE}
                           alt={`Dokumentasi ${program.name} ${index + 1}`}
                           fill
                           className="object-cover"

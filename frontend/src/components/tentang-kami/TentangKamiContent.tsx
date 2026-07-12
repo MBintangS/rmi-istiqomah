@@ -7,7 +7,7 @@ import { useBanners } from "@/hooks/useBanners";
 import { usePengurus } from "@/hooks/usePengurus";
 import { useSettingsValue } from "@/hooks/useSettings";
 import { getApiErrorMessage } from "@/lib/api";
-import { FALLBACK_ABOUT_IMAGE } from "@/lib/constants";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapPengurusListItem } from "@/lib/mappers/pengurus";
 
 export function TentangKamiContent() {
@@ -15,7 +15,7 @@ export function TentangKamiContent() {
   const { data: banners } = useBanners();
   const { data: pengurusData, isLoading, isError, error } = usePengurus();
 
-  const aboutImage = banners?.[0]?.image ?? FALLBACK_ABOUT_IMAGE;
+  const aboutImage = banners?.[0]?.image || PLACEHOLDER_IMAGE;
   const pengurus = (pengurusData ?? []).map(mapPengurusListItem).sort((a, b) => a.order - b.order);
   const periodLabel = pengurus.find((item) => item.period)?.period;
 

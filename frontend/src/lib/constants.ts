@@ -1,8 +1,11 @@
-export const PLACEHOLDER_IMAGE = "https://res.cloudinary.com/demo/image/upload/sample.jpg";
+/** Local fallback when CMS / API image is missing */
+export const PLACEHOLDER_IMAGE = "/placeholder.png";
 
-export const FALLBACK_HERO_IMAGE = "/hero.jpg";
+/** @deprecated Use PLACEHOLDER_IMAGE */
+export const FALLBACK_PLACHOLDER_IMAGE = PLACEHOLDER_IMAGE;
 
-export const FALLBACK_PLACHOLDER_IMAGE = "/placeholder.png";
+/** @deprecated Use PLACEHOLDER_IMAGE */
+export const FALLBACK_HERO_IMAGE = PLACEHOLDER_IMAGE;
 
-export const FALLBACK_ABOUT_IMAGE =
-  "https://images.unsplash.com/photo-1591604466100-9dcb9cbdab0c?w=1000&q=80";
+/** @deprecated Use PLACEHOLDER_IMAGE */
+export const FALLBACK_ABOUT_IMAGE = PLACEHOLDER_IMAGE;
