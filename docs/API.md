@@ -897,7 +897,7 @@ Detail rekening by MongoDB ObjectId.
 
 ### `POST /donasi`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -923,11 +923,11 @@ Detail rekening by MongoDB ObjectId.
 
 ### `PUT /donasi/:id`
 
-**Auth:** Admin — body partial
+**Auth:** Super Admin — body partial
 
 ### `DELETE /donasi/:id`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 ---
 
@@ -1431,6 +1431,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | POST/PUT/DELETE /donasi: Super Admin only |
 | 2026-07-12 | — | GET /galeri: query eventId untuk filter kegiatan terkait |
 | 2026-07-12 | — | PUT /settings: Super Admin only |
 | 2026-07-12 | — | POST/PUT/DELETE pengurus, program, testimoni: Super Admin only |
