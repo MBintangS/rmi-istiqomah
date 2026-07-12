@@ -2,22 +2,26 @@
 
 import Link from "next/link";
 import { EmptyState, SkeletonList } from "@/components/ui";
+import { useAuth } from "@/hooks/useAuth";
 import { useDashboardStats } from "@/hooks/useDashboardStats";
 import { getApiErrorMessage } from "@/lib/api";
 
-const cards = [
+const allCards = [
   { key: "publishedArtikel", label: "Artikel Terbit", href: "/admin/artikel" },
   { key: "draftArtikel", label: "Artikel Draft", href: "/admin/artikel" },
   { key: "publishedKegiatan", label: "Kegiatan", href: "/admin/kegiatan" },
   { key: "totalGaleri", label: "Galeri", href: "/admin/galeri" },
-  { key: "totalPengurus", label: "Pengurus", href: "/admin/pengurus" },
-  { key: "totalProgram", label: "Program", href: "/admin/program" },
+  { key: "totalPengurus", label: "Pengurus", href: "/admin/pengurus", superAdminOnly: true },
+  { key: "totalProgram", label: "Program", href: "/admin/program", superAdminOnly: true },
   { key: "totalDokumen", label: "Dokumen", href: "/admin/dokumen" },
   { key: "totalMessages", label: "Pesan Kontak", href: "/admin/dashboard" },
 ] as const;
 
 export function DashboardStatsGrid() {
+  const { user } = useAuth();
   const { data, isLoading, isError, error, refetch } = useDashboardStats();
+  const isSuperAdmin = user?.role === "superadmin";
+  const cards = allCards.filter((card) => !("superAdminOnly" in card && card.superAdminOnly) || isSuperAdmin);
 
   if (isLoading) {
     return <SkeletonList count={4} />;

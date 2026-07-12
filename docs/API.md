@@ -752,7 +752,7 @@ List pengurus organisasi.
 
 ### `POST /pengurus`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -778,11 +778,11 @@ List pengurus organisasi.
 
 ### `PUT /pengurus/:id`
 
-**Auth:** Admin — body partial
+**Auth:** Super Admin — body partial
 
 ### `DELETE /pengurus/:id`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 ---
 
@@ -825,7 +825,7 @@ Detail program by slug.
 
 ### `POST /program`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -850,11 +850,11 @@ Slug auto-generate dari `name`.
 
 ### `PUT /program/:id`
 
-**Auth:** Admin — body partial
+**Auth:** Super Admin — body partial
 
 ### `DELETE /program/:id`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 ---
 
@@ -962,7 +962,7 @@ List testimoni untuk homepage.
 
 ### `POST /testimoni`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -988,11 +988,11 @@ List testimoni untuk homepage.
 
 ### `PUT /testimoni/:id`
 
-**Auth:** Admin — body partial
+**Auth:** Super Admin — body partial
 
 ### `DELETE /testimoni/:id`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 ---
 
@@ -1293,7 +1293,7 @@ Pengaturan situs (singleton). Auto-create default jika belum ada.
 
 Update pengaturan situs (partial).
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:** semua field opsional — `siteName`, `tagline`, `about`, `vision`, `mission`, `address`, `phone`, `whatsapp`, `email`, `socialMedia`, `googleMapsEmbed`
 
@@ -1430,6 +1430,8 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | PUT /settings: Super Admin only |
+| 2026-07-12 | — | POST/PUT/DELETE pengurus, program, testimoni: Super Admin only |
 | 2026-07-12 | — | GET /stats/count (total artikel/kegiatan/galeri publik); hapus stats dari PUT /settings |
 | 2026-07-12 | — | POST/GET /contact: field whatsapp opsional |
 | 2026-07-12 | — | GET /contact (admin list pesan kontak) |
