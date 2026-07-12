@@ -4,8 +4,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/home/ArticleCard";
 import { ShareButtons } from "@/components/articles/ShareButtons";
-import { Badge, EmptyState, Skeleton } from "@/components/ui";
+import { Badge, EmptyState } from "@/components/ui";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { ArtikelDetailSkeleton } from "@/components/artikel/ArtikelDetailSkeleton";
 import { useArticle, useArticles } from "@/hooks";
 import { getApiErrorMessage } from "@/lib/api";
 import { formatArticleDate } from "@/lib/format-date";
@@ -25,17 +26,7 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
   const { data: listData } = useArticles({ limit: 50 });
 
   if (isLoading) {
-    return (
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <Skeleton className="h-6 w-32" />
-          <Skeleton className="h-10 w-full max-w-2xl" />
-          <Skeleton className="h-5 w-48" />
-        </div>
-        <Skeleton className="aspect-video w-full max-w-3xl rounded-rmi" />
-        <Skeleton variant="text" lines={6} className="max-w-3xl" />
-      </div>
-    );
+    return <ArtikelDetailSkeleton />;
   }
 
   if (isError) {
