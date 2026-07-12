@@ -11,6 +11,16 @@ export const testimoniFormSchema = z.object({
 
 export type TestimoniFormValues = z.infer<typeof testimoniFormSchema>;
 
+export const donasiFormSchema = z.object({
+  bank: z.string().trim().min(2, "Nama bank minimal 2 karakter"),
+  accountNumber: z.string().trim().min(5, "Nomor rekening minimal 5 karakter"),
+  accountName: z.string().trim().min(2, "Nama akun minimal 2 karakter"),
+  order: z.number().int().min(0),
+  isActive: z.boolean(),
+});
+
+export type DonasiFormValues = z.infer<typeof donasiFormSchema>;
+
 export const kategoriFormSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter"),
   type: z.enum(["artikel", "kegiatan", "galeri"]),

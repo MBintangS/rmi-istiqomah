@@ -306,6 +306,25 @@ export interface TestimoniWritePayload {
   isActive?: boolean;
 }
 
+export interface DonasiListItem {
+  id: string;
+  bank: string;
+  accountNumber: string;
+  accountName: string;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DonasiWritePayload {
+  bank: string;
+  accountNumber: string;
+  accountName: string;
+  order?: number;
+  isActive?: boolean;
+}
+
 export interface KategoriWritePayload {
   name: string;
   type: "artikel" | "kegiatan" | "galeri";

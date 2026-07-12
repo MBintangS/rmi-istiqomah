@@ -858,6 +858,78 @@ Slug auto-generate dari `name`.
 
 ---
 
+## Donasi
+
+### `GET /donasi`
+
+List rekening donasi.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+**Aturan:** Sort `order` ascending, lalu `createdAt` descending
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "bank": "Bank Syariah Indonesia (BSI)",
+      "accountNumber": "7123456789",
+      "accountName": "Remaja Masjid Istiqomah",
+      "order": 0,
+      "isActive": true,
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### `GET /donasi/:id`
+
+Detail rekening by MongoDB ObjectId.
+
+**Auth:** Optional (publik: hanya `isActive: true`)
+
+### `POST /donasi`
+
+**Auth:** Admin
+
+**Body:**
+
+```json
+{
+  "bank": "Bank Syariah Indonesia (BSI)",
+  "accountNumber": "7123456789",
+  "accountName": "Remaja Masjid Istiqomah",
+  "order": 0,
+  "isActive": true
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `bank` | ✅ | Nama bank |
+| `accountNumber` | ✅ | Nomor rekening |
+| `accountName` | ✅ | Nama pemilik rekening |
+| `order` | — | Urutan tampil (default `0`) |
+| `isActive` | — | Tampil di publik (default `true`) |
+
+**Response `201`:** rekening + `message`
+
+### `PUT /donasi/:id`
+
+**Auth:** Admin — body partial
+
+### `DELETE /donasi/:id`
+
+**Auth:** Admin
+
+---
+
 ## Testimoni
 
 ### `GET /testimoni`
@@ -1309,6 +1381,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-12 | — | GET/POST/PUT/DELETE /donasi (rekening donasi) |
 | 2026-07-12 | — | Hapus modul Agenda (pakai Kegiatan saja) |
 | 2026-07-11 | 43 | Base URL production: https://rmi-istiqomah-api.onrender.com/api |
 | 2026-07-10 | 40 | GET/POST/PUT/DELETE /users (Super Admin only) |

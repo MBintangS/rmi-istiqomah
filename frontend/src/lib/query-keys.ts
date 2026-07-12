@@ -50,6 +50,10 @@ export const queryKeys = {
     all: ["testimoni"] as const,
     list: () => [...queryKeys.testimoni.all, "list"] as const,
   },
+  donasi: {
+    all: ["donasi"] as const,
+    list: () => [...queryKeys.donasi.all, "list"] as const,
+  },
   dokumen: {
     all: ["dokumen"] as const,
     lists: () => [...queryKeys.dokumen.all, "list"] as const,

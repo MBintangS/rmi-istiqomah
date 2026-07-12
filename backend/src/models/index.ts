@@ -8,6 +8,7 @@ export { Pengurus, type IPengurus, type PengurusDocument } from "./Pengurus.mode
 export { Program, type IProgram, type ProgramDocument } from "./Program.model";
 export { Testimoni, type ITestimoni, type TestimoniDocument } from "./Testimoni.model";
 export { Dokumen, type IDokumen, type DokumenDocument } from "./Dokumen.model";
+export { Donasi, type IDonasi, type DonasiDocument } from "./Donasi.model";
 export { ContactMessage, type IContactMessage, type ContactMessageDocument } from "./ContactMessage.model";
 export {
   Settings,

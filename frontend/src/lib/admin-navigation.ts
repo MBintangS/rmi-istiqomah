@@ -36,6 +36,7 @@ export const adminNavItems: AdminNavItem[] = [
   { label: "Pengurus", href: "/admin/pengurus", group: "organisasi" },
   { label: "Program", href: "/admin/program", group: "organisasi" },
   { label: "Dokumen", href: "/admin/dokumen", group: "media" },
+  { label: "Donasi", href: "/admin/donasi", group: "media" },
   { label: "Testimoni", href: "/admin/testimoni", group: "organisasi" },
   { label: "Kategori", href: "/admin/kategori", group: "konten" },
   { label: "Pengguna", href: "/admin/pengguna", group: "sistem", roles: ["superadmin"] },
