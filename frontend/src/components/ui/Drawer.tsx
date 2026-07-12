@@ -11,6 +11,12 @@ export interface DrawerProps {
   title?: string;
   children: ReactNode;
   className?: string;
+  /** Hapus header & padding — konten mengisi panel penuh (mis. sidebar admin). */
+  bare?: boolean;
+  /** Sisi panel. Default: kanan. */
+  side?: "left" | "right";
+  contentClassName?: string;
+  headerClassName?: string;
 }
 
 function CloseIcon() {
@@ -33,7 +39,17 @@ function CloseIcon() {
   );
 }
 
-export function Drawer({ open, onClose, title, children, className }: DrawerProps) {
+export function Drawer({
+  open,
+  onClose,
+  title,
+  children,
+  className,
+  bare = false,
+  side = "right",
+  contentClassName,
+  headerClassName,
+}: DrawerProps) {
   const titleId = useId();
   const panelRef = useRef<HTMLElement>(null);
 
@@ -58,28 +74,42 @@ export function Drawer({ open, onClose, title, children, className }: DrawerProp
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}
+        aria-label={title ? undefined : "Menu"}
         className={cn(
-          "drawer-slide-in absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-surface shadow-soft",
+          "absolute top-0 flex h-full w-full max-w-sm flex-col shadow-soft",
+          side === "left" ? "drawer-slide-in-left left-0" : "drawer-slide-in right-0",
+          bare ? "bg-transparent" : "bg-surface",
           className,
         )}
       >
-        <div className="flex items-center justify-between border-b border-foreground/10 px-5 py-4">
-          {title && (
-            <h2 id={titleId} className="text-lg font-semibold text-heading">
-              {title}
-            </h2>
-          )}
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Tutup"
-            className="ml-auto rounded-full p-1.5 text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            <CloseIcon />
-          </button>
-        </div>
+        {bare ? (
+          <div className={cn("relative h-full min-h-0 flex-1", contentClassName)}>{children}</div>
+        ) : (
+          <>
+            <div
+              className={cn(
+                "flex items-center justify-between border-b border-foreground/10 px-5 py-4",
+                headerClassName,
+              )}
+            >
+              {title && (
+                <h2 id={titleId} className="text-lg font-semibold text-heading">
+                  {title}
+                </h2>
+              )}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Tutup"
+                className="ml-auto rounded-full p-1.5 text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <CloseIcon />
+              </button>
+            </div>
 
-        <div className="flex-1 overflow-y-auto p-5">{children}</div>
+            <div className={cn("flex-1 overflow-y-auto p-5", contentClassName)}>{children}</div>
+          </>
+        )}
       </aside>
     </div>,
     document.body,

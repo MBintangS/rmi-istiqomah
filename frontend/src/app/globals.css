@@ -94,6 +94,10 @@
     animation: drawer-slide-in 0.3s ease-out;
   }
 
+  .drawer-slide-in-left {
+    animation: drawer-slide-in-left 0.3s ease-out;
+  }
+
   .modal-backdrop {
     animation: modal-fade-in 0.2s ease-out;
   }
@@ -143,6 +147,7 @@
     .modal-backdrop,
     .modal-panel,
     .drawer-slide-in,
+    .drawer-slide-in-left,
     .page-hero {
       animation: none;
     }
@@ -152,6 +157,15 @@
 @keyframes drawer-slide-in {
   from {
     transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-slide-in-left {
+  from {
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);

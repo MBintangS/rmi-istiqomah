@@ -40,10 +40,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Menu Admin">
-        <div className="-m-4 h-[calc(100vh-4rem)]">
-          <AdminSidebar onNavigate={() => setDrawerOpen(false)} />
-        </div>
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        bare
+        side="left"
+        className="w-[15.5rem] max-w-[15.5rem] bg-[#0f1609] shadow-none"
+      >
+        <AdminSidebar
+          onNavigate={() => setDrawerOpen(false)}
+          onClose={() => setDrawerOpen(false)}
+        />
       </Drawer>
     </div>
   );

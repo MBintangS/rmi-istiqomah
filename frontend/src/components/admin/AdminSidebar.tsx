@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 interface AdminSidebarProps {
   onNavigate?: () => void;
+  onClose?: () => void;
 }
 
 function isActivePath(pathname: string, href: string) {
@@ -36,20 +37,44 @@ function groupItems(items: AdminNavItem[]) {
     .filter((entry) => entry.items.length > 0);
 }
 
-export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
+export function AdminSidebar({ onNavigate, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
   const { user } = useAuth();
   const navItems = getAdminNavItemsForRole(user?.role);
   const grouped = groupItems(navItems);
 
   return (
-    <aside className="flex h-full w-full flex-col border-r border-foreground/10 bg-[#0f1609] text-surface">
+    <aside className="flex h-full w-full flex-col bg-[#0f1609] text-surface">
       <div className="flex h-14 items-center gap-2.5 border-b border-white/10 px-4">
         <RmiLogo size={32} />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold tracking-tight">CMS Admin</p>
           <p className="truncate text-[11px] text-white/50">Remaja Masjid Istiqomah</p>
         </div>
+        {onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Tutup menu"
+            className="rounded-md p-1.5 text-white/60 transition-colors hover:bg-white/10 hover:text-white lg:hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        ) : null}
       </div>
 
       <nav
