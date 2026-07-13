@@ -68,3 +68,20 @@ export function formatArtikel(artikel: PopulatedArtikel, options?: { includeCont
 export function isAdminUser(user?: { role: string }): boolean {
   return user?.role === "admin" || user?.role === "superadmin";
 }
+
+/** Parse query flag for CMS list/detail that may include drafts/inactive. */
+export function parseIncludeUnpublished(value: unknown): boolean {
+  return value === true || value === "true" || value === "1";
+}
+
+/**
+ * Admin JWT alone is not enough — public pages may send the token.
+ * Unpublished content is only returned when admin also passes includeUnpublished.
+ */
+export function canViewUnpublished(
+  user: { role: string } | undefined,
+  query: { includeUnpublished?: unknown } | Record<string, unknown>,
+): boolean {
+  return isAdminUser(user) && parseIncludeUnpublished(query.includeUnpublished);
+}
+

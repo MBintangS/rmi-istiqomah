@@ -7,15 +7,15 @@ import type {
   DokumenListQuery,
   UpdateDokumenInput,
 } from "../schemas/misc.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatDokumen } from "../utils/dokumenMapper";
 import { buildPaginationMeta, parsePagination } from "../utils/pagination";
 import { sendSuccess } from "../utils/response";
 
-function buildDokumenFilter(query: DokumenListQuery, isAdmin: boolean): FilterQuery<IDokumen> {
+function buildDokumenFilter(query: DokumenListQuery, includeUnpublished: boolean): FilterQuery<IDokumen> {
   const filter: FilterQuery<IDokumen> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isPublished = true;
   }
 
@@ -33,9 +33,9 @@ function buildDokumenFilter(query: DokumenListQuery, isAdmin: boolean): FilterQu
 
 export async function listDokumen(req: Request, res: Response): Promise<void> {
   const query = req.query as unknown as DokumenListQuery;
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, query);
   const { page, limit, skip } = parsePagination(query);
-  const filter = buildDokumenFilter(query, isAdmin);
+  const filter = buildDokumenFilter(query, includeUnpublished);
 
   const [items, total] = await Promise.all([
     Dokumen.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),

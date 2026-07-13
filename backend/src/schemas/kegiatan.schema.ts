@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { includeUnpublishedQuerySchema } from "./queryFlags.schema";
 
 const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "ID tidak valid");
 
@@ -53,6 +54,7 @@ export const kegiatanListQuerySchema = z.object({
   category: z.string().trim().optional(),
   status: z.enum(["upcoming", "ongoing", "completed"]).optional(),
   sort: z.string().trim().optional(),
+  includeUnpublished: includeUnpublishedQuerySchema,
 });
 
 export type CreateKegiatanInput = z.infer<typeof createKegiatanSchema>;

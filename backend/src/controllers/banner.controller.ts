@@ -2,13 +2,13 @@ import type { Request, Response } from "express";
 import { AppError } from "../middleware/errorHandler";
 import { Banner } from "../models";
 import type { CreateBannerInput, UpdateBannerInput } from "../schemas/galeri.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatBanner } from "../utils/bannerMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listBanner(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
-  const filter = isAdmin ? {} : { isActive: true };
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const filter = includeUnpublished ? {} : { isActive: true };
   const items = await Banner.find(filter).sort({ order: 1, createdAt: -1 });
 
   sendSuccess(res, items.map((item) => formatBanner(item)));

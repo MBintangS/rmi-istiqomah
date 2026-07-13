@@ -8,7 +8,7 @@ import type {
   GaleriListQuery,
   UpdateGaleriInput,
 } from "../schemas/galeri.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatGaleri } from "../utils/galeriMapper";
 import { buildPaginationMeta, parsePagination } from "../utils/pagination";
 import { sendSuccess } from "../utils/response";
@@ -29,10 +29,10 @@ function parseGaleriSort(sort?: string) {
   return { [field]: sort.startsWith("-") ? (-1 as const) : (1 as const) };
 }
 
-function buildGaleriFilter(query: GaleriListQuery, isAdmin: boolean): FilterQuery<IGaleri> {
+function buildGaleriFilter(query: GaleriListQuery, includeUnpublished: boolean): FilterQuery<IGaleri> {
   const filter: FilterQuery<IGaleri> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isPublished = true;
   }
 
@@ -50,9 +50,9 @@ function buildGaleriFilter(query: GaleriListQuery, isAdmin: boolean): FilterQuer
 
 export async function listGaleri(req: Request, res: Response): Promise<void> {
   const query = req.query as unknown as GaleriListQuery;
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, query);
   const { page, limit, skip } = parsePagination(query);
-  const filter = buildGaleriFilter(query, isAdmin);
+  const filter = buildGaleriFilter(query, includeUnpublished);
 
   if (query.category) {
     const kategori = await Kategori.findOne({ slug: query.category, type: "galeri" });
@@ -83,10 +83,10 @@ export async function listGaleri(req: Request, res: Response): Promise<void> {
 }
 
 export async function getGaleriById(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IGaleri> = { _id: req.params.id };
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isPublished = true;
   }
 

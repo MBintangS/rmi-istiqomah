@@ -7,7 +7,7 @@ import type {
   KegiatanListQuery,
   UpdateKegiatanInput,
 } from "../schemas/kegiatan.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatKegiatan } from "../utils/kegiatanMapper";
 import { buildPaginationMeta, parsePagination } from "../utils/pagination";
 import { sendSuccess } from "../utils/response";
@@ -28,10 +28,13 @@ function parseKegiatanSort(sort?: string) {
   return { [field]: sort.startsWith("-") ? (-1 as const) : (1 as const) };
 }
 
-function buildKegiatanFilter(query: KegiatanListQuery, isAdmin: boolean): FilterQuery<IKegiatan> {
+function buildKegiatanFilter(
+  query: KegiatanListQuery,
+  includeUnpublished: boolean,
+): FilterQuery<IKegiatan> {
   const filter: FilterQuery<IKegiatan> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isPublished = true;
   }
 
@@ -49,9 +52,9 @@ function buildKegiatanFilter(query: KegiatanListQuery, isAdmin: boolean): Filter
 
 export async function listKegiatan(req: Request, res: Response): Promise<void> {
   const query = req.query as unknown as KegiatanListQuery;
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, query);
   const { page, limit, skip } = parsePagination(query);
-  const filter = buildKegiatanFilter(query, isAdmin);
+  const filter = buildKegiatanFilter(query, includeUnpublished);
 
   if (query.category) {
     const kategori = await Kategori.findOne({ slug: query.category, type: "kegiatan" });
@@ -77,10 +80,10 @@ export async function listKegiatan(req: Request, res: Response): Promise<void> {
 }
 
 export async function getKegiatanBySlug(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IKegiatan> = { slug: req.params.slug };
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isPublished = true;
   }
 

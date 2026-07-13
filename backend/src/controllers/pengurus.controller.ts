@@ -3,15 +3,15 @@ import type { FilterQuery } from "mongoose";
 import { AppError } from "../middleware/errorHandler";
 import { Pengurus, type IPengurus } from "../models";
 import type { CreatePengurusInput, UpdatePengurusInput } from "../schemas/organisasi.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatPengurus } from "../utils/pengurusMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listPengurus(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IPengurus> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 

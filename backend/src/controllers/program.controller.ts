@@ -3,15 +3,15 @@ import type { FilterQuery } from "mongoose";
 import { AppError } from "../middleware/errorHandler";
 import { Program, type IProgram } from "../models";
 import type { CreateProgramInput, UpdateProgramInput } from "../schemas/organisasi.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatProgram } from "../utils/programMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listProgram(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IProgram> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 
@@ -21,10 +21,10 @@ export async function listProgram(req: Request, res: Response): Promise<void> {
 }
 
 export async function getProgramBySlug(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IProgram> = { slug: req.params.slug };
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 

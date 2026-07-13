@@ -3,15 +3,15 @@ import type { FilterQuery } from "mongoose";
 import { AppError } from "../middleware/errorHandler";
 import { Donasi, type IDonasi } from "../models";
 import type { CreateDonasiInput, UpdateDonasiInput } from "../schemas/donasi.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatDonasi } from "../utils/donasiMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listDonasi(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IDonasi> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 
@@ -21,10 +21,10 @@ export async function listDonasi(req: Request, res: Response): Promise<void> {
 }
 
 export async function getDonasiById(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IDonasi> = { _id: req.params.id };
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 

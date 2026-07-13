@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { includeUnpublishedQuerySchema } from "./queryFlags.schema";
 
 const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "ID tidak valid");
 
@@ -27,6 +28,7 @@ export const galeriListQuerySchema = z.object({
   category: z.string().trim().optional(),
   eventId: objectIdSchema.optional(),
   sort: z.string().trim().optional(),
+  includeUnpublished: includeUnpublishedQuerySchema,
 });
 
 export const createBannerSchema = z.object({

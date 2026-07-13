@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { includeUnpublishedQuerySchema } from "./queryFlags.schema";
 
 export const createDokumenSchema = z.object({
   name: z.string().trim().min(1, "Nama dokumen wajib diisi"),
@@ -17,6 +18,7 @@ export const dokumenListQuerySchema = z.object({
   limit: z.coerce.number().int().positive().max(100).optional(),
   search: z.string().trim().optional(),
   category: z.string().trim().optional(),
+  includeUnpublished: includeUnpublishedQuerySchema,
 });
 
 export const contactFormSchema = z.object({

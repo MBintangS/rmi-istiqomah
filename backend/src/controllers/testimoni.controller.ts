@@ -3,15 +3,15 @@ import type { FilterQuery } from "mongoose";
 import { AppError } from "../middleware/errorHandler";
 import { Testimoni, type ITestimoni } from "../models";
 import type { CreateTestimoniInput, UpdateTestimoniInput } from "../schemas/organisasi.schema";
-import { isAdminUser } from "../utils/artikelMapper";
+import { canViewUnpublished } from "../utils/artikelMapper";
 import { formatTestimoni } from "../utils/testimoniMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listTestimoni(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<ITestimoni> = {};
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.isActive = true;
   }
 

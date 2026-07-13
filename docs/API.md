@@ -35,7 +35,7 @@ Token didapat dari `POST /api/auth/login`. Role yang diizinkan untuk operasi adm
 
 ### Optional Auth
 
-Beberapa endpoint GET menerima token opsional. Jika token admin valid dikirim, response bisa menyertakan data non-publik (mis. artikel `draft`, kegiatan belum dipublish). Tanpa token, hanya data publik yang dikembalikan.
+Beberapa endpoint GET menerima token opsional. **JWT admin saja tidak cukup** untuk melihat draft/nonaktif — harus juga mengirim `includeUnpublished=true`. Tanpa flag itu, response selalu hanya konten publik (`published` / `isPublished` / `isActive`), termasuk jika admin sedang membuka website publik di tab lain.
 
 ---
 
@@ -98,6 +98,7 @@ Beberapa endpoint GET menerima token opsional. Jika token admin valid dikirim, r
 | `category` | string | — | Filter slug kategori |
 | `status` | string | — | Filter status (lihat tiap modul) |
 | `sort` | string | — | Sort field; prefix `-` = descending (mis. `-createdAt`) |
+| `includeUnpublished` | boolean | — | CMS only: `true` + auth admin untuk lihat draft/nonaktif. Tanpa flag ini, GET publik selalu hanya konten terbit/aktif (meski ada JWT) |
 
 ---
 
@@ -1431,6 +1432,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-07-13 | — | GET list/detail: draft/nonaktif hanya dengan includeUnpublished=true + admin |
 | 2026-07-12 | — | POST/PUT/DELETE /donasi: Super Admin only |
 | 2026-07-12 | — | GET /galeri: query eventId untuk filter kegiatan terkait |
 | 2026-07-12 | — | PUT /settings: Super Admin only |

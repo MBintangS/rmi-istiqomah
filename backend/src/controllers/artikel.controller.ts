@@ -7,19 +7,19 @@ import type {
   CreateArtikelInput,
   UpdateArtikelInput,
 } from "../schemas/artikel.schema";
-import { formatArtikel, isAdminUser } from "../utils/artikelMapper";
+import { formatArtikel, canViewUnpublished } from "../utils/artikelMapper";
 import { buildPaginationMeta, parsePagination, parseSort } from "../utils/pagination";
 import { sendSuccess } from "../utils/response";
 
 function buildArtikelFilter(
   query: ArtikelListQuery,
-  isAdmin: boolean,
+  includeUnpublished: boolean,
 ): FilterQuery<IArtikel> {
   const filter: FilterQuery<IArtikel> = {};
 
-  if (isAdmin && query.status) {
+  if (includeUnpublished && query.status) {
     filter.status = query.status;
-  } else if (!isAdmin) {
+  } else if (!includeUnpublished) {
     filter.status = "published";
   }
 
@@ -33,9 +33,9 @@ function buildArtikelFilter(
 
 export async function listArtikel(req: Request, res: Response): Promise<void> {
   const query = req.query as unknown as ArtikelListQuery;
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, query);
   const { page, limit, skip } = parsePagination(query);
-  const filter = buildArtikelFilter(query, isAdmin);
+  const filter = buildArtikelFilter(query, includeUnpublished);
 
   if (query.category) {
     const kategori = await Kategori.findOne({ slug: query.category, type: "artikel" });
@@ -66,10 +66,10 @@ export async function listArtikel(req: Request, res: Response): Promise<void> {
 }
 
 export async function getArtikelBySlug(req: Request, res: Response): Promise<void> {
-  const isAdmin = isAdminUser(req.user);
+  const includeUnpublished = canViewUnpublished(req.user, req.query);
   const filter: FilterQuery<IArtikel> = { slug: req.params.slug };
 
-  if (!isAdmin) {
+  if (!includeUnpublished) {
     filter.status = "published";
   }
 

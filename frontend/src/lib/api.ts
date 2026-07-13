@@ -15,9 +15,22 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = getAuthToken();
-  if (token) {
+  const onAdminPanel =
+    typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
+
+  // Only attach CMS token inside /admin so public pages always get published-only data.
+  if (token && onAdminPanel) {
     config.headers.Authorization = `Bearer ${token}`;
+
+    const method = (config.method ?? "get").toLowerCase();
+    if (method === "get") {
+      config.params = {
+        ...((config.params as Record<string, unknown> | undefined) ?? {}),
+        includeUnpublished: true,
+      };
+    }
   }
+
   return config;
 });
 
