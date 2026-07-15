@@ -19,7 +19,7 @@ export function StatsSection() {
         <dl className="grid grid-cols-3 gap-x-8 gap-y-10">
           {statItems.map(({ key, label }) => (
             <div key={key} className="min-w-0 text-center">
-              <dt className="text-caption font-medium text-foreground/55">{label}</dt>
+              <dt className="text-caption text-lg font-medium text-foreground/55">{label}</dt>
               <dd className="mt-2 font-display text-4xl font-extrabold tracking-tight text-primary sm:text-5xl md:text-6xl">
                 {counts[key]}
               </dd>

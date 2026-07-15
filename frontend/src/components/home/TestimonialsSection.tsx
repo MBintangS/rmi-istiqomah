@@ -60,7 +60,7 @@ export function TestimonialsSection() {
   return (
     <MotionSection
       tone="fade"
-      className="relative overflow-hidden bg-background py-24 sm:py-32"
+      className="relative overflow-hidden bg-background py-24"
     >
       <div
         className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-primary/[0.06] blur-3xl"
