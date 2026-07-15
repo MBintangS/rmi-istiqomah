@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useRef, useState } from "react";
 import { EventCard } from "@/components/home/EventCard";
-import { EmptyState, Input, Select } from "@/components/ui";
+import { EmptyState, Input, Pagination, Select } from "@/components/ui";
 import type { Kegiatan, Kategori } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,15 @@ type KegiatanViewMode = "grid" | "list";
 interface EventListProps {
   events: Kegiatan[];
   categories: Kategori[];
+  search: string;
+  onSearchChange: (value: string) => void;
+  categorySlug: string;
+  onCategoryChange: (slug: string) => void;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  /** True when filters applied but no results */
+  isFilteredEmpty?: boolean;
 }
 
 function GridViewIcon({ className }: { className?: string }) {
@@ -61,43 +70,70 @@ function ListViewIcon({ className }: { className?: string }) {
   );
 }
 
-export function EventList({ events, categories }: EventListProps) {
-  const [search, setSearch] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+export function EventList({
+  events,
+  categories,
+  search,
+  onSearchChange,
+  categorySlug,
+  onCategoryChange,
+  currentPage,
+  totalPages,
+  onPageChange,
+  isFilteredEmpty = false,
+}: EventListProps) {
   const [viewMode, setViewMode] = useState<KegiatanViewMode>("grid");
+  const filtersRef = useRef<HTMLDivElement>(null);
 
-  const filteredEvents = useMemo(() => {
-    const query = search.trim().toLowerCase();
+  const handlePageChange = (nextPage: number) => {
+    if (nextPage === currentPage || nextPage < 1 || nextPage > totalPages) {
+      return;
+    }
 
-    return events.filter((event) => {
-      const matchesCategory = !categoryId || event.category.id === categoryId;
-      const matchesSearch = !query || event.title.toLowerCase().includes(query);
+    onPageChange(nextPage);
 
-      return matchesCategory && matchesSearch;
+    // Blur tombol paginasi agar browser tidak menarik viewport kembali ke bawah
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+
+    requestAnimationFrame(() => {
+      const el = filtersRef.current;
+      if (!el) return;
+
+      const headerOffset = 96; // sejajar scroll-mt-24 + navbar sticky
+      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top, behavior });
     });
-  }, [events, categoryId, search]);
+  };
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div
+        ref={filtersRef}
+        className="flex scroll-mt-24 flex-col gap-4 sm:flex-row sm:items-center"
+      >
         <Input
           type="search"
           placeholder="Cari nama kegiatan..."
           value={search}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={(event) => onSearchChange(event.target.value)}
           className="sm:flex-1"
           aria-label="Cari kegiatan"
         />
 
         <Select
-          value={categoryId}
-          onChange={(event) => setCategoryId(event.target.value)}
+          value={categorySlug}
+          onChange={(event) => onCategoryChange(event.target.value)}
           className="sm:w-56"
           aria-label="Filter kategori"
         >
           <option value="">Semua kategori</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>
+            <option key={category.id} value={category.slug}>
               {category.name}
             </option>
           ))}
@@ -141,23 +177,33 @@ export function EventList({ events, categories }: EventListProps) {
         </div>
       </div>
 
-      {filteredEvents.length > 0 ? (
+      {events.length > 0 ? (
         <div
           className={cn(
             "grid gap-4",
             viewMode === "grid" ? "lg:grid-cols-2" : "grid-cols-1",
           )}
         >
-          {filteredEvents.map((event) => (
+          {events.map((event) => (
             <EventCard key={event.id} event={event} variant={viewMode} />
           ))}
         </div>
       ) : (
         <EmptyState
-          title="Tidak ada kegiatan ditemukan"
-          description="Tidak ada kegiatan yang cocok dengan pencarian atau filter."
+          title={isFilteredEmpty ? "Tidak ada kegiatan ditemukan" : "Belum ada kegiatan"}
+          description={
+            isFilteredEmpty
+              ? "Tidak ada kegiatan yang cocok dengan pencarian atau filter."
+              : "Kegiatan RMI akan tampil di sini setelah dipublikasikan."
+          }
         />
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
