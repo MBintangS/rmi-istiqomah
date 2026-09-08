@@ -185,7 +185,7 @@ export function EventList({
         >
           {events.map((event) => (
             <motion.div key={event.id} variants={reduce ? undefined : staggerItem}>
-              <EventCard event={event} variant={viewMode} />
+              <EventCard event={event} variant={viewMode} compact />
             </motion.div>
           ))}
         </motion.div>
