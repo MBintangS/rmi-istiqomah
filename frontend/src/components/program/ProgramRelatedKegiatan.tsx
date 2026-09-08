@@ -51,7 +51,7 @@ export function ProgramRelatedKegiatan({ programName, programSlug }: ProgramRela
       <section className="border-t border-foreground/10 bg-surface py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Skeleton className="mb-6 h-8 w-56 rounded-rmi" />
-          <div className="grid gap-4 lg:grid-cols-1">
+          <div className="grid gap-4">
             <Skeleton className="h-28 w-full rounded-rmi" />
             <Skeleton className="h-28 w-full rounded-rmi" />
             <Skeleton className="h-28 w-full rounded-rmi" />
@@ -85,7 +85,7 @@ export function ProgramRelatedKegiatan({ programName, programSlug }: ProgramRela
 
         <div className="grid gap-4">
           {events.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <EventCard key={event.id} event={event} variant="list" />
           ))}
         </div>
       </div>

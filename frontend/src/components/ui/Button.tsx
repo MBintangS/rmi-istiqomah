@@ -28,7 +28,8 @@ const sizeStyles: Record<ButtonSize, string> = {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", type = "button", href, children, ...props }, ref) => {
     const classes = cn(
-      "inline-flex items-center justify-center rounded-full font-medium transition-colors",
+      "inline-flex cursor-pointer items-center justify-center rounded-full font-medium",
+      "transition-all duration-200 ease-out active:scale-[0.98]",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
       "disabled:pointer-events-none disabled:opacity-50",
       variantStyles[variant],

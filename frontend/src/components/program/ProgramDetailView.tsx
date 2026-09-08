@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button, EmptyState, RichTextContent } from "@/components/ui";
 import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
@@ -49,24 +49,20 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
 
   return (
     <>
-      <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Breadcrumb
-            items={[
-              { label: "Beranda", href: "/" },
-              { label: "Program", href: "/program" },
-              { label: program.name },
-            ]}
-            className="mb-4"
-          />
-          <h2>{program.name}</h2>
-          <p className="text-body mt-3 max-w-2xl text-foreground/70">{program.description}</p>
-        </div>
-      </section>
+      <PageHero
+        variant="detail"
+        title={program.name}
+        description={program.description}
+        breadcrumb={[
+          { label: "Beranda", href: "/" },
+          { label: "Program", href: "/program" },
+          { label: program.name },
+        ]}
+      />
 
       <section className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="relative mb-10 aspect-video overflow-hidden rounded-rmi shadow-soft sm:aspect-[21/9]">
+          <div className="relative mb-10 aspect-[16/10] overflow-hidden rounded-rmi sm:aspect-[21/9]">
             <Image
               src={program.image || PLACEHOLDER_IMAGE}
               alt={program.name}
@@ -77,10 +73,10 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
             />
           </div>
 
-          <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-            <div className="space-y-6 lg:col-span-2">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="space-y-10 lg:col-span-8">
               <div>
-                <h2 className="mb-4">Tentang Program</h2>
+                <h2 className="mb-4 text-2xl">Tentang Program</h2>
                 {program.content ? (
                   <RichTextContent html={program.content} />
                 ) : (
@@ -90,7 +86,7 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
 
               {program.galleryImages.length > 0 && (
                 <div>
-                  <h2 className="mb-4">Galeri Kegiatan</h2>
+                  <h2 className="mb-4 text-2xl">Galeri Kegiatan</h2>
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {program.galleryImages.map((image, index) => (
                       <div
@@ -120,9 +116,9 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
               </p>
             </div>
 
-            <aside className="space-y-6">
+            <aside className="space-y-6 lg:col-span-4">
               {program.schedule.length > 0 && (
-                <div className="rounded-rmi border border-foreground/10 bg-surface p-6 shadow-soft">
+                <div className="rounded-rmi border border-foreground/10 bg-surface p-6">
                   <h2 className="mb-4 text-lg">Jadwal</h2>
                   <dl className="space-y-4">
                     {program.schedule.map((item) => (
@@ -135,12 +131,12 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
                 </div>
               )}
 
-              <div className="rounded-rmi border border-primary/20 bg-primary/5 p-6">
-                <h2 className="mb-2 text-lg">Tertarik bergabung?</h2>
-                <p className="text-body mb-4 text-foreground/80">
+              <div className="rounded-rmi bg-heading p-6 text-white">
+                <h2 className="mb-2 text-lg text-white">Tertarik bergabung?</h2>
+                <p className="text-body mb-4 text-white/80">
                   Hubungi pengurus RMI untuk informasi pendaftaran dan detail kegiatan.
                 </p>
-                <Button href="/kontak" className="w-full">
+                <Button href="/kontak" variant="primary" className="w-full">
                   Info lebih lanjut
                 </Button>
               </div>

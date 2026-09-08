@@ -20,7 +20,7 @@ export default function ArtikelIndexPage() {
         ]}
       />
 
-      <section className="bg-background py-16 sm:py-20">
+      <section className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <ArtikelPageContent />
         </div>

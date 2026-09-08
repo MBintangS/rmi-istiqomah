@@ -14,25 +14,10 @@ export interface EmptyStateProps {
 
 function DefaultIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="48"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-primary/60"
-      aria-hidden="true"
-    >
-      <path d="M4 22h16" />
-      <path d="M6 18V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14" />
-      <path d="M10 6h4" />
-      <path d="M10 10h4" />
-      <path d="M10 14h4" />
-    </svg>
+    <span className="relative inline-flex h-12 w-12 items-center justify-center" aria-hidden="true">
+      <span className="absolute h-10 w-10 rotate-45 border border-primary/25" />
+      <span className="h-2.5 w-2.5 rotate-45 bg-secondary" />
+    </span>
   );
 }
 
@@ -48,11 +33,11 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center rounded-rmi bg-surface px-6 py-12 text-center shadow-soft",
+        "flex flex-col items-center justify-center rounded-rmi border border-foreground/10 bg-surface px-6 py-14 text-center",
         className,
       )}
     >
-      <div className="mb-4">{icon ?? <DefaultIcon />}</div>
+      <div className="mb-5">{icon ?? <DefaultIcon />}</div>
       <h3 className="text-lg font-semibold text-heading">{title}</h3>
       {description && (
         <p className="text-body mt-2 max-w-sm text-foreground/70">{description}</p>

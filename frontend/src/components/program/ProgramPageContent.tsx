@@ -10,7 +10,7 @@ export function ProgramPageContent() {
   const { data, isLoading, isError, error, refetch } = usePrograms();
 
   if (isLoading) {
-    return <SkeletonList count={3} />;
+    return <SkeletonList count={3} className="lg:grid-cols-1" />;
   }
 
   if (isError) {
@@ -25,6 +25,7 @@ export function ProgramPageContent() {
   }
 
   const programs = (data ?? []).map(mapProgramListItem);
+  const [featured, ...rest] = programs;
 
   if (programs.length === 0) {
     return (
@@ -36,10 +37,15 @@ export function ProgramPageContent() {
   }
 
   return (
-    <div className="grid gap-6">
-      {programs.map((program) => (
-        <ProgramCard key={program.id} program={program} />
-      ))}
+    <div className="space-y-4">
+      {featured ? <ProgramCard program={featured} featured /> : null}
+      {rest.length > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2">
+          {rest.map((program) => (
+            <ProgramCard key={program.id} program={program} />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

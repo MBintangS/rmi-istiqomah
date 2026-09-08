@@ -29,7 +29,7 @@ export function KegiatanDokumentasi({ eventId, eventTitle }: KegiatanDokumentasi
   if (isLoading) {
     return (
       <div>
-        <h3 className="mb-4">Dokumentasi</h3>
+        <h2 className="mb-4 text-xl sm:text-2xl">Dokumentasi</h2>
         <div className="grid grid-cols-3 gap-3">
           {[0, 1, 2].map((i) => (
             <Skeleton key={i} className="aspect-square rounded-rmi" />
@@ -46,7 +46,7 @@ export function KegiatanDokumentasi({ eventId, eventTitle }: KegiatanDokumentasi
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
-        <h3>Dokumentasi</h3>
+        <h2 className="text-xl sm:text-2xl">Dokumentasi</h2>
         <Link href="/galeri" className="text-caption font-medium text-primary hover:underline">
           Lihat galeri →
         </Link>

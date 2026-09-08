@@ -13,6 +13,7 @@ export default function KontakPage() {
   return (
     <>
       <PageHero
+        variant="utility"
         title="Hubungi Kami"
         description="Ada pertanyaan atau ingin bergabung? Kirim pesan atau hubungi pengurus RMI langsung."
         breadcrumb={[
@@ -21,14 +22,16 @@ export default function KontakPage() {
         ]}
       />
 
-      <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div>
-            <h2 className="mb-6">Form Kontak</h2>
+      <section className="bg-background py-12 sm:py-16">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+          <div className="rounded-rmi border border-foreground/10 bg-surface p-6 sm:p-8 lg:col-span-6">
+            <h2 className="mb-6 text-2xl">Form Kontak</h2>
             <ContactForm />
           </div>
 
-          <KontakInfo />
+          <div className="lg:col-span-6">
+            <KontakInfo />
+          </div>
         </div>
       </section>
     </>

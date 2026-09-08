@@ -66,7 +66,7 @@ export function KegiatanPageContent() {
   const isInitialLoading = (kegiatanLoading || kategoriLoading) && !data;
 
   if (isInitialLoading) {
-    return <SkeletonList count={4} />;
+    return <SkeletonList count={4} className="lg:grid-cols-2" />;
   }
 
   if (kegiatanError) {

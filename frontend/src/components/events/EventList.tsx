@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { EventCard } from "@/components/home/EventCard";
-import { EmptyState, Input, Pagination, Select } from "@/components/ui";
+import { EmptyState, FilterBar, Input, Pagination, Select } from "@/components/ui";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 import type { Kegiatan, Kategori } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -84,6 +86,7 @@ export function EventList({
 }: EventListProps) {
   const [viewMode, setViewMode] = useState<KegiatanViewMode>("grid");
   const filtersRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
 
   const handlePageChange = (nextPage: number) => {
     if (nextPage === currentPage || nextPage < 1 || nextPage > totalPages) {
@@ -92,7 +95,6 @@ export function EventList({
 
     onPageChange(nextPage);
 
-    // Blur tombol paginasi agar browser tidak menarik viewport kembali ke bawah
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
@@ -104,7 +106,7 @@ export function EventList({
       const el = filtersRef.current;
       if (!el) return;
 
-      const headerOffset = 96; // sejajar scroll-mt-24 + navbar sticky
+      const headerOffset = 96;
       const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top, behavior });
     });
@@ -112,10 +114,7 @@ export function EventList({
 
   return (
     <div className="space-y-8">
-      <div
-        ref={filtersRef}
-        className="flex scroll-mt-24 flex-col gap-4 sm:flex-row sm:items-center"
-      >
+      <FilterBar ref={filtersRef} className="scroll-mt-24">
         <Input
           type="search"
           placeholder="Cari nama kegiatan..."
@@ -140,7 +139,7 @@ export function EventList({
         </Select>
 
         <div
-          className="inline-flex shrink-0 self-end rounded-rmi border border-foreground/10 bg-surface p-1 sm:self-auto"
+          className="inline-flex shrink-0 self-end rounded-full border border-foreground/10 bg-background p-1 sm:self-auto"
           role="group"
           aria-label="Mode tampilan"
         >
@@ -151,7 +150,7 @@ export function EventList({
             aria-label="Tampilan grid"
             title="Grid"
             className={cn(
-              "rounded-md p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              "cursor-pointer rounded-full p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               viewMode === "grid"
                 ? "bg-primary text-white"
                 : "text-foreground/55 hover:bg-primary/10 hover:text-primary",
@@ -166,7 +165,7 @@ export function EventList({
             aria-label="Tampilan list"
             title="List"
             className={cn(
-              "rounded-md p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              "cursor-pointer rounded-full p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               viewMode === "list"
                 ? "bg-primary text-white"
                 : "text-foreground/55 hover:bg-primary/10 hover:text-primary",
@@ -175,19 +174,21 @@ export function EventList({
             <ListViewIcon />
           </button>
         </div>
-      </div>
+      </FilterBar>
 
       {events.length > 0 ? (
-        <div
-          className={cn(
-            "grid gap-4",
-            viewMode === "grid" ? "lg:grid-cols-2" : "grid-cols-1",
-          )}
+        <motion.div
+          className={cn("grid gap-4", viewMode === "grid" ? "sm:grid-cols-2" : "grid-cols-1")}
+          initial={reduce ? false : "hidden"}
+          animate="visible"
+          variants={reduce ? undefined : staggerContainer}
         >
           {events.map((event) => (
-            <EventCard key={event.id} event={event} variant={viewMode} />
+            <motion.div key={event.id} variants={reduce ? undefined : staggerItem}>
+              <EventCard event={event} variant={viewMode} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
         <EmptyState
           title={isFilteredEmpty ? "Tidak ada kegiatan ditemukan" : "Belum ada kegiatan"}

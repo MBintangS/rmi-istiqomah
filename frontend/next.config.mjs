@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
@@ -12,6 +13,13 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+  },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(glb|gltf)$/,
+      type: "asset/resource",
+    });
+    return config;
   },
   async redirects() {
     return [

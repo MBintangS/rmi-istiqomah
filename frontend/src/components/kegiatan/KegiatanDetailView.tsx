@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Badge, EmptyState, RichTextContent } from "@/components/ui";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { Badge, Button, EmptyState, RichTextContent } from "@/components/ui";
+import { PageHero } from "@/components/layout/PageHero";
 import { useKegiatanBySlug } from "@/hooks/useKegiatanBySlug";
 import { useSettingsValue } from "@/hooks/useSettings";
 import { formatEventDate } from "@/lib/format-date";
@@ -78,27 +78,26 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
   return (
     <>
       <JsonLd data={eventLd} />
-      <section className="border-b border-foreground/10 bg-surface py-8 sm:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Breadcrumb
-            items={[
-              { label: "Beranda", href: "/" },
-              { label: "Kegiatan", href: "/kegiatan" },
-              { label: event.title },
-            ]}
-            className="mb-4"
-          />
-          <div className="flex flex-wrap items-center gap-3">
+      <PageHero
+        variant="detail"
+        title={event.title}
+        breadcrumb={[
+          { label: "Beranda", href: "/" },
+          { label: "Kegiatan", href: "/kegiatan" },
+          { label: event.title },
+        ]}
+        meta={
+          <>
             <Badge variant={status.variant}>{status.label}</Badge>
             <Badge variant="category">{event.category.name}</Badge>
-          </div>
-          <h2 className="mt-3">{event.title}</h2>
-        </div>
-      </section>
+          </>
+        }
+        actions={<Button href="/kegiatan" variant="outline">Kegiatan lain</Button>}
+      />
 
       <section className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="relative mb-10 aspect-video overflow-hidden rounded-rmi shadow-soft sm:aspect-[21/9]">
+          <div className="relative mb-10 aspect-[16/10] overflow-hidden rounded-rmi sm:aspect-[21/9]">
             <Image
               src={event.thumbnail || PLACEHOLDER_IMAGE}
               alt={event.title}
@@ -109,10 +108,10 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
             />
           </div>
 
-          <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-            <div className="space-y-6 lg:col-span-2">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="space-y-10 lg:col-span-8">
               <div>
-                <h3 className="mb-4">Deskripsi Kegiatan</h3>
+                <h2 className="mb-4 text-2xl">Deskripsi Kegiatan</h2>
                 <RichTextContent html={event.description} />
               </div>
 
@@ -120,7 +119,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
 
               {event.location && (
                 <div>
-                  <h3 className="mb-4">Lokasi</h3>
+                  <h2 className="mb-4 text-2xl">Lokasi</h2>
                   <p className="text-body mb-4 text-foreground/80">{event.location}</p>
                   <div className="relative aspect-video overflow-hidden rounded-rmi border border-foreground/10 bg-surface">
                     <iframe
@@ -136,10 +135,10 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
               )}
             </div>
 
-            <aside className="space-y-6">
-              <div className="rounded-rmi border border-foreground/10 bg-surface p-6 shadow-soft">
-                <h2 className="mb-4 text-lg">Informasi</h2>
-                <dl className="space-y-4">
+            <aside className="lg:col-span-4">
+              <div className="rounded-rmi border border-foreground/10 bg-surface p-6 lg:sticky lg:top-24">
+                <h2 className="mb-5 text-lg">Informasi</h2>
+                <dl className="space-y-5">
                   <div>
                     <dt className="text-caption font-medium text-primary">Tanggal</dt>
                     <dd className="text-body mt-1 text-foreground/80">

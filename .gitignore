@@ -22,6 +22,8 @@ frontend/out/
 frontend/.vercel/
 frontend/next-env.d.ts
 
+.cursor/
+
 # Backend build / coverage
 backend/dist/
 backend/build/

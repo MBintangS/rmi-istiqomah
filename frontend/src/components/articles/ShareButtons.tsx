@@ -26,12 +26,12 @@ export function ShareButtons({ title, path, className }: ShareButtonsProps) {
 
   return (
     <div className={cn("flex flex-wrap items-center gap-3", className)}>
-      <span className="text-caption font-medium text-foreground/70">Bagikan:</span>
+      <span className="text-caption font-medium text-foreground/70">Bagikan</span>
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-caption inline-flex items-center gap-2 rounded-rmi border border-foreground/20 bg-surface px-3 py-1.5 font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+        className="text-caption inline-flex items-center rounded-full border border-foreground/20 bg-surface px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         aria-disabled={!whatsappUrl}
       >
         WhatsApp
@@ -40,7 +40,7 @@ export function ShareButtons({ title, path, className }: ShareButtonsProps) {
         href={facebookUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-caption inline-flex items-center gap-2 rounded-rmi border border-foreground/20 bg-surface px-3 py-1.5 font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+        className="text-caption inline-flex items-center rounded-full border border-foreground/20 bg-surface px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         aria-disabled={!facebookUrl}
       >
         Facebook

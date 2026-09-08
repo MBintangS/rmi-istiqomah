@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { RmiLogo } from "@/components/brand/RmiLogo";
+import { JejakLine } from "@/components/layout/JejakLine";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SkipToContent } from "@/components/layout/SkipToContent";
@@ -13,26 +12,23 @@ export default function NotFound() {
       <Navbar />
       <main
         id="main-content"
-        className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center bg-background px-4 py-16 text-center"
+        className="flex min-h-[calc(100vh-4rem)] flex-col justify-center bg-background px-4 py-16 sm:px-6 lg:px-8"
       >
-        <div className="mx-auto max-w-lg">
-          <div className="mb-6 flex justify-center">
-            <RmiLogo size={64} />
-          </div>
-          <p className="text-caption font-medium text-primary">404 - Halaman Tidak Ditemukan</p>
-          <h1 className="mt-3">Maaf, halaman ini tidak ada</h1>
-          <p className="text-body mt-4 text-foreground/70">
-            Halaman yang Anda cari mungkin sudah dipindahkan atau alamat URL-nya salah.
-            Kembali ke beranda {SITE_NAME} untuk melanjutkan.
+        <div className="mx-auto w-full max-w-6xl">
+          <p className="font-display text-6xl font-bold tracking-tight text-primary sm:text-7xl">
+            404
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <h1 className="mt-4 max-w-[16ch] text-3xl sm:text-4xl">Halaman ini tidak ada di jejak RMI</h1>
+          <p className="text-body mt-4 max-w-[48ch] text-foreground/70">
+            Alamat yang dibuka mungkin sudah dipindahkan. Kembali ke beranda {SITE_NAME} atau lihat
+            kegiatan yang sedang berjalan.
+          </p>
+          <JejakLine className="mt-8 max-w-xs" />
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button href="/">Kembali ke Beranda</Button>
-            <Link
-              href="/kontak"
-              className="text-button font-medium text-primary transition-colors hover:text-primary-dark"
-            >
-              Hubungi Kami
-            </Link>
+            <Button href="/kegiatan" variant="outline">
+              Lihat Kegiatan
+            </Button>
           </div>
         </div>
       </main>

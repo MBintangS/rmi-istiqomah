@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArticleCard } from "@/components/home/ArticleCard";
-import { EmptyState, Input, Pagination, Select } from "@/components/ui";
+import { EmptyState, FilterBar, Input, Pagination, Select } from "@/components/ui";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 import type { Artikel, Kategori } from "@/types";
 
 const PAGE_SIZE = 3;
@@ -16,6 +18,8 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
 
   const filteredArticles = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -36,6 +40,8 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
     safePage * PAGE_SIZE,
   );
 
+  const [featured, ...rest] = paginatedArticles;
+
   useEffect(() => {
     setCurrentPage(1);
   }, [search, categoryId]);
@@ -46,9 +52,25 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
     }
   }, [currentPage, totalPages]);
 
+  const handlePageChange = (nextPage: number) => {
+    setCurrentPage(nextPage);
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    requestAnimationFrame(() => {
+      const el = filtersRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    });
+  };
+
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row">
+      <FilterBar ref={filtersRef} className="scroll-mt-24">
         <Input
           type="search"
           placeholder="Cari judul artikel..."
@@ -71,14 +93,31 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
             </option>
           ))}
         </Select>
-      </div>
+      </FilterBar>
 
       {paginatedArticles.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {paginatedArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
+        <motion.div
+          className="space-y-6"
+          initial={reduce ? false : "hidden"}
+          animate="visible"
+          variants={reduce ? undefined : staggerContainer}
+        >
+          {featured ? (
+            <motion.div variants={reduce ? undefined : staggerItem}>
+              <ArticleCard article={featured} variant="featured" />
+            </motion.div>
+          ) : null}
+
+          {rest.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {rest.map((article) => (
+                <motion.div key={article.id} variants={reduce ? undefined : staggerItem}>
+                  <ArticleCard article={article} />
+                </motion.div>
+              ))}
+            </div>
+          ) : null}
+        </motion.div>
       ) : (
         <EmptyState
           title="Tidak ada artikel"
@@ -90,7 +129,7 @@ export function ArticleList({ articles, categories }: ArticleListProps) {
       <Pagination
         currentPage={safePage}
         totalPages={totalPages}
-        onPageChange={setCurrentPage}
+        onPageChange={handlePageChange}
       />
     </div>
   );

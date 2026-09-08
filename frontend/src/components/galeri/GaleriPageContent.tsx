@@ -14,7 +14,7 @@ export function GaleriPageContent() {
   const { data, isLoading, isError, error, refetch } = useGaleri({ limit: 100, sort: "order" });
 
   if (isLoading) {
-    return <SkeletonList count={8} />;
+    return <SkeletonList count={8} className="md:grid-cols-4" />;
   }
 
   if (isError) {

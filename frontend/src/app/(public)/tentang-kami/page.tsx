@@ -13,6 +13,7 @@ export default function TentangKamiPage() {
   return (
     <>
       <PageHero
+        variant="list"
         title="Tentang Kami"
         description="Mengenal lebih dekat Remaja Masjid Istiqomah: profil, landasan, dan tim pengurus."
         breadcrumb={[

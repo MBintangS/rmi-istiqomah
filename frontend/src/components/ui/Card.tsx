@@ -24,7 +24,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-rmi bg-surface shadow-soft transition-shadow hover:shadow-md",
+        "overflow-hidden rounded-rmi border border-foreground/10 bg-surface transition-shadow hover:shadow-soft",
         className,
       )}
       {...props}

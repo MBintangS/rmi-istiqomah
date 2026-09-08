@@ -2,6 +2,7 @@ export { RichTextContent, richTextContentClassName } from "./RichTextContent";
 export { Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from "./Breadcrumb";
 export { Drawer, type DrawerProps } from "./Drawer";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
+export { FilterBar, type FilterBarProps } from "./FilterBar";
 export { Modal, type ModalProps } from "./Modal";
 export { Pagination } from "./Pagination";
 export { Skeleton, SkeletonList, type SkeletonListProps, type SkeletonProps, type SkeletonVariant } from "./Skeleton";

@@ -34,10 +34,10 @@ export function Skeleton({ variant = "bar", lines = 3, className, ...props }: Sk
   if (variant === "card") {
     return (
       <div
-        className={cn("overflow-hidden rounded-rmi bg-surface shadow-soft", className)}
+        className={cn("overflow-hidden rounded-rmi border border-foreground/10 bg-surface", className)}
         {...props}
       >
-        <div className="aspect-video animate-pulse bg-foreground/10" />
+        <div className="aspect-[16/11] animate-pulse bg-foreground/10" />
         <div className="space-y-3 p-5">
           <SkeletonBar className="h-5 w-2/3" />
           <SkeletonBar className="h-4 w-full" />
@@ -57,7 +57,7 @@ export interface SkeletonListProps {
 
 export function SkeletonList({ count = 3, className }: SkeletonListProps) {
   return (
-    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", className)}>
+    <div className={cn("grid gap-4 sm:grid-cols-2", className)}>
       {Array.from({ length: count }).map((_, index) => (
         <Skeleton key={index} variant="card" />
       ))}

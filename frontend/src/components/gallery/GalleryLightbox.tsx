@@ -83,11 +83,11 @@ export function GalleryLightbox({
           onClick={onClose}
           aria-label="Tutup lightbox"
           className={cn(
-            "shrink-0 rounded-full p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white",
+            "flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white",
             focusRing,
           )}
         >
-          ✕
+          <span aria-hidden="true">✕</span>
         </button>
       </div>
 
@@ -105,7 +105,7 @@ export function GalleryLightbox({
             type="button"
             onClick={goPrev}
             className={cn(
-              "relative z-10 mr-2 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:inline-flex",
+              "relative z-10 mr-2 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:inline-flex",
               focusRing,
             )}
             aria-label="Foto sebelumnya"
@@ -130,7 +130,7 @@ export function GalleryLightbox({
             type="button"
             onClick={goNext}
             className={cn(
-              "relative z-10 ml-2 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:inline-flex",
+              "relative z-10 ml-2 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:inline-flex",
               focusRing,
             )}
             aria-label="Foto berikutnya"

@@ -18,17 +18,17 @@ export function LatestKegiatanSection() {
   const events = (data?.items ?? []).map(mapKegiatanListItem);
 
   return (
-    <MotionSection tone="fade" className="bg-background py-16 sm:py-20">
+    <MotionSection tone="fade" className="bg-background py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 max-w-2xl">
-          <h2>Kegiatan Terakhir</h2>
+          <h2>Kegiatan terakhir</h2>
           <p className="text-body mt-3 text-foreground/70">
-            kegiatan RMI yang baru saja berlangsung.
+            Jejak aktivitas RMI yang baru saja berlangsung.
           </p>
         </div>
 
         {isPending ? (
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {[0, 1, 2].map((i) => (
               <Skeleton key={i} className="aspect-[3/1] w-full rounded-rmi" />
             ))}
@@ -44,7 +44,7 @@ export function LatestKegiatanSection() {
             description="Kegiatan terbaru akan tampil di sini setelah dipublikasikan."
           />
         ) : (
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {events.map((event) => (
               <Link
                 key={event.id}
@@ -56,22 +56,21 @@ export function LatestKegiatanSection() {
                   alt={event.title}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  sizes="(max-width: 1152px) 100vw, 1152px"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-heading/0 transition-colors duration-300 group-hover:bg-heading/45" />
-                <div className="absolute inset-0 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-6">
-                  <p className="font-display text-lg font-semibold text-white sm:text-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-heading/80 via-heading/15 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                  <p className="font-display text-lg font-semibold text-white sm:text-xl">
                     {event.title}
                   </p>
                 </div>
-                <span className="sr-only">{event.title}</span>
               </Link>
             ))}
           </div>
         )}
 
-        <div className="mt-6 flex justify-center">
+        <div className="mt-8">
           <Button href="/kegiatan" variant="outline">
             Lihat kegiatan lain
           </Button>

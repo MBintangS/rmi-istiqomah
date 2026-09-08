@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { Select } from "@/components/ui";
+import { motion, useReducedMotion } from "framer-motion";
+import { EmptyState, FilterBar, Select } from "@/components/ui";
 import { GalleryLightbox } from "@/components/gallery/GalleryLightbox";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import type { FlatGalleryItem } from "@/lib/gallery";
+import { staggerContainer, staggerItem } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 interface GalleryGridProps {
   items: FlatGalleryItem[];
@@ -17,6 +20,7 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
   const [category, setCategory] = useState("");
   const [eventId, setEventId] = useState("");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const reduce = useReducedMotion();
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -32,11 +36,11 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row">
+      <FilterBar>
         <Select
           value={category}
           onChange={(event) => setCategory(event.target.value)}
-          className="sm:w-56"
+          className="sm:flex-1 sm:max-w-xs"
           aria-label="Filter kategori galeri"
         >
           <option value="">Semua kategori</option>
@@ -50,7 +54,7 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
         <Select
           value={eventId}
           onChange={(event) => setEventId(event.target.value)}
-          className="sm:w-64"
+          className="sm:flex-1 sm:max-w-sm"
           aria-label="Filter kegiatan"
         >
           <option value="">Semua kegiatan</option>
@@ -60,37 +64,52 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
             </option>
           ))}
         </Select>
-      </div>
+      </FilterBar>
 
       {filteredItems.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <motion.div
+          className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4"
+          initial={reduce ? false : "hidden"}
+          animate="visible"
+          variants={reduce ? undefined : staggerContainer}
+        >
           {filteredItems.map((item, index) => (
-            <button
+            <motion.div
               key={item.id}
-              type="button"
-              onClick={() => openLightbox(index)}
-              className="group relative aspect-square overflow-hidden rounded-rmi shadow-soft"
-              aria-label={`Buka foto: ${item.caption}`}
+              variants={reduce ? undefined : staggerItem}
+              className={cn(index === 0 && "col-span-2 row-span-2")}
             >
-              <Image
-                src={item.url || PLACEHOLDER_IMAGE}
-                alt={item.caption}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-heading/0 transition-colors group-hover:bg-heading/20" />
-              <span className="text-caption absolute inset-x-0 bottom-0 bg-gradient-to-t from-heading/80 to-transparent p-3 text-left text-white opacity-0 transition-opacity group-hover:opacity-100">
-                {item.caption}
-              </span>
-            </button>
+              <button
+                type="button"
+                onClick={() => openLightbox(index)}
+                className={cn(
+                  "group relative block w-full cursor-pointer overflow-hidden rounded-rmi bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                  index === 0 ? "aspect-[4/3] h-full min-h-[14rem] md:aspect-auto" : "aspect-square",
+                )}
+                aria-label={`Buka foto: ${item.caption}`}
+              >
+                <Image
+                  src={item.url || PLACEHOLDER_IMAGE}
+                  alt={item.caption}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes={index === 0 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                  loading="lazy"
+                />
+                {item.caption ? (
+                  <span className="absolute inset-x-0 bottom-0 bg-heading/70 p-2.5 text-left text-xs leading-snug text-white sm:p-3 sm:text-sm">
+                    {item.caption}
+                  </span>
+                ) : null}
+              </button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
-        <p className="text-body rounded-rmi border border-dashed border-foreground/20 bg-surface p-8 text-center text-foreground/70">
-          Tidak ada foto yang cocok dengan filter.
-        </p>
+        <EmptyState
+          title="Tidak ada foto"
+          description="Tidak ada foto yang cocok dengan filter."
+        />
       )}
 
       {activeIndex !== null && (

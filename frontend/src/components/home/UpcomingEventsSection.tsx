@@ -17,14 +17,14 @@ export function UpcomingEventsSection() {
   const events = (data?.items ?? []).map(mapKegiatanListItem);
 
   return (
-    <MotionSection tone="soft" className="bg-background py-24 sm:py-32">
+    <MotionSection tone="soft" className="bg-surface py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 max-w-2xl">
-          <h2>Jadwal Kegiatan RMI</h2>
-          <p className="text-body mt-4 text-foreground/70">
+        <div className="mb-10 max-w-2xl">
+          <h2>Jadwal kegiatan RMI</h2>
+          <p className="text-body mt-3 text-foreground/70">
             Ikuti kegiatan rutin dan perayaan besar remaja masjid dalam waktu dekat.
           </p>
-          <div className="mt-6">
+          <div className="mt-5">
             <Button href="/kegiatan" variant="outline" size="sm">
               Semua Kegiatan
             </Button>
@@ -44,13 +44,10 @@ export function UpcomingEventsSection() {
             description="Kegiatan RMI akan tampil di sini setelah dijadwalkan."
           />
         ) : (
-          <div className="divide-y divide-foreground/10 border-y border-foreground/10">
+          <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 md:grid-cols-3">
             {events.map((event) => (
-              <div key={event.id} className="py-4">
-                <EventCard
-                  event={event}
-                  className="rounded-none border-0 bg-transparent p-0 shadow-none hover:translate-y-0 hover:shadow-none sm:p-0"
-                />
+              <div key={event.id} className="min-w-[68%] snap-start sm:min-w-0">
+                <EventCard event={event} compact />
               </div>
             ))}
           </div>

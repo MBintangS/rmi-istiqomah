@@ -58,57 +58,42 @@ export function TestimonialsSection() {
   };
 
   return (
-    <MotionSection
-      tone="fade"
-      className="relative overflow-hidden bg-background py-24"
-    >
-      <div
-        className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-primary/[0.06] blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-16 bottom-8 h-56 w-56 rounded-full bg-secondary/10 blur-3xl"
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <MotionSection tone="fade" className="bg-surface py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <header className="max-w-2xl">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
-            Kata Mereka
-          </p>
-          <h2 className="mt-3 max-w-[16ch]">Suara yang tumbuh bersama</h2>
-          <p className="text-body mt-4 max-w-[42ch] text-foreground/65">
+          <h2 className="max-w-[16ch]">Suara yang tumbuh bersama</h2>
+          <p className="text-body mt-3 max-w-[42ch] text-foreground/65">
             Pengalaman anggota, sahabat, dan teman-teman yang ikut tumbuh di wilayah Masjid Al-Istiqomah.
           </p>
         </header>
 
         {isPending ? (
-          <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="mx-auto aspect-[4/5] w-full max-w-[5.5rem] animate-pulse rounded-rmi bg-foreground/10 sm:max-w-[6.5rem] lg:col-span-2 lg:mx-0 lg:max-w-[7rem]" />
+          <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="mx-auto aspect-[4/5] w-full max-w-[5.5rem] animate-pulse rounded-rmi bg-foreground/10 lg:col-span-2 lg:mx-0 lg:max-w-[7rem]" />
             <div className="space-y-4 lg:col-span-10">
               <Skeleton variant="text" lines={4} />
               <Skeleton className="h-14 w-56 rounded-rmi" />
             </div>
           </div>
         ) : isError ? (
-          <div className="mt-14">
+          <div className="mt-12">
             <EmptyState
               title="Gagal memuat testimoni"
               description={getApiErrorMessage(error)}
             />
           </div>
         ) : !current ? (
-          <div className="mt-14">
+          <div className="mt-12">
             <EmptyState
               title="Belum ada testimoni"
               description="Testimoni anggota RMI akan tampil di sini."
             />
           </div>
         ) : (
-          <div className="mt-14">
-            <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="mt-12">
+            <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
               <div className="relative lg:col-span-2">
-                <div className="relative aspect-[4/5] w-full max-w-[5rem] overflow-hidden rounded-rmi bg-primary/10 sm:max-w-[6rem] lg:mx-0 lg:max-w-[6.5rem]">
+                <div className="relative aspect-[4/5] w-full max-w-[5rem] overflow-hidden rounded-rmi bg-primary/10 sm:max-w-[6rem] lg:max-w-[6.5rem]">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={current.id}
@@ -132,13 +117,6 @@ export function TestimonialsSection() {
               </div>
 
               <div className="relative min-w-0 lg:col-span-10">
-                <span
-                  className="pointer-events-none absolute -left-2 -top-8 font-display text-[7rem] leading-none text-primary/15 select-none sm:-top-10 sm:text-[9rem]"
-                  aria-hidden="true"
-                >
-                  &ldquo;
-                </span>
-
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.figure
                     key={current.id}
@@ -166,7 +144,7 @@ export function TestimonialsSection() {
             </div>
 
             {total > 1 ? (
-              <div className="mt-12 flex items-center gap-3 sm:gap-4">
+              <div className="mt-10 flex items-center gap-3 sm:gap-4">
                 <div
                   className="min-w-0 flex-1 overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                   role="tablist"
@@ -187,7 +165,7 @@ export function TestimonialsSection() {
                           className={cn(
                             "relative h-12 w-12 shrink-0 rounded-full bg-primary/10 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                             active
-                              ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                              ? "ring-2 ring-primary ring-offset-2 ring-offset-surface"
                               : "opacity-55 hover:opacity-100",
                           )}
                         >
@@ -207,9 +185,6 @@ export function TestimonialsSection() {
                 </div>
 
                 <div className="flex shrink-0 items-center gap-2">
-                  <p className="mr-1 hidden text-[11px] font-medium uppercase tracking-[0.14em] text-foreground/45 sm:block">
-                    {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-                  </p>
                   <button
                     type="button"
                     onClick={() => goTo(activeIndex - 1)}

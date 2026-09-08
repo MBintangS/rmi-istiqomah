@@ -1,63 +1,63 @@
-import { RmiLogo } from "@/components/brand/RmiLogo";
+import { type ReactNode } from "react";
+import { JejakLine } from "@/components/layout/JejakLine";
 import { Breadcrumb, type BreadcrumbItem } from "@/components/ui/Breadcrumb";
 import { cn } from "@/lib/utils";
 
 export interface PageHeroProps {
   title: string;
-  description: string;
+  description?: string;
   breadcrumb: BreadcrumbItem[];
   className?: string;
+  variant?: "list" | "detail" | "utility";
+  meta?: ReactNode;
+  actions?: ReactNode;
 }
 
 /**
- * Shared internal-page hero for public routes.
- * Asymmetric stack + brand atmosphere; not a marketing full-bleed hero.
+ * Editorial inner-page header. Signature: jejak diamonds, not a green banner.
  */
-export function PageHero({ title, description, breadcrumb, className }: PageHeroProps) {
+export function PageHero({
+  title,
+  description,
+  breadcrumb,
+  className,
+  variant = "list",
+  meta,
+  actions,
+}: PageHeroProps) {
   return (
     <section
-      className={cn(
-        "page-hero relative overflow-hidden border-b border-foreground/10 bg-background",
-        className,
-      )}
+      className={cn("page-hero relative border-b border-foreground/10 bg-background", className)}
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(78,131,10,0.12),_transparent_55%)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-16 bottom-0 h-48 w-48 rounded-full bg-primary/10 blur-3xl sm:h-64 sm:w-64"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+        className={cn(
+          "relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8",
+          variant === "utility" && "py-8 sm:py-10",
+          variant === "detail" && "py-8 sm:py-10 lg:py-12",
+          variant === "list" && "py-10 sm:py-12 lg:py-14",
+        )}
+      >
         <Breadcrumb items={breadcrumb} className="mb-6 sm:mb-8" />
 
-        <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
-            <div className="mb-4 h-1 w-12 rounded-full bg-primary" aria-hidden="true" />
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-heading sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
-              {title}
-            </h1>
-            <p className="text-body mt-4 max-w-[42ch] text-foreground/70 sm:mt-5 sm:max-w-[48ch]">
-              {description}
-            </p>
-          </div>
-
-          <div className="hidden lg:col-span-4 lg:flex lg:justify-end lg:pb-1">
-            <div className="relative">
-              <div
-                className="absolute -inset-3 rounded-full bg-primary/10 blur-md"
-                aria-hidden="true"
-              />
-              <RmiLogo size={144} className="relative ring-1 ring-primary" />
-            </div>
-          </div>
+        <div className={cn(variant === "detail" ? "max-w-4xl" : "max-w-3xl")}>
+          <h1
+            className={cn(
+              "font-display font-semibold tracking-tight text-heading",
+              variant === "detail"
+                ? "text-3xl leading-[1.15] sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12]"
+                : "text-3xl leading-[1.15] sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]",
+            )}
+          >
+            {title}
+          </h1>
+          {description ? (
+            <p className="text-body mt-4 max-w-[48ch] text-foreground/70 sm:mt-5">{description}</p>
+          ) : null}
+          {meta ? <div className="mt-4 flex flex-wrap items-center gap-2">{meta}</div> : null}
+          {actions ? <div className="mt-6 flex flex-wrap gap-3">{actions}</div> : null}
         </div>
+
+        <JejakLine className="mt-8 max-w-sm sm:mt-10" />
       </div>
     </section>
   );

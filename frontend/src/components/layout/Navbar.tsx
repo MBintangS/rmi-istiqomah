@@ -62,7 +62,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:h-[4.5rem] lg:px-8">
         <Link href="/" className="flex min-w-0 items-center gap-2.5">
           <RmiLogo size={36} priority />
           <span className="hidden truncate font-display text-sm font-semibold tracking-tight text-heading sm:inline">
@@ -70,12 +70,12 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
+        <nav className="hidden h-full items-center gap-1 lg:flex" aria-label="Navigasi utama">
           {navItems.map((item) =>
             item.children ? (
               <div
                 key={item.href}
-                className="relative"
+                className="relative h-full"
                 onMouseEnter={() => setProgramOpen(true)}
                 onMouseLeave={() => setProgramOpen(false)}
                 onFocus={() => setProgramOpen(true)}
@@ -90,14 +90,20 @@ export function Navbar() {
                   aria-expanded={programOpen}
                   aria-haspopup="true"
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                    "relative inline-flex h-full items-center gap-1 px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                     isActive(item.href)
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
+                      ? "text-primary"
+                      : "text-foreground/80 hover:text-primary",
                   )}
                 >
                   {item.label}
                   <ChevronDownIcon />
+                  {isActive(item.href) ? (
+                    <span
+                      className="pointer-events-none absolute bottom-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 translate-y-1/2 rotate-45 bg-secondary"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                 </Link>
                 {programOpen && (
                   <div className="absolute left-0 top-full z-50 min-w-[180px] pt-2">
@@ -124,13 +130,19 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                  "relative flex h-full items-center px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   isActive(item.href)
-                    ? "bg-primary/10 text-primary"
-                    : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
+                    ? "text-primary"
+                    : "text-foreground/80 hover:text-primary",
                 )}
               >
                 {item.label}
+                {isActive(item.href) ? (
+                  <span
+                    className="pointer-events-none absolute bottom-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 translate-y-1/2 rotate-45 bg-secondary"
+                    aria-hidden="true"
+                  />
+                ) : null}
               </Link>
             ),
           )}

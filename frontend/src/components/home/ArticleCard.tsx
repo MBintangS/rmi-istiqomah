@@ -9,15 +9,11 @@ import { cn } from "@/lib/utils";
 interface ArticleCardProps {
   article: Artikel;
   className?: string;
-  /** card = list pages; featured / list = beranda editorial layouts */
+  /** card = list pages; featured / list = editorial layouts */
   variant?: "card" | "featured" | "list";
 }
 
-export function ArticleCard({
-  article,
-  className,
-  variant = "card",
-}: ArticleCardProps) {
+export function ArticleCard({ article, className, variant = "card" }: ArticleCardProps) {
   const thumbnail = article.thumbnail || PLACEHOLDER_IMAGE;
 
   if (variant === "featured") {
@@ -25,7 +21,8 @@ export function ArticleCard({
       <Link
         href={`/artikel/${article.slug}`}
         className={cn(
-          "group grid overflow-hidden rounded-rmi bg-surface md:grid-cols-2",
+          "group grid overflow-hidden rounded-rmi bg-background md:grid-cols-2",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
           className,
         )}
       >
@@ -65,7 +62,8 @@ export function ArticleCard({
       <Link
         href={`/artikel/${article.slug}`}
         className={cn(
-          "group block border-b border-foreground/10 pb-6 transition-colors last:border-b-0",
+          "group block border-b border-foreground/10 py-6 transition-colors last:border-b-0",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
           className,
         )}
       >
@@ -93,32 +91,34 @@ export function ArticleCard({
     <Link
       href={`/artikel/${article.slug}`}
       className={cn(
-        "group block overflow-hidden rounded-rmi border border-foreground/10 bg-surface transition-colors hover:border-primary/30",
+        "group flex flex-col overflow-hidden rounded-rmi border border-foreground/10 bg-surface transition-all duration-300",
+        "hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
         className,
       )}
     >
-      <div className="relative aspect-video w-full overflow-hidden bg-primary/10">
+      <div className="relative aspect-[16/11] w-full overflow-hidden bg-primary/10">
         <Image
           src={thumbnail}
           alt={article.title}
           fill
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 
-      <div className="space-y-2 p-5">
+      <div className="flex flex-1 flex-col space-y-2 p-5">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="category">{article.category.name}</Badge>
           <time className="text-caption text-foreground/70" dateTime={article.publishedAt}>
             {formatArticleDate(article.publishedAt)}
           </time>
         </div>
-        <h3 className="text-lg font-semibold text-heading transition-colors group-hover:text-primary">
+        <h3 className="font-display text-lg font-semibold leading-snug text-heading transition-colors group-hover:text-primary">
           {article.title}
         </h3>
         <p className="text-body line-clamp-2 text-foreground/80">{article.excerpt}</p>
-        <span className="text-caption inline-flex items-center font-medium text-primary">
+        <span className="text-caption mt-auto inline-flex items-center pt-1 font-medium text-primary">
           Baca artikel
           <span className="ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true">
             →
