@@ -10,7 +10,7 @@ import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function GalleryPreviewSection() {
-  const { data, isPending, isError } = useGaleri({ limit: 20, sort: "order" });
+  const { data, isPending, isError } = useGaleri({ limit: 20, sort: "-createdAt" });
   const previewImages = getGalleryPreviewImages(data?.items ?? [], 5);
 
   return (

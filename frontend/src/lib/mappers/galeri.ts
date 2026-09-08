@@ -6,7 +6,6 @@ import type { GaleriImage } from "@/types";
 export function flattenGaleriItems(albums: GaleriListItem[]): FlatGalleryItem[] {
   return albums
     .filter((album) => album.isPublished)
-    .sort((a, b) => a.order - b.order)
     .flatMap((album) =>
       album.images.map((image, index) => ({
         id: `${album.id}-${index}`,

@@ -11,7 +11,7 @@ import {
 } from "@/lib/mappers/galeri";
 
 export function GaleriPageContent() {
-  const { data, isLoading, isError, error, refetch } = useGaleri({ limit: 100, sort: "order" });
+  const { data, isLoading, isError, error, refetch } = useGaleri({ limit: 100, sort: "-createdAt" });
 
   if (isLoading) {
     return <SkeletonList count={8} className="md:grid-cols-4" />;
