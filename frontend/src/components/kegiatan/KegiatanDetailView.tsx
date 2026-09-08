@@ -97,7 +97,7 @@ export function KegiatanDetailView({ slug }: KegiatanDetailViewProps) {
 
       <section className="bg-background py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="relative mb-10 aspect-[16/10] overflow-hidden rounded-rmi sm:aspect-[21/9]">
+          <div className="relative mb-10 aspect-[3/1] overflow-hidden rounded-rmi sm:aspect-[21/9]">
             <Image
               src={event.thumbnail || PLACEHOLDER_IMAGE}
               alt={event.title}

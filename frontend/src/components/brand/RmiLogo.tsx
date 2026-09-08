@@ -1,5 +1,5 @@
 import Image from "next/image";
-import rmiLogo from "@/assets/RMI_LOGO.png";
+import rmiLogo from "@/assets/Logo RMI_2.png";
 import { cn } from "@/lib/utils";
 
 type RmiLogoProps = {
@@ -13,7 +13,7 @@ export function RmiLogo({ size = 36, className, priority }: RmiLogoProps) {
   return (
     <Image
       src={rmiLogo}
-      alt="Logo Remaja Masjid Al-Istiqomah"
+      alt="Logo Remaja Masjid Istiqomah"
       width={size}
       height={size}
       className={cn("shrink-0 rounded-full object-cover", className)}

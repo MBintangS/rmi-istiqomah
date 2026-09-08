@@ -1,22 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { PengurusCard } from "@/components/about/PengurusCard";
+import { RmiLogo } from "@/components/brand/RmiLogo";
 import { Button, EmptyState, SkeletonList } from "@/components/ui";
 import { MotionSection } from "@/components/home/MotionSection";
-import { useBanners } from "@/hooks/useBanners";
 import { usePengurus } from "@/hooks/usePengurus";
 import { useSettingsValue } from "@/hooks/useSettings";
 import { getApiErrorMessage } from "@/lib/api";
-import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { mapPengurusListItem } from "@/lib/mappers/pengurus";
 
 export function TentangKamiContent() {
   const { siteName, about, vision, mission } = useSettingsValue();
-  const { data: banners } = useBanners();
   const { data: pengurusData, isLoading, isError, error } = usePengurus();
 
-  const aboutImage = banners?.[0]?.image || PLACEHOLDER_IMAGE;
   const pengurus = (pengurusData ?? []).map(mapPengurusListItem).sort((a, b) => a.order - b.order);
   const periodLabel = pengurus.find((item) => item.period)?.period;
 
@@ -24,14 +20,8 @@ export function TentangKamiContent() {
     <>
       <MotionSection tone="slide" className="bg-background py-12 sm:py-16">
         <div className="mx-auto grid max-w-6xl items-end gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-rmi sm:aspect-[5/4] lg:col-span-5 lg:aspect-auto lg:min-h-[28rem]">
-            <Image
-              src={aboutImage}
-              alt={`Kegiatan ${siteName}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 42vw"
-            />
+          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-rmi sm:aspect-[5/4] lg:col-span-5 lg:aspect-auto lg:min-h-[28rem]">
+            <RmiLogo size={280} className="h-auto w-[72%] max-w-[18rem] sm:max-w-[20rem]" />
           </div>
 
           <div className="space-y-5 lg:col-span-7">

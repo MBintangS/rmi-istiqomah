@@ -43,7 +43,7 @@ export function ProgramCard({ program, className, featured = false }: ProgramCar
         <p
           className={cn(
             "text-white/85",
-            featured ? "text-body max-w-[48ch]" : "text-caption line-clamp-2",
+            featured ? "text-body max-w-[48ch] line-clamp-3" : "text-caption line-clamp-2",
           )}
         >
           {program.description}
