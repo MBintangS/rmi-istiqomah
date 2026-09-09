@@ -32,7 +32,7 @@ export function PengurusCard({ pengurus, className }: PengurusCardProps) {
         </h3>
         <p className="text-caption font-medium text-primary">{pengurus.position}</p>
         {pengurus.period && (
-          <p className="text-caption text-foreground/60">Periode {pengurus.period}</p>
+          <p className="text-caption text-foreground/70">Periode {pengurus.period}</p>
         )}
       </div>
     </article>

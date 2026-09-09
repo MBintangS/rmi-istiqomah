@@ -3,11 +3,12 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SkipToContent } from "@/components/layout/SkipToContent";
 import { Button } from "@/components/ui";
+import { PublicThemeProvider } from "@/providers/PublicThemeProvider";
 import { SITE_NAME } from "@/lib/seo";
 
 export default function NotFound() {
   return (
-    <>
+    <PublicThemeProvider>
       <SkipToContent />
       <Navbar />
       <main
@@ -33,6 +34,6 @@ export default function NotFound() {
         </div>
       </main>
       <Footer />
-    </>
+    </PublicThemeProvider>
   );
 }

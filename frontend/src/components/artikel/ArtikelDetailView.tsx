@@ -71,7 +71,7 @@ export function ArtikelDetailView({ slug }: ArtikelDetailViewProps) {
         meta={
           <>
             <Badge variant="category">{article.category.name}</Badge>
-            <time className="text-caption text-foreground/60" dateTime={article.publishedAt}>
+            <time className="text-caption text-foreground/70" dateTime={article.publishedAt}>
               {formatArticleDate(article.publishedAt)}
             </time>
           </>

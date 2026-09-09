@@ -47,7 +47,7 @@ export function KegiatanDokumentasi({ eventId, eventTitle }: KegiatanDokumentasi
     <div>
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <h2 className="text-xl sm:text-2xl">Dokumentasi</h2>
-        <Link href="/galeri" className="text-caption font-medium text-primary hover:underline">
+        <Link href="/galeri" className="text-caption font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           Lihat galeri →
         </Link>
       </div>
@@ -56,7 +56,7 @@ export function KegiatanDokumentasi({ eventId, eventTitle }: KegiatanDokumentasi
           <Link
             key={photo.id}
             href="/galeri"
-            className="group relative aspect-square overflow-hidden rounded-rmi bg-primary/10"
+            className="group relative aspect-square overflow-hidden rounded-rmi bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <Image
               src={photo.url || PLACEHOLDER_IMAGE}

@@ -28,7 +28,7 @@ export function Pagination({
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="text-caption cursor-pointer rounded-full border border-foreground/20 px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-40"
+        className="text-caption cursor-pointer rounded-full border border-foreground/20 px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className="sm:hidden">Prev</span>
         <span className="hidden sm:inline">Sebelumnya</span>
@@ -42,7 +42,7 @@ export function Pagination({
             onClick={() => onPageChange(page)}
             aria-current={page === currentPage ? "page" : undefined}
             className={cn(
-              "text-caption flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              "text-caption flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               page === currentPage
                 ? "border-primary bg-primary text-white"
                 : "border-foreground/20 text-foreground hover:border-primary hover:text-primary",
@@ -57,7 +57,7 @@ export function Pagination({
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="text-caption cursor-pointer rounded-full border border-foreground/20 px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-40"
+        className="text-caption cursor-pointer rounded-full border border-foreground/20 px-4 py-2 font-medium text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className="sm:hidden">Next</span>
         <span className="hidden sm:inline">Selanjutnya</span>

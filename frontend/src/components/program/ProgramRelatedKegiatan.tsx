@@ -71,13 +71,13 @@ export function ProgramRelatedKegiatan({ programName, programSlug }: ProgramRela
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-xl sm:text-2xl">Kegiatan terkait</h2>
-            <p className="text-caption mt-1 text-foreground/55">
+            <p className="text-caption mt-1 text-foreground/70">
               3 kegiatan terbaru dalam kategori {programName}.
             </p>
           </div>
           <Link
             href="/kegiatan"
-            className="text-caption font-medium text-primary hover:underline"
+            className="text-caption font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Lihat semua →
           </Link>

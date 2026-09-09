@@ -11,7 +11,7 @@ export function Footer() {
     useSettingsValue();
 
   return (
-    <footer className="bg-heading text-surface">
+    <footer className="bg-ink text-on-ink">
       <div className="relative h-0.5 w-full bg-secondary" aria-hidden="true">
         <span className="absolute left-[12%] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-secondary" />
       </div>
@@ -22,17 +22,17 @@ export function Footer() {
               <RmiLogo size={36} />
               <span className="font-display text-lg font-semibold">{siteName}</span>
             </div>
-            <p className="text-sm leading-relaxed text-surface/70">{tagline}</p>
+            <p className="text-sm leading-relaxed text-on-ink/70">{tagline}</p>
           </div>
 
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold text-white">Navigasi</h3>
+            <h3 className="mb-4 font-display text-base font-semibold text-on-ink">Navigasi</h3>
             <ul className="space-y-2">
               {mainNavItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-surface/70 transition-colors hover:text-secondary"
+                    className="text-sm text-on-ink/70 transition-colors hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                   >
                     {item.label}
                   </Link>
@@ -42,8 +42,8 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold text-white">Kontak</h3>
-            <ul className="space-y-2 text-sm text-surface/70">
+            <h3 className="mb-4 font-display text-base font-semibold text-on-ink">Kontak</h3>
+            <ul className="space-y-2 text-sm text-on-ink/70">
               <li>{address}</li>
               <li>
                 <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-secondary">
@@ -73,7 +73,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={key}
-                      className="rounded-full p-2 text-surface/70 transition-colors hover:bg-primary/20 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                      className="rounded-full p-2 text-on-ink/70 transition-colors hover:bg-primary/20 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                     >
                       <Icon className="h-5 w-5" />
                     </a>
@@ -83,7 +83,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold text-white">Lokasi</h3>
+            <h3 className="mb-4 font-display text-base font-semibold text-on-ink">Lokasi</h3>
             {googleMapsEmbed ? (
               <div className="overflow-hidden rounded-rmi">
                 <iframe
@@ -99,12 +99,12 @@ export function Footer() {
                 />
               </div>
             ) : (
-              <p className="text-sm text-surface/70">{address}</p>
+              <p className="text-sm text-on-ink/70">{address}</p>
             )}
           </div>
         </div>
 
-        <div className="mt-12 border-t border-surface/10 pt-6 text-sm text-surface/60">
+        <div className="mt-12 border-t border-on-ink/10 pt-6 text-sm text-on-ink/70">
           © {new Date().getFullYear()} {siteName}. All rights reserved.
         </div>
       </div>

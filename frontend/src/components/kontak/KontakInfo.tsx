@@ -23,7 +23,7 @@ export function KontakInfo() {
               <p className="text-caption font-medium text-heading">Telepon</p>
               <a
                 href={`tel:${phone.replace(/\s/g, "")}`}
-                className="text-body mt-1 inline-block text-primary hover:underline"
+                className="text-body mt-1 inline-block text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 {phone}
               </a>
@@ -33,7 +33,7 @@ export function KontakInfo() {
             <span className="mt-2 h-2 w-2 shrink-0 rotate-45 bg-secondary" aria-hidden="true" />
             <div>
               <p className="text-caption font-medium text-heading">Email</p>
-              <a href={`mailto:${email}`} className="text-body mt-1 inline-block text-primary hover:underline">
+              <a href={`mailto:${email}`} className="text-body mt-1 inline-block text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 {email}
               </a>
             </div>
@@ -47,7 +47,7 @@ export function KontakInfo() {
                   href={`https://wa.me/${whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-body mt-1 inline-block text-primary hover:underline"
+                  className="text-body mt-1 inline-block text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   +{whatsapp}
                 </a>

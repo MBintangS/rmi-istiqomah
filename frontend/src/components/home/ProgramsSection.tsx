@@ -47,7 +47,7 @@ export function ProgramsSection() {
             {featured ? (
               <Link
                 href={`/program/${featured.slug}`}
-                className="group relative min-h-[22rem] overflow-hidden rounded-rmi bg-heading lg:col-span-7 lg:min-h-[28rem]"
+                className="group relative min-h-[22rem] overflow-hidden rounded-rmi bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background lg:col-span-7 lg:min-h-[28rem]"
               >
                 <Image
                   src={featured.image || PLACEHOLDER_IMAGE}
@@ -56,7 +56,7 @@ export function ProgramsSection() {
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 58vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-heading via-heading/35 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 space-y-3 p-6 sm:p-8">
                   <h3 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
                     {featured.name}
@@ -78,7 +78,7 @@ export function ProgramsSection() {
                   <Link
                     key={program.id}
                     href={`/program/${program.slug}`}
-                    className="group relative min-h-[10.5rem] flex-1 overflow-hidden rounded-rmi bg-heading sm:min-h-[12rem]"
+                    className="group relative min-h-[10.5rem] flex-1 overflow-hidden rounded-rmi bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:min-h-[12rem]"
                   >
                     <Image
                       src={program.image || PLACEHOLDER_IMAGE}
@@ -87,7 +87,7 @@ export function ProgramsSection() {
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       sizes="(max-width: 1024px) 100vw, 40vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-heading/90 via-heading/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-5">
                       <h3 className="font-display text-xl font-bold tracking-tight text-white">
                         {program.name}

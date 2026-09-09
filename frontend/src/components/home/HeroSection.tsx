@@ -30,13 +30,13 @@ function StatBadge({
     <div className={cn("pointer-events-auto", className)}>
       <div
         className={cn(
-          "flex items-center gap-3 rounded-2xl bg-background/75 px-4 py-3 shadow-soft ring-1 ring-primary/10 backdrop-blur-md",
+          "flex items-center gap-3 rounded-2xl bg-background/85 px-4 py-3 shadow-soft ring-1 ring-primary/15 backdrop-blur-md",
           floatClass,
         )}
       >
         <span className="h-2.5 w-2.5 shrink-0 rotate-45 bg-secondary" aria-hidden="true" />
         <div>
-          <p className="text-caption text-foreground/60">{label}</p>
+          <p className="text-caption text-foreground/70">{label}</p>
           <p className="font-display text-lg font-bold leading-tight text-heading">{value}</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ export function HeroSection() {
                 href="/kontak"
                 variant="outline"
                 size="lg"
-                className="w-full bg-background sm:w-auto sm:origin-center sm:scale-[0.96]"
+                className="w-full bg-background/90 sm:w-auto sm:origin-center sm:scale-[0.96]"
               >
                 Gabung Bersama Kami
               </Button>

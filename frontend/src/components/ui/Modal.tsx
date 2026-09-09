@@ -59,7 +59,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}
         className={cn(
-          "modal-panel relative z-10 flex max-h-[min(92dvh,40rem)] w-full flex-col overflow-hidden rounded-t-2xl border border-foreground/10 bg-background shadow-[0_24px_64px_rgba(20,32,10,0.18)] sm:max-w-md sm:rounded-rmi",
+          "modal-panel relative z-10 flex max-h-[min(92dvh,40rem)] w-full flex-col overflow-hidden rounded-t-2xl border border-foreground/10 bg-background shadow-soft sm:max-w-md sm:rounded-rmi",
           className,
         )}
       >
@@ -78,7 +78,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
             type="button"
             onClick={onClose}
             aria-label="Tutup"
-            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-foreground/55 transition-colors hover:bg-surface hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-foreground/70 transition-colors hover:bg-surface hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
           >
             <CloseIcon />
           </button>

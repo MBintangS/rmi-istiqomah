@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { RmiLogo } from "@/components/brand/RmiLogo";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Button } from "@/components/ui";
 import { Drawer } from "@/components/ui/Drawer";
 import { useMainNavItems } from "@/hooks/useMainNavItems";
@@ -63,7 +64,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:h-[4.5rem] lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-2.5">
+        <Link href="/" className="flex min-w-0 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <RmiLogo size={36} priority />
           <span className="hidden truncate font-display text-sm font-semibold tracking-tight text-heading sm:inline">
             Remaja Masjid Istiqomah
@@ -146,18 +147,22 @@ export function Navbar() {
               </Link>
             ),
           )}
-          <Button href="/admin/login" size="sm" className="ml-2">
-            Login
-          </Button>
+          <div className="ml-2 flex items-center gap-1">
+            <Button href="/admin/login" size="sm">
+              Login
+            </Button>
+            <ThemeToggle />
+          </div>
         </nav>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-1 lg:hidden">
           <Button href="/admin/login" size="sm" variant="outline">
             Login
           </Button>
+          <ThemeToggle />
           <button
             type="button"
-            className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label="Buka menu"
             aria-expanded={drawerOpen}
             onClick={() => setDrawerOpen(true)}
@@ -204,10 +209,11 @@ export function Navbar() {
               )}
             </div>
           ))}
-          <div className="mt-4 border-t border-foreground/10 pt-4">
-            <Button href="/admin/login" className="w-full">
+          <div className="mt-4 flex items-center gap-2 border-t border-foreground/10 pt-4">
+            <Button href="/admin/login" className="min-w-0 flex-1">
               Login
             </Button>
+            <ThemeToggle />
           </div>
         </nav>
       </Drawer>

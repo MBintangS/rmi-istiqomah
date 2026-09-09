@@ -135,7 +135,7 @@ export function TestimonialsSection() {
                         {current.name}
                       </p>
                       {current.role ? (
-                        <p className="mt-0.5 text-sm text-foreground/60">{current.role}</p>
+                        <p className="mt-0.5 text-sm text-foreground/70">{current.role}</p>
                       ) : null}
                     </figcaption>
                   </motion.figure>
@@ -163,7 +163,7 @@ export function TestimonialsSection() {
                           title={item.name}
                           onClick={() => setActiveIndex(index)}
                           className={cn(
-                            "relative h-12 w-12 shrink-0 rounded-full bg-primary/10 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                            "relative h-12 w-12 shrink-0 rounded-full bg-primary/10 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
                             active
                               ? "ring-2 ring-primary ring-offset-2 ring-offset-surface"
                               : "opacity-55 hover:opacity-100",
@@ -188,7 +188,7 @@ export function TestimonialsSection() {
                   <button
                     type="button"
                     onClick={() => goTo(activeIndex - 1)}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-rmi border border-foreground/12 text-heading transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-rmi border border-foreground/12 text-heading transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Testimoni sebelumnya"
                   >
                     <Chevron direction="prev" />
@@ -196,7 +196,7 @@ export function TestimonialsSection() {
                   <button
                     type="button"
                     onClick={() => goTo(activeIndex + 1)}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-rmi border border-foreground/12 text-heading transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-rmi border border-foreground/12 text-heading transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Testimoni berikutnya"
                   >
                     <Chevron direction="next" />

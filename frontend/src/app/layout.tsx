@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Toaster } from "@/components/ui/Toaster";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { poppins, syne } from "@/lib/fonts";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -47,8 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <body className={`${poppins.variable} ${syne.variable} font-sans antialiased`}>
+        <Script id="rmi-theme" strategy="beforeInteractive">
+          {THEME_BOOTSTRAP_SCRIPT}
+        </Script>
         <QueryProvider>{children}</QueryProvider>
         <Toaster />
       </body>

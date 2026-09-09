@@ -63,7 +63,7 @@ export function Drawer({
     <div className="fixed inset-0 z-50">
       <button
         type="button"
-        className="absolute inset-0 bg-heading/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/55 backdrop-blur-sm"
         aria-label="Tutup menu"
         onClick={onClose}
         tabIndex={-1}

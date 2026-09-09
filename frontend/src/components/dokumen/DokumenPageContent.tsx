@@ -111,7 +111,7 @@ export function DokumenPageContent() {
                     {doc.description ? (
                       <p className="text-body text-foreground/80">{doc.description}</p>
                     ) : null}
-                    <p className="text-caption text-foreground/60">{formatFileSize(doc.fileSize)}</p>
+                    <p className="text-caption text-foreground/70">{formatFileSize(doc.fileSize)}</p>
                   </div>
                 </div>
 

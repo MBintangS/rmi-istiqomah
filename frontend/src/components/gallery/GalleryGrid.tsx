@@ -97,7 +97,7 @@ export function GalleryGrid({ items, categories, events }: GalleryGridProps) {
                   loading="lazy"
                 />
                 {item.caption ? (
-                  <span className="absolute inset-x-0 bottom-0 bg-heading/70 p-2.5 text-left text-xs leading-snug text-white sm:p-3 sm:text-sm">
+                  <span className="absolute inset-x-0 bottom-0 bg-ink/70 p-2.5 text-left text-xs leading-snug text-white sm:p-3 sm:text-sm">
                     {item.caption}
                   </span>
                 ) : null}

@@ -3,6 +3,7 @@ import type { Config } from "tailwindcss";
 const withAlpha = (cssVar: string) => `rgb(var(${cssVar}) / <alpha-value>)`;
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -24,6 +25,9 @@ const config: Config = {
         surface: withAlpha("--color-surface"),
         foreground: withAlpha("--color-foreground"),
         heading: withAlpha("--color-heading"),
+        ink: withAlpha("--color-ink"),
+        "on-ink": withAlpha("--color-on-ink"),
+        error: withAlpha("--color-error"),
         accent: {
           green: withAlpha("--color-accent-green"),
           "green-2": withAlpha("--color-accent-green-2"),
@@ -38,7 +42,7 @@ const config: Config = {
         rmi: "0.75rem",
       },
       boxShadow: {
-        soft: "0 8px 30px rgba(20, 32, 10, 0.06)",
+        soft: "var(--shadow-soft)",
       },
     },
   },

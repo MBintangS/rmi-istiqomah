@@ -19,7 +19,7 @@ export function StatsSection() {
         <dl className="grid grid-cols-3 gap-4 sm:gap-10">
           {statItems.map(({ key, label }, index) => (
             <div key={key} className="min-w-0">
-              <dt className="text-caption text-foreground/60">{label}</dt>
+              <dt className="text-caption text-foreground/70">{label}</dt>
               <dd className="mt-1 flex items-baseline gap-2 font-display text-3xl font-extrabold tracking-tight text-primary sm:text-5xl md:text-6xl">
                 {index > 0 ? (
                   <span

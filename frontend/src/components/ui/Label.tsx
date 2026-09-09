@@ -13,7 +13,7 @@ export function Label({ className, children, required, ...props }: LabelProps) {
     >
       {children}
       {required && (
-        <span className="ml-0.5 text-red-500" aria-hidden="true">
+        <span className="ml-0.5 text-error" aria-hidden="true">
           *
         </span>
       )}

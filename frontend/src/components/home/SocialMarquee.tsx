@@ -36,7 +36,7 @@ function SocialPill({
       rel="noopener noreferrer"
       aria-label={label}
       tabIndex={tabIndex}
-      className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-background/80 px-5 py-2.5 text-heading ring-1 ring-primary/15 backdrop-blur-md transition-colors hover:text-primary hover:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-background/90 px-5 py-2.5 text-heading ring-1 ring-primary/20 backdrop-blur-md transition-colors hover:text-primary hover:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       <Icon className="h-4 w-4" />
       <span className="text-sm font-medium">{label}</span>

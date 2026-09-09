@@ -49,7 +49,7 @@ export function LatestKegiatanSection() {
               <Link
                 key={event.id}
                 href={`/kegiatan/${event.slug}`}
-                className="group relative block aspect-[3/1] overflow-hidden rounded-rmi bg-primary/10"
+                className="group relative block aspect-[3/1] overflow-hidden rounded-rmi bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <Image
                   src={event.thumbnail || PLACEHOLDER_IMAGE}
@@ -59,7 +59,7 @@ export function LatestKegiatanSection() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-heading/80 via-heading/15 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                   <p className="font-display text-lg font-semibold text-white sm:text-xl">
                     {event.title}

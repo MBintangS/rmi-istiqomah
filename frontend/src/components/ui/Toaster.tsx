@@ -9,21 +9,22 @@ export function Toaster() {
       toastOptions={{
         duration: 4000,
         style: {
-          background: "#F8FAFC",
-          color: "#1F2937",
+          background: "rgb(var(--color-surface))",
+          color: "rgb(var(--color-foreground))",
           borderRadius: "0.75rem",
-          boxShadow: "0 4px 20px rgba(35, 48, 10, 0.08)",
+          border: "1px solid rgb(var(--color-foreground) / 0.12)",
+          boxShadow: "var(--shadow-soft)",
         },
         success: {
           iconTheme: {
-            primary: "#4e830a",
-            secondary: "#ffffff",
+            primary: "rgb(var(--color-primary))",
+            secondary: "rgb(var(--color-surface))",
           },
         },
         error: {
           iconTheme: {
-            primary: "#dc2626",
-            secondary: "#ffffff",
+            primary: "rgb(var(--color-error))",
+            secondary: "rgb(var(--color-surface))",
           },
         },
       }}

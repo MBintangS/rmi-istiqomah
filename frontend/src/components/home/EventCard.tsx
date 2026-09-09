@@ -62,7 +62,7 @@ export function EventCard({ event, className, variant = "grid", compact = false 
             {event.time && event.location && <span aria-hidden="true"> · </span>}
             <span className="break-words">{event.location}</span>
           </p>
-          <time className="text-caption text-foreground/55" dateTime={event.dateStart}>
+          <time className="text-caption text-foreground/70" dateTime={event.dateStart}>
             {formattedDate}
           </time>
         </div>

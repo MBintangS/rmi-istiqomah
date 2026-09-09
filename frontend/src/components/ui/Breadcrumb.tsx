@@ -14,7 +14,7 @@ export interface BreadcrumbProps {
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
   return (
     <nav aria-label="Breadcrumb" className={cn("min-w-0", className)}>
-      <ol className="flex flex-wrap items-center gap-1.5 text-caption text-foreground/60 sm:gap-2">
+      <ol className="flex flex-wrap items-center gap-1.5 text-caption text-foreground/70 sm:gap-2">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
 
@@ -26,7 +26,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                 </span>
               )}
               {item.href && !isLast ? (
-                <Link href={item.href} className="shrink-0 transition-colors hover:text-primary">
+                <Link href={item.href} className="shrink-0 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                   {item.label}
                 </Link>
               ) : (

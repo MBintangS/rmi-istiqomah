@@ -52,7 +52,7 @@ export function ContactForm() {
           Nama
         </Label>
         <Input id="name" placeholder="Nama lengkap" error={Boolean(errors.name)} {...register("name")} />
-        {errors.name && <p className="text-caption text-red-600">{errors.name.message}</p>}
+        {errors.name && <p className="text-caption text-error">{errors.name.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -66,7 +66,7 @@ export function ContactForm() {
           error={Boolean(errors.email)}
           {...register("email")}
         />
-        {errors.email && <p className="text-caption text-red-600">{errors.email.message}</p>}
+        {errors.email && <p className="text-caption text-error">{errors.email.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -78,7 +78,7 @@ export function ContactForm() {
           error={Boolean(errors.whatsapp)}
           {...register("whatsapp")}
         />
-        {errors.whatsapp && <p className="text-caption text-red-600">{errors.whatsapp.message}</p>}
+        {errors.whatsapp && <p className="text-caption text-error">{errors.whatsapp.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -91,7 +91,7 @@ export function ContactForm() {
           error={Boolean(errors.subject)}
           {...register("subject")}
         />
-        {errors.subject && <p className="text-caption text-red-600">{errors.subject.message}</p>}
+        {errors.subject && <p className="text-caption text-error">{errors.subject.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -105,7 +105,7 @@ export function ContactForm() {
           error={Boolean(errors.message)}
           {...register("message")}
         />
-        {errors.message && <p className="text-caption text-red-600">{errors.message.message}</p>}
+        {errors.message && <p className="text-caption text-error">{errors.message.message}</p>}
       </div>
 
       <Button type="submit" className="w-full sm:w-auto" disabled={mutation.isPending}>

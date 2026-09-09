@@ -153,7 +153,7 @@ export function EventList({
               "cursor-pointer rounded-full p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               viewMode === "grid"
                 ? "bg-primary text-white"
-                : "text-foreground/55 hover:bg-primary/10 hover:text-primary",
+                : "text-foreground/70 hover:bg-primary/10 hover:text-primary",
             )}
           >
             <GridViewIcon />
@@ -168,7 +168,7 @@ export function EventList({
               "cursor-pointer rounded-full p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               viewMode === "list"
                 ? "bg-primary text-white"
-                : "text-foreground/55 hover:bg-primary/10 hover:text-primary",
+                : "text-foreground/70 hover:bg-primary/10 hover:text-primary",
             )}
           >
             <ListViewIcon />

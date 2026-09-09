@@ -37,7 +37,12 @@ export function GalleryPreviewSection() {
               />
             ))}
           </div>
-        ) : isError || previewImages.length === 0 ? (
+        ) : isError ? (
+          <EmptyState
+            title="Gagal memuat galeri"
+            description="Dokumentasi kegiatan tidak dapat ditampilkan saat ini."
+          />
+        ) : previewImages.length === 0 ? (
           <EmptyState
             title="Belum ada foto galeri"
             description="Dokumentasi kegiatan akan tampil di sini setelah diunggah."
@@ -49,7 +54,7 @@ export function GalleryPreviewSection() {
                 key={`${image.url}-${index}`}
                 href="/galeri"
                 className={cn(
-                  "group relative overflow-hidden rounded-rmi",
+                  "group relative overflow-hidden rounded-rmi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   index === 0 && "col-span-2 row-span-2",
                 )}
               >

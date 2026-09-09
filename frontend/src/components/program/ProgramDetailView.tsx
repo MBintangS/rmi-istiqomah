@@ -107,9 +107,9 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
                 </div>
               )}
 
-              <p className="text-caption text-foreground/60">
+              <p className="text-caption text-foreground/70">
                 Dokumentasi lengkap tersedia di halaman{" "}
-                <Link href="/galeri" className="font-medium text-primary hover:underline">
+                <Link href="/galeri" className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                   Galeri
                 </Link>
                 .
@@ -131,9 +131,9 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
                 </div>
               )}
 
-              <div className="rounded-rmi bg-heading p-6 text-white">
-                <h2 className="mb-2 text-lg text-white">Tertarik bergabung?</h2>
-                <p className="text-body mb-4 text-white/80">
+              <div className="rounded-rmi bg-ink p-6 text-on-ink">
+                <h2 className="mb-2 text-lg text-on-ink">Tertarik bergabung?</h2>
+                <p className="text-body mb-4 text-on-ink/80">
                   Hubungi pengurus RMI untuk informasi pendaftaran dan detail kegiatan.
                 </p>
                 <Button href="/kontak" variant="primary" className="w-full">

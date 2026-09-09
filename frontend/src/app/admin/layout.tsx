@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { AdminThemeReset } from "@/components/admin/AdminThemeReset";
 
 export const metadata: Metadata = {
   robots: {
@@ -9,5 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <AdminThemeReset />
+      {children}
+    </AuthProvider>
+  );
 }
