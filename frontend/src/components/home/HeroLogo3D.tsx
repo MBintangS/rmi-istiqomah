@@ -12,7 +12,7 @@ function RmiLogoModel() {
   const model = useMemo(() => scene.clone(true), [scene]);
 
   return (
-    <group rotation={[Math.PI / 2, 0, 0]}>
+    <group rotation={[Math.PI / 2.1, 0, 0]}>
       <primitive object={model} />
     </group>
   );
@@ -76,7 +76,7 @@ export function HeroLogo3D({ reduceMotion = false }: HeroLogo3DProps) {
           enablePan={false}
           enableRotate={!reduceMotion}
           autoRotate={!reduceMotion}
-          autoRotateSpeed={0.85}
+          autoRotateSpeed={4}
           target={[0, 0, 0]}
           minPolarAngle={Math.PI * 0.38}
           maxPolarAngle={Math.PI * 0.52}
