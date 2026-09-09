@@ -11,6 +11,16 @@ Panduan deploy production monorepo Remaja Masjid Istiqomah.
 
 HTTPS disediakan otomatis oleh Vercel dan Render pada URL default. Domain custom bersifat opsional.
 
+### Migrasi API ke Next.js (bertahap)
+
+Route Handlers ada di `frontend/src/app/api`. **Jangan matikan Render** sampai cutover stabil.
+
+1. Situs publik/CMS tetap memakai Express selama `NEXT_PUBLIC_API_URL` mengarah ke Render / `localhost:5000`.
+2. Untuk menguji Next API lokal: salin `MONGODB_URI`, `JWT_SECRET` (sama agar token admin tetap valid), dan `CLOUDINARY_*` ke `frontend/.env.local`. Jangan commit file itu.
+3. Cutover: set `NEXT_PUBLIC_API_URL=/api` di Vercel, tambahkan secret server-only di Vercel (`MONGODB_URI`, `JWT_SECRET`, `CLOUDINARY_*`), pastikan Atlas mengizinkan IP Vercel (`0.0.0.0/0` atau integrasi Atlas–Vercel).
+4. Upload CMS pada Next memakai **signed upload** ke Cloudinary (`POST /api/upload/signature`), bukan multipart ke Route Handler (batas body Vercel ~4,5 MB).
+5. Setelah produksi stabil, baru retire service Render.
+
 ---
 
 ## Prasyarat
@@ -77,8 +87,15 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 
 | Key | Nilai |
 |-----|--------|
-| `NEXT_PUBLIC_API_URL` | `https://rmi-api.onrender.com/api` (sesuaikan URL Render) |
+| `NEXT_PUBLIC_API_URL` | Saat ini: `https://rmi-istiqomah-api.onrender.com/api`. Setelah cutover: `/api` |
 | `NEXT_PUBLIC_SITE_URL` | `https://your-app.vercel.app` (atau domain custom) |
+| `MONGODB_URI` | Wajib untuk Route Handlers (server-only, tanpa `NEXT_PUBLIC_`) |
+| `JWT_SECRET` | Sama dengan backend agar token admin tetap valid |
+| `JWT_EXPIRES_IN` | `7d` (opsional) |
+| `CLOUDINARY_CLOUD_NAME` | dari dashboard Cloudinary |
+| `CLOUDINARY_API_KEY` | … |
+| `CLOUDINARY_API_SECRET` | … |
+| `CLOUDINARY_FOLDER` | `rmi-prod` |
 
 4. Deploy. Catat URL frontend.
 5. Kembali ke Render → update `CORS_ORIGIN` ke URL Vercel (tanpa trailing slash) → **Manual Deploy** agar CORS aktif.
@@ -130,7 +147,8 @@ Setelah UAT, catat sign-off (nama + tanggal) di bawah atau di issue GitHub.
 | Health 502 / crash | Log Render; `MONGODB_URI` ke `/rmi-prod`; Atlas Network Access |
 | CORS error di browser | `CORS_ORIGIN` = origin FE exact (https, tanpa `/` di akhir) |
 | FE tidak fetch API | `NEXT_PUBLIC_API_URL` harus di-set **sebelum** build Vercel; redeploy setelah ubah |
-| Upload gagal | `CLOUDINARY_*` lengkap; folder `rmi-prod` |
+| Upload gagal | `CLOUDINARY_*` lengkap; folder `rmi-prod`; pada Next gunakan signature, bukan multipart ke `/api/upload` |
+| Next `/api` 500 | Secret server `MONGODB_URI` / `JWT_SECRET` di Vercel; Atlas Network Access |
 | Cold start lambat | Normal di Free tier Render |
 
 ---
