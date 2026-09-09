@@ -1,9 +1,18 @@
-# Dokumentasi API — RMI Backend
+# Dokumentasi API — RMI
 
-> Referensi implementasi aktual backend Express.  
+> Referensi implementasi aktual.  
 > Spesifikasi desain lengkap: [`docs/prd/10-api-specification.md`](./prd/10-api-specification.md)
 
-**Cakupan saat ini:** Sprint 20–28 (semua endpoint backend publik + `POST /api/upload`)
+**Cakupan saat ini:** Sprint 20–28 (semua endpoint publik + upload)
+
+Selama migrasi, dua implementasi memakai kontrak yang sama (`{ success, data }` / `{ success: false, error }`):
+
+| Implementasi | Status | Catatan |
+|--------------|--------|---------|
+| Express `backend/` | Aktif (situs saat ini) | Fallback sampai cutover |
+| Next.js Route Handlers `frontend/src/app/api` | Siap diuji | Same-origin `/api`; upload via signature Cloudinary |
+
+Frontend masih mengarah ke Express selama `NEXT_PUBLIC_API_URL` bukan `/api`.
 
 ---
 
@@ -11,13 +20,22 @@
 
 | Environment | URL |
 |-------------|-----|
-| Development | `http://localhost:5000/api` |
-| Production | `https://rmi-istiqomah-api.onrender.com/api` |
+| Development (Express, default frontend) | `http://localhost:5000/api` |
+| Development (Next Route Handlers) | `http://localhost:3000/api` |
+| Production (Render, fallback) | `https://rmi-istiqomah-api.onrender.com/api` |
+| Production (Vercel, setelah cutover) | `/api` (same-origin) |
 
-Jalankan backend:
+Jalankan Express:
 
 ```bash
 cd backend
+npm run dev
+```
+
+Jalankan Next (termasuk `/api` jika env server sudah di `frontend/.env.local`):
+
+```bash
+cd frontend
 npm run dev
 ```
 
@@ -1307,7 +1325,30 @@ Update pengaturan situs (partial).
 
 ## Upload
 
-### `POST /upload`
+Vercel Functions membatasi body ~4,5 MB, sementara gambar CMS sampai 5 MB dan dokumen 10 MB. **Route Handler Next.js tidak menerima file.** Browser meminta signature, lalu unggah langsung ke Cloudinary.
+
+Express (situs saat ini, `NEXT_PUBLIC_API_URL` mengarah ke `:5000` / Render) tetap menerima multipart seperti di bawah.
+
+### `POST /upload/signature` (Next.js)
+
+Minta tanda tangan Cloudinary (admin CMS). Dipakai otomatis ketika frontend memakai `NEXT_PUBLIC_API_URL=/api`.
+
+**Auth:** Admin
+
+**Body JSON (opsional):**
+
+| Field | Type | Keterangan |
+|-------|------|------------|
+| `folder` | string | Folder Cloudinary (huruf, angka, `/`, `_`, `-`) |
+| `resourceType` | `image` \| `raw` | Default `image`; dokumen pakai `raw` |
+
+**Response `200`:** `{ timestamp, signature, apiKey, cloudName, folder, resourceType }`
+
+Browser lalu `POST` ke `https://api.cloudinary.com/v1_1/{cloudName}/{resourceType}/upload` dengan `file`, `api_key`, `timestamp`, `signature`, `folder`. Bentuk hasil yang dipakai CMS tetap `{ url, publicId, width, height, format, bytes, ... }`.
+
+`POST /upload` dan `POST /upload/file` pada Next.js mengembalikan `413` — jangan kirim file ke Route Handler.
+
+### `POST /upload` (Express)
 
 Upload gambar ke Cloudinary (admin CMS).
 
@@ -1344,7 +1385,7 @@ Upload gambar ke Cloudinary (admin CMS).
 }
 ```
 
-### `POST /upload/file`
+### `POST /upload/file` (Express)
 
 Upload file dokumen ke Cloudinary (admin CMS). Resource type: `raw`.
 
@@ -1432,6 +1473,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-09 | — | Next.js Route Handlers `/api` (parity Express); `POST /upload/signature`; Express tetap fallback |
 | 2026-07-13 | — | GET list/detail: draft/nonaktif hanya dengan includeUnpublished=true + admin |
 | 2026-07-12 | — | POST/PUT/DELETE /donasi: Super Admin only |
 | 2026-07-12 | — | GET /galeri: query eventId untuk filter kegiatan terkait |

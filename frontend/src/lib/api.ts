@@ -2,8 +2,37 @@ import axios, { type AxiosError, isAxiosError } from "axios";
 import { getAuthToken } from "@/lib/auth-token";
 import type { ApiErrorResponse, ApiSuccessResponse } from "@/types/api";
 
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+function resolveApiBaseUrl() {
+  const configured = (process.env.NEXT_PUBLIC_API_URL ?? "/api").replace(/\/$/, "");
+
+  if (configured.startsWith("http://") || configured.startsWith("https://")) {
+    return configured;
+  }
+
+  const path = configured.startsWith("/") ? configured : `/${configured}`;
+
+  if (typeof window !== "undefined") {
+    return path;
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (siteUrl) {
+    return `${siteUrl}${path}`;
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}${path}`;
+  }
+
+  return `http://127.0.0.1:${process.env.PORT ?? "3000"}${path}`;
+}
+
+export const API_BASE_URL = resolveApiBaseUrl();
+
+export function usesSameOriginApi() {
+  const configured = process.env.NEXT_PUBLIC_API_URL ?? "/api";
+  return configured === "/api" || (configured.startsWith("/") && !configured.startsWith("//"));
+}
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
