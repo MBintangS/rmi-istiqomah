@@ -89,6 +89,7 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 |-----|--------|
 | `NEXT_PUBLIC_API_URL` | Saat ini: `https://rmi-istiqomah-api.onrender.com/api`. Setelah cutover: `/api` |
 | `NEXT_PUBLIC_SITE_URL` | `https://your-app.vercel.app` (atau domain custom) |
+| `NEXT_PUBLIC_GA_ID` | Measurement ID GA4 (`G-XXXXXXXXXX`). Redeploy setelah diisi |
 | `MONGODB_URI` | Wajib untuk Route Handlers (server-only, tanpa `NEXT_PUBLIC_`) |
 | `JWT_SECRET` | Sama dengan backend agar token admin tetap valid |
 | `JWT_EXPIRES_IN` | `7d` (opsional) |

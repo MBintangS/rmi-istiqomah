@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { Toaster } from "@/components/ui/Toaster";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { poppins, syne } from "@/lib/fonts";
@@ -56,6 +57,7 @@ export default function RootLayout({
         </Script>
         <QueryProvider>{children}</QueryProvider>
         <Toaster />
+        <GoogleAnalytics />
       </body>
     </html>
   );
