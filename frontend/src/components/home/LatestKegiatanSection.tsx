@@ -11,7 +11,7 @@ import { mapKegiatanListItem } from "@/lib/mappers/kegiatan";
 
 export function LatestKegiatanSection() {
   const { data, isPending, isError, error } = useKegiatan({
-    limit: 3,
+    limit: 6,
     sort: "-dateStart",
   });
 
