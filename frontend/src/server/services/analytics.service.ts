@@ -1,5 +1,5 @@
 import "server-only";
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { BetaAnalyticsDataClient, type protos } from "@google-analytics/data";
 import { AppError } from "@/server/errors";
 import type {
   DashboardAnalytics,
@@ -63,10 +63,7 @@ type CacheEntry = {
   data: DashboardAnalytics;
 };
 
-type ReportRow = {
-  dimensionValues?: Array<{ value?: string | null }>;
-  metricValues?: Array<{ value?: string | null }>;
-};
+type IRow = protos.google.analytics.data.v1beta.IRow;
 
 let cachedClient: BetaAnalyticsDataClient | null = null;
 let cachedClientKey = "";
@@ -111,13 +108,13 @@ function getClient(config: Ga4Config): BetaAnalyticsDataClient {
   return cachedClient;
 }
 
-function metricInt(row: ReportRow | undefined, index: number): number {
+function metricInt(row: IRow | null | undefined, index: number): number {
   const raw = row?.metricValues?.[index]?.value;
   const parsed = Number(raw);
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function totalsFromRow(row: ReportRow | undefined): DashboardAnalyticsTotals {
+function totalsFromRow(row: IRow | null | undefined): DashboardAnalyticsTotals {
   return {
     activeUsers: metricInt(row, 0),
     pageViews: metricInt(row, 1),
@@ -158,7 +155,7 @@ function gaMonthToIso(value: string): string {
 
 function fillSeries(
   keys: string[],
-  rows: ReportRow[] | undefined,
+  rows: IRow[] | null | undefined,
   parseKey: (raw: string) => string,
 ): DashboardAnalyticsPoint[] {
   const byKey = new Map<string, DashboardAnalyticsTotals>();

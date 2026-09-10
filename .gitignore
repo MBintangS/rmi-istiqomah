@@ -20,6 +20,7 @@ rmi-analytics*.json
 
 # Next.js
 frontend/.next/
+frontend/.next-build/
 frontend/out/
 frontend/.vercel/
 frontend/next-env.d.ts
