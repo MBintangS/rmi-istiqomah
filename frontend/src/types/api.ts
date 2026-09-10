@@ -395,6 +395,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role: AuthRole;
+  avatar: string | null;
 }
 
 export interface AdminUserListItem {
@@ -403,8 +404,17 @@ export interface AdminUserListItem {
   email: string;
   role: AuthRole;
   isActive: boolean;
+  avatar: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ProfileUpdatePayload {
+  name: string;
+  email: string;
+  avatar?: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface UserCreatePayload {

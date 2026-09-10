@@ -21,6 +21,7 @@ import {
   AdminDeleteButton,
   AdminToggleActiveButton,
 } from "@/components/admin/AdminRowActions";
+import { AdminUserAvatar } from "@/components/admin/AdminUserAvatar";
 import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/hooks/useUsers";
@@ -208,10 +209,15 @@ export function AdminPenggunaList() {
                 return (
                   <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
                     <td className="px-3.5 py-2.5">
-                      <p className="font-medium text-heading">{item.name}</p>
-                      {isSelf ? (
-                        <p className="text-caption text-foreground/50">Anda</p>
-                      ) : null}
+                      <div className="flex items-center gap-2.5">
+                        <AdminUserAvatar name={item.name} avatar={item.avatar} size={32} />
+                        <div>
+                          <p className="font-medium text-heading">{item.name}</p>
+                          {isSelf ? (
+                            <p className="text-caption text-foreground/50">Anda</p>
+                          ) : null}
+                        </div>
+                      </div>
                     </td>
                     <td className="px-3.5 py-2.5 text-foreground/70">{item.email}</td>
                     <td className="px-3.5 py-2.5">

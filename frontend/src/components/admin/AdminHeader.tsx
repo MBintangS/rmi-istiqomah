@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AdminUserAvatar } from "@/components/admin/AdminUserAvatar";
 import { Button } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -59,16 +61,17 @@ export function AdminHeader({ title, onOpenMenu }: AdminHeaderProps) {
       </div>
 
       <div className="flex items-center gap-2.5 sm:gap-3">
-        <div className="hidden rounded-rmi border border-foreground/10 bg-surface/70 px-3 py-1.5 text-right sm:block">
-          <p className="text-sm font-medium leading-tight text-heading">{user?.name}</p>
-          <p className="text-[11px] text-foreground/50">{roleLabel}</p>
-        </div>
-        <span
-          className="hidden h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary sm:inline-flex"
-          aria-hidden="true"
+        <Link
+          href="/admin/profil"
+          aria-label="Buka profil"
+          className="flex min-w-0 items-center gap-2.5 rounded-rmi border border-transparent px-1 py-1 transition-colors hover:border-foreground/10 hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-          {(user?.name ?? "A").charAt(0).toUpperCase()}
-        </span>
+          <div className="hidden text-right sm:block">
+            <p className="text-sm font-medium leading-tight text-heading">{user?.name}</p>
+            <p className="text-[11px] text-foreground/50">{roleLabel}</p>
+          </div>
+          <AdminUserAvatar name={user?.name ?? "A"} avatar={user?.avatar} size={32} />
+        </Link>
         <Button type="button" variant="outline" size="sm" onClick={handleLogout}>
           Logout
         </Button>

@@ -1,6 +1,42 @@
 import { AppError } from "@/server/errors";
 import { signToken } from "@/server/auth";
 import { User } from "@/server/models";
+import type { UpdateProfileInput } from "@/server/schemas/user.schema";
+
+function formatAuthUser(user: {
+  _id: { toString(): string };
+  name: string;
+  email: string;
+  role: "admin" | "superadmin";
+  avatar?: string | null;
+}) {
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    avatar: user.avatar ?? null,
+  };
+}
+
+function issueSession(user: {
+  _id: { toString(): string };
+  name: string;
+  email: string;
+  role: "admin" | "superadmin";
+  avatar?: string | null;
+}) {
+  const token = signToken({
+    sub: user._id.toString(),
+    email: user.email,
+    role: user.role,
+  });
+
+  return {
+    token,
+    user: formatAuthUser(user),
+  };
+}
 
 export async function login(email?: string, password?: string) {
   if (!email?.trim() || !password) {
@@ -15,32 +51,64 @@ export async function login(email?: string, password?: string) {
     throw new AppError(403, "ACCOUNT_INACTIVE", "Akun admin tidak aktif");
   }
 
-  const token = signToken({
-    sub: user._id.toString(),
-    email: user.email,
-    role: user.role,
-  });
-
-  return {
-    token,
-    user: {
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    },
-  };
+  return issueSession(user);
 }
 
 export async function getMe(userId: string) {
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).lean();
   if (!user || !user.isActive) {
     throw new AppError(401, "UNAUTHORIZED", "User tidak ditemukan atau tidak aktif");
   }
-  return {
-    id: user._id.toString(),
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  };
+  return formatAuthUser(user);
+}
+
+export async function updateMe(userId: string, data: UpdateProfileInput) {
+  const user = await User.findById(userId).select("+password");
+  if (!user || !user.isActive) {
+    throw new AppError(401, "UNAUTHORIZED", "User tidak ditemukan atau tidak aktif");
+  }
+
+  const nextEmail = data.email.trim().toLowerCase();
+  const emailChanged = nextEmail !== user.email;
+  const passwordChanged = Boolean(data.newPassword);
+
+  if (emailChanged || passwordChanged) {
+    if (!data.currentPassword) {
+      throw new AppError(
+        400,
+        "VALIDATION_ERROR",
+        emailChanged ? "Password saat ini wajib diisi untuk mengubah email" : "Password saat ini wajib diisi",
+      );
+    }
+    const matches = await user.comparePassword(data.currentPassword);
+    if (!matches) {
+      throw new AppError(400, "VALIDATION_ERROR", "Password saat ini salah");
+    }
+  }
+
+  if (emailChanged) {
+    const existing = await User.findOne({ email: nextEmail, _id: { $ne: user._id } }).select("_id");
+    if (existing) {
+      throw new AppError(400, "VALIDATION_ERROR", "Email sudah terdaftar");
+    }
+    user.email = nextEmail;
+  }
+
+  user.name = data.name;
+  if (data.newPassword) {
+    user.password = data.newPassword;
+  }
+
+  await user.save();
+
+  if (data.avatar !== undefined) {
+    if (data.avatar) {
+      await User.collection.updateOne({ _id: user._id }, { $set: { avatar: data.avatar } });
+    } else {
+      await User.collection.updateOne({ _id: user._id }, { $unset: { avatar: 1 } });
+    }
+  }
+
+  const fresh = await User.findById(user._id).lean();
+  return issueSession(fresh ?? user);
 }

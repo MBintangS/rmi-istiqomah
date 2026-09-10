@@ -170,7 +170,8 @@ Login admin, mendapat JWT.
       "id": "6a4f70ecf9fb145d25794f52",
       "name": "Super Admin RMI",
       "email": "admin@rmi-masjid.org",
-      "role": "superadmin"
+      "role": "superadmin",
+      "avatar": null
     }
   }
 }
@@ -191,7 +192,57 @@ Profil user dari token.
     "id": "6a4f70ecf9fb145d25794f52",
     "name": "Super Admin RMI",
     "email": "admin@rmi-masjid.org",
-    "role": "superadmin"
+    "role": "superadmin",
+    "avatar": null
+  }
+}
+```
+
+### `PUT /auth/me`
+
+Perbarui profil akun yang sedang login: nama, email, foto, dan password.
+
+**Auth:** Bearer token (admin atau superadmin)
+
+**Body:**
+
+```json
+{
+  "name": "Admin Konten",
+  "email": "konten@rmi-masjid.org",
+  "avatar": "https://res.cloudinary.com/demo/image/upload/avatar.jpg",
+  "currentPassword": "PasswordLama123",
+  "newPassword": "PasswordBaru123"
+}
+```
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Nama tampilan |
+| `email` | ✅ | Unik; ubah email wajib `currentPassword` |
+| `avatar` | — | URL foto; kirim `""` untuk menghapus |
+| `currentPassword` | — | Wajib jika mengubah email atau password |
+| `newPassword` | — | Minimal 8 karakter |
+
+**Aturan:**
+- Mengubah email atau password memerlukan `currentPassword` yang benar
+- Response menyertakan token baru agar JWT tetap sinkron dengan email
+
+**Response `200`:** `{ token, user }` + `message`
+
+```json
+{
+  "success": true,
+  "message": "Profil berhasil diperbarui",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id": "6a4f70ecf9fb145d25794f52",
+      "name": "Admin Konten",
+      "email": "konten@rmi-masjid.org",
+      "role": "admin",
+      "avatar": "https://res.cloudinary.com/demo/image/upload/avatar.jpg"
+    }
   }
 }
 ```
@@ -220,6 +271,7 @@ List semua akun admin.
       "email": "admin@rmi-masjid.org",
       "role": "superadmin",
       "isActive": true,
+      "avatar": null,
       "createdAt": "2026-07-09T10:00:00.000Z",
       "updatedAt": "2026-07-09T10:00:00.000Z"
     }
@@ -1520,6 +1572,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-10 | — | PUT /auth/me: update profil (nama, email, avatar, password); field avatar di user |
 | 2026-09-10 | — | POST/PUT/DELETE /kategori dan /banner: Super Admin only |
 | 2026-09-10 | — | GET /dashboard/analytics: periods + series; exclude localhost & /admin |
 | 2026-09-09 | — | Next.js Route Handlers `/api` (parity Express); `POST /upload/signature`; Express tetap fallback |

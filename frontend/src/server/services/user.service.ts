@@ -9,6 +9,7 @@ function formatUser(user: {
   email: string;
   role: string;
   isActive: boolean;
+  avatar?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }) {
@@ -18,6 +19,7 @@ function formatUser(user: {
     email: user.email,
     role: user.role,
     isActive: user.isActive,
+    avatar: user.avatar ?? null,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };

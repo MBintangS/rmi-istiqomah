@@ -11,7 +11,7 @@ import {
 } from "react";
 import { clearAuthToken, getAuthToken, setAuthToken } from "@/lib/auth-token";
 import { fetchAuthMe, loginAdmin } from "@/services/auth.service";
-import type { AuthUser, LoginPayload } from "@/types/api";
+import type { AuthUser, LoginPayload, LoginResult } from "@/types/api";
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -20,6 +20,7 @@ interface AuthContextValue {
   login: (payload: LoginPayload) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
+  applySession: (result: LoginResult) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -87,6 +88,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const applySession = useCallback((result: LoginResult) => {
+    setAuthToken(result.token);
+    setUser(result.user);
+  }, []);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
@@ -95,8 +101,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       logout,
       refreshUser,
+      applySession,
     }),
-    [user, isLoading, login, logout, refreshUser],
+    [user, isLoading, login, logout, refreshUser, applySession],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

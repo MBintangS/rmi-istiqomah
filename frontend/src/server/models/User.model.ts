@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { Schema, model, models, type Document, type Model } from "mongoose";
+import mongoose, { Schema, model, models, type Document, type Model } from "mongoose";
 
 export type UserRole = "superadmin" | "admin";
 
@@ -9,6 +9,7 @@ export interface IUser {
   password: string;
   role: UserRole;
   isActive: boolean;
+  avatar?: string;
 }
 
 export interface IUserMethods {
@@ -48,6 +49,10 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
       type: Boolean,
       default: true,
     },
+    avatar: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,
@@ -66,5 +71,9 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.comparePassword = async function (candidatePassword: string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
+
+if (models.User && !models.User.schema.path("avatar")) {
+  mongoose.deleteModel("User");
+}
 
 export const User = (models.User as UserModel) || model<IUser, UserModel>("User", userSchema);

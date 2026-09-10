@@ -48,6 +48,7 @@ export type {
   AuthRole,
   AuthUser,
   AdminUserListItem,
+  ProfileUpdatePayload,
   UserCreatePayload,
   UserUpdatePayload,
   LoginPayload,

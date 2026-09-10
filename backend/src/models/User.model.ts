@@ -9,6 +9,7 @@ export interface IUser {
   password: string;
   role: UserRole;
   isActive: boolean;
+  avatar?: string;
 }
 
 export interface IUserMethods {
@@ -47,6 +48,10 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    avatar: {
+      type: String,
+      trim: true,
     },
   },
   {

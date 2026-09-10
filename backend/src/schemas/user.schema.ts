@@ -16,5 +16,44 @@ export const updateUserSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
+export const updateProfileSchema = z
+  .object({
+    name: z.string().trim().min(2, "Nama minimal 2 karakter"),
+    email: z.string().trim().email("Email tidak valid"),
+    avatar: z.string().trim().optional(),
+    currentPassword: z.string().optional(),
+    newPassword: z.string().optional(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.avatar && values.avatar.length > 0) {
+      const parsed = z.string().url().safeParse(values.avatar);
+      if (!parsed.success) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "URL foto tidak valid",
+          path: ["avatar"],
+        });
+      }
+    }
+
+    if (values.newPassword) {
+      if (values.newPassword.length < 8) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Password baru minimal 8 karakter",
+          path: ["newPassword"],
+        });
+      }
+      if (!values.currentPassword) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Password saat ini wajib diisi",
+          path: ["currentPassword"],
+        });
+      }
+    }
+  });
+
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
