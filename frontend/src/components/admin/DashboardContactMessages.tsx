@@ -114,11 +114,11 @@ export function DashboardContactMessages() {
         open={Boolean(selected)}
         onClose={() => setSelected(null)}
         title={selected?.subject ?? "Pesan kontak"}
-        className="sm:max-w-lg"
+        className="sm:max-w-2xl"
       >
         {selected ? (
           <div className="space-y-4">
-            <dl className="grid gap-3 text-sm">
+            <dl className="grid gap-3 text-sm sm:grid-cols-3">
               <div>
                 <dt className="text-caption text-foreground/50">Tanggal</dt>
                 <dd className="mt-0.5 text-foreground/80">

@@ -1,5 +1,6 @@
 import "server-only";
 import { BetaAnalyticsDataClient, type protos } from "@google-analytics/data";
+import { shouldTrackPath } from "@/lib/gtag";
 import { AppError } from "@/server/errors";
 import type {
   DashboardAnalytics,
@@ -10,7 +11,8 @@ import type {
 const RANGE_DAYS = 28;
 const MONTH_COUNT = 12;
 const CACHE_MS = 15 * 60 * 1000;
-const TOP_PAGES_LIMIT = 8;
+const CACHE_VERSION = 3;
+const TOP_PAGES_LIMIT = 5;
 const JAKARTA = "Asia/Jakarta";
 
 const emptyTotals: DashboardAnalyticsTotals = { activeUsers: 0, pageViews: 0 };
@@ -31,24 +33,42 @@ const emptyAnalytics = (): DashboardAnalytics => ({
   topPages: [],
 });
 
-const localhostFilter = {
-  notExpression: {
-    orGroup: {
-      expressions: [
-        {
-          filter: {
-            fieldName: "hostName",
-            stringFilter: { matchType: "CONTAINS" as const, value: "localhost" },
+const reportFilter = {
+  andGroup: {
+    expressions: [
+      {
+        notExpression: {
+          orGroup: {
+            expressions: [
+              {
+                filter: {
+                  fieldName: "hostName",
+                  stringFilter: { matchType: "CONTAINS" as const, value: "localhost" },
+                },
+              },
+              {
+                filter: {
+                  fieldName: "hostName",
+                  stringFilter: { matchType: "CONTAINS" as const, value: "127.0.0.1" },
+                },
+              },
+            ],
           },
         },
-        {
+      },
+      {
+        notExpression: {
           filter: {
-            fieldName: "hostName",
-            stringFilter: { matchType: "CONTAINS" as const, value: "127.0.0.1" },
+            fieldName: "pagePath",
+            stringFilter: {
+              matchType: "BEGINS_WITH" as const,
+              value: "/admin",
+              caseSensitive: false,
+            },
           },
         },
-      ],
-    },
+      },
+    ],
   },
 };
 
@@ -59,6 +79,7 @@ type Ga4Config = {
 };
 
 type CacheEntry = {
+  version: number;
   expiresAt: number;
   data: DashboardAnalytics;
 };
@@ -204,7 +225,7 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
     return emptyAnalytics();
   }
 
-  if (reportCache && reportCache.expiresAt > Date.now()) {
+  if (reportCache && reportCache.version === CACHE_VERSION && reportCache.expiresAt > Date.now()) {
     return reportCache.data;
   }
 
@@ -227,7 +248,7 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
         property,
         dateRanges: [dateRange],
         metrics: [{ name: "activeUsers" }, { name: "screenPageViews" }],
-        dimensionFilter: localhostFilter,
+        dimensionFilter: reportFilter,
       });
 
     const [todayRes, yesterdayRes, last30Res, last365Res, last28Res, dailyRes, monthlyRes, pagesRes] =
@@ -240,7 +261,7 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
         metrics: [{ name: "activeUsers" }, { name: "screenPageViews" }],
         orderBys: [{ dimension: { dimensionName: "date" } }],
         limit: RANGE_DAYS,
-        dimensionFilter: localhostFilter,
+        dimensionFilter: reportFilter,
       }),
       client.runReport({
         property,
@@ -249,7 +270,7 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
         metrics: [{ name: "activeUsers" }, { name: "screenPageViews" }],
         orderBys: [{ dimension: { dimensionName: "yearMonth" } }],
         limit: MONTH_COUNT,
-        dimensionFilter: localhostFilter,
+        dimensionFilter: reportFilter,
       }),
       client.runReport({
         property,
@@ -257,8 +278,8 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
         dimensions: [{ name: "pagePath" }, { name: "pageTitle" }],
         metrics: [{ name: "screenPageViews" }],
         orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
-        limit: TOP_PAGES_LIMIT,
-        dimensionFilter: localhostFilter,
+        limit: TOP_PAGES_LIMIT + 12,
+        dimensionFilter: reportFilter,
       }),
     ]);
 
@@ -277,18 +298,21 @@ export async function getDashboardAnalytics(): Promise<DashboardAnalytics> {
       },
       seriesDaily: fillSeries(enumerateDays(today, RANGE_DAYS), dailyRes[0].rows, gaDateToIso),
       seriesMonthly: fillSeries(enumerateMonths(currentMonth, MONTH_COUNT), monthlyRes[0].rows, gaMonthToIso),
-      topPages: (pagesRes[0].rows ?? []).map((row) => {
-        const path = row.dimensionValues?.[0]?.value || "/";
-        const title = row.dimensionValues?.[1]?.value?.trim() || path;
-        return {
-          path,
-          title: title === "(not set)" ? path : title,
-          views: metricInt(row, 0),
-        };
-      }),
+      topPages: (pagesRes[0].rows ?? [])
+        .map((row) => {
+          const path = row.dimensionValues?.[0]?.value || "/";
+          const title = row.dimensionValues?.[1]?.value?.trim() || path;
+          return {
+            path,
+            title: title === "(not set)" ? path : title,
+            views: metricInt(row, 0),
+          };
+        })
+        .filter((page) => shouldTrackPath(page.path.split("?")[0] || "/"))
+        .slice(0, TOP_PAGES_LIMIT),
     };
 
-    reportCache = { expiresAt: Date.now() + CACHE_MS, data };
+    reportCache = { version: CACHE_VERSION, expiresAt: Date.now() + CACHE_MS, data };
     return data;
   } catch (err) {
     throw mapGaError(err);

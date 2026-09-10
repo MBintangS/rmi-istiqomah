@@ -1224,7 +1224,7 @@ Ringkasan kunjungan GA4 untuk panel admin (Data API, bukan realtime).
 **Catatan:**
 - Membaca `GA4_PROPERTY_ID`, `GA4_CLIENT_EMAIL`, `GA4_PRIVATE_KEY` (server-only)
 - Jika ketiga env belum lengkap: `configured: false` dengan angka 0 (bukan error)
-- Hostname `localhost` / `127.0.0.1` dikecualikan
+- Hostname `localhost` / `127.0.0.1` dan path `/admin` dikecualikan
 - Respons di-cache di server ±15 menit
 - Laporan GA4 bisa tertunda 24–48 jam; `today` sering belum lengkap
 - `activeUsers` / `pageViews` = 28 hari; `periods` = hari ini, kemarin, 30 hari, 365 hari
@@ -1520,7 +1520,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
-| 2026-09-10 | — | GET /dashboard/analytics: periods + seriesDaily/Monthly + top pages |
+| 2026-09-10 | — | GET /dashboard/analytics: periods + series; exclude localhost & /admin |
 | 2026-09-09 | — | Next.js Route Handlers `/api` (parity Express); `POST /upload/signature`; Express tetap fallback |
 | 2026-07-13 | — | GET list/detail: draft/nonaktif hanya dengan includeUnpublished=true + admin |
 | 2026-07-12 | — | POST/PUT/DELETE /donasi: Super Admin only |

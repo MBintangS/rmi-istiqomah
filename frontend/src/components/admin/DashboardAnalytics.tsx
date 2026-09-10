@@ -58,7 +58,7 @@ export function DashboardAnalytics() {
           <h3 className="text-sm font-semibold tracking-tight text-heading">Kunjungan website</h3>
           <p className="text-caption text-foreground/55">
             {data?.configured
-              ? "Google Analytics 4. Data bisa tertunda hingga 24–48 jam; hari ini sering belum lengkap."
+              ? "Google Analytics 4. Data bisa tertunda hingga 24–48 jam; Total hari ini dan Kemarin bisa jadi belum lengkap."
               : "Ringkasan pengunjung dari Google Analytics."}
           </p>
         </div>
