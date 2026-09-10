@@ -34,12 +34,8 @@ import {
   type UserEditFormValues,
 } from "@/lib/user-form-schema";
 import { createUser, deleteUser, updateUser } from "@/services/users.service";
+import { normalizeRole, roleLabel } from "@/lib/roles";
 import type { AdminUserListItem } from "@/types/api";
-
-const ROLE_LABELS = {
-  admin: "Admin",
-  superadmin: "Super Admin",
-} as const;
 
 export function AdminPenggunaList() {
   const queryClient = useQueryClient();
@@ -55,7 +51,7 @@ export function AdminPenggunaList() {
       name: "",
       email: "",
       password: "",
-      role: "admin",
+      role: "pengurus",
       isActive: true,
     },
   });
@@ -66,7 +62,7 @@ export function AdminPenggunaList() {
       name: "",
       email: "",
       password: "",
-      role: "admin",
+      role: "pengurus",
       isActive: true,
     },
   });
@@ -77,7 +73,7 @@ export function AdminPenggunaList() {
       name: editTarget.name,
       email: editTarget.email,
       password: "",
-      role: editTarget.role,
+      role: normalizeRole(editTarget.role),
       isActive: editTarget.isActive,
     });
   }, [editTarget, editForm]);
@@ -102,7 +98,7 @@ export function AdminPenggunaList() {
         name: "",
         email: "",
         password: "",
-        role: "admin",
+        role: "pengurus",
         isActive: true,
       });
       invalidate();
@@ -160,7 +156,7 @@ export function AdminPenggunaList() {
               name: "",
               email: "",
               password: "",
-              role: "admin",
+              role: "pengurus",
               isActive: true,
             });
             setCreateOpen(true);
@@ -222,7 +218,7 @@ export function AdminPenggunaList() {
                     <td className="px-3.5 py-2.5 text-foreground/70">{item.email}</td>
                     <td className="px-3.5 py-2.5">
                       <Badge variant={item.role === "superadmin" ? "success" : "default"}>
-                        {ROLE_LABELS[item.role]}
+                        {roleLabel(item.role)}
                       </Badge>
                     </td>
                     <td className="px-3.5 py-2.5">
@@ -316,7 +312,7 @@ export function AdminPenggunaList() {
                 Role
               </Label>
               <Select id="create-role" {...createForm.register("role")}>
-                <option value="admin">Admin</option>
+                <option value="pengurus">Pengurus</option>
                 <option value="superadmin">Super Admin</option>
               </Select>
             </div>
@@ -405,7 +401,7 @@ export function AdminPenggunaList() {
                 disabled={currentUser?.id === editTarget?.id}
                 {...editForm.register("role")}
               >
-                <option value="admin">Admin</option>
+                <option value="pengurus">Pengurus</option>
                 <option value="superadmin">Super Admin</option>
               </Select>
             </div>

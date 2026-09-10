@@ -4,6 +4,8 @@ import { User } from "../models";
 import type { UpdateProfileInput } from "../schemas/user.schema";
 import { sendSuccess } from "../utils/response";
 import { signToken } from "../utils/jwt";
+import { normalizeRole } from "../utils/roles";
+import type { UserRole } from "../models/User.model";
 
 interface LoginBody {
   email?: string;
@@ -14,14 +16,14 @@ function formatAuthUser(user: {
   _id: { toString(): string };
   name: string;
   email: string;
-  role: "admin" | "superadmin";
+  role: string;
   avatar?: string;
 }) {
   return {
     id: user._id.toString(),
     name: user.name,
     email: user.email,
-    role: user.role,
+    role: normalizeRole(user.role),
     avatar: user.avatar ?? null,
   };
 }
@@ -30,18 +32,19 @@ function issueSession(user: {
   _id: { toString(): string };
   name: string;
   email: string;
-  role: "admin" | "superadmin";
+  role: string;
   avatar?: string;
 }) {
+  const role: UserRole = normalizeRole(user.role);
   const token = signToken({
     sub: user._id.toString(),
     email: user.email,
-    role: user.role,
+    role,
   });
 
   return {
     token,
-    user: formatAuthUser(user),
+    user: formatAuthUser({ ...user, role }),
   };
 }
 
@@ -59,7 +62,12 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 
   if (!user.isActive) {
-    throw new AppError(403, "ACCOUNT_INACTIVE", "Akun admin tidak aktif");
+    throw new AppError(403, "ACCOUNT_INACTIVE", "Akun tidak aktif");
+  }
+
+  if (user.role === "admin") {
+    await User.collection.updateOne({ _id: user._id }, { $set: { role: "pengurus" } });
+    user.role = "pengurus";
   }
 
   sendSuccess(res, issueSession(user));

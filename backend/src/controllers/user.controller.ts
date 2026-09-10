@@ -3,6 +3,7 @@ import { AppError } from "../middleware/errorHandler";
 import { User } from "../models";
 import type { CreateUserInput, UpdateUserInput } from "../schemas/user.schema";
 import { sendSuccess } from "../utils/response";
+import { normalizeRole } from "../utils/roles";
 
 function formatUser(user: {
   _id: { toString(): string };
@@ -18,7 +19,7 @@ function formatUser(user: {
     id: user._id.toString(),
     name: user.name,
     email: user.email,
-    role: user.role,
+    role: normalizeRole(user.role),
     isActive: user.isActive,
     avatar: user.avatar ?? null,
     createdAt: user.createdAt,

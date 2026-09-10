@@ -66,7 +66,7 @@ export function formatArtikel(artikel: PopulatedArtikel, options?: { includeCont
 }
 
 export function isAdminUser(user?: { role: string }): boolean {
-  return user?.role === "admin" || user?.role === "superadmin";
+  return user?.role === "pengurus" || user?.role === "admin" || user?.role === "superadmin";
 }
 
 /** Parse query flag for CMS list/detail that may include drafts/inactive. */

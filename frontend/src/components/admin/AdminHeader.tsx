@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AdminUserAvatar } from "@/components/admin/AdminUserAvatar";
 import { Button } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
+import { roleLabel } from "@/lib/roles";
 
 interface AdminHeaderProps {
   title: string;
@@ -19,8 +20,6 @@ export function AdminHeader({ title, onOpenMenu }: AdminHeaderProps) {
     logout();
     router.replace("/admin/login");
   };
-
-  const roleLabel = user?.role === "superadmin" ? "Super Admin" : "Admin";
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-foreground/10 bg-background/90 px-4 backdrop-blur-md sm:px-6">
@@ -68,7 +67,7 @@ export function AdminHeader({ title, onOpenMenu }: AdminHeaderProps) {
         >
           <div className="hidden text-right sm:block">
             <p className="text-sm font-medium leading-tight text-heading">{user?.name}</p>
-            <p className="text-[11px] text-foreground/50">{roleLabel}</p>
+            <p className="text-[11px] text-foreground/50">{roleLabel(user?.role)}</p>
           </div>
           <AdminUserAvatar name={user?.name ?? "A"} avatar={user?.avatar} size={32} />
         </Link>

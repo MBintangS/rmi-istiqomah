@@ -1,10 +1,17 @@
 import { z } from "zod";
+import type { UserRole } from "@/lib/roles";
+
+const storedRoleSchema = z.enum(["pengurus", "superadmin", "admin"]);
+
+export const userRoleSchema = storedRoleSchema.transform((role): UserRole =>
+  role === "superadmin" ? "superadmin" : "pengurus",
+);
 
 export const createUserSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi"),
   email: z.string().trim().email("Email tidak valid"),
   password: z.string().min(8, "Password minimal 8 karakter"),
-  role: z.enum(["admin", "superadmin"]),
+  role: userRoleSchema,
   isActive: z.boolean().optional(),
 });
 
@@ -12,7 +19,7 @@ export const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi").optional(),
   email: z.string().trim().email("Email tidak valid").optional(),
   password: z.string().min(8, "Password minimal 8 karakter").optional(),
-  role: z.enum(["admin", "superadmin"]).optional(),
+  role: userRoleSchema.optional(),
   isActive: z.boolean().optional(),
 });
 

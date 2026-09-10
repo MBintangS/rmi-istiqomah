@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
+import { roleLabel } from "@/lib/roles";
 
 function greetingForHour(hour: number) {
   if (hour < 11) return "Selamat pagi";
@@ -19,7 +20,7 @@ export function DashboardWelcome() {
     month: "long",
     year: "numeric",
   });
-  const roleLabel = user?.role === "superadmin" ? "Super Admin" : "Admin";
+  const label = roleLabel(user?.role);
 
   return (
     <section className="relative overflow-hidden rounded-rmi border border-foreground/10 bg-background shadow-[0_1px_2px_rgba(20,32,10,0.04)]">
@@ -46,7 +47,7 @@ export function DashboardWelcome() {
         </div>
         <div className="mt-3 shrink-0 text-left sm:mt-0 sm:text-right">
           <p className="text-sm font-medium text-heading">{dateLabel}</p>
-          <p className="text-[11px] text-foreground/50">{roleLabel}</p>
+          <p className="text-[11px] text-foreground/50">{label}</p>
         </div>
       </div>
     </section>

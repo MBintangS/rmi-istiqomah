@@ -4,7 +4,7 @@ export const userCreateFormSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter"),
   email: z.string().trim().email("Email tidak valid"),
   password: z.string().min(8, "Password minimal 8 karakter"),
-  role: z.enum(["admin", "superadmin"]),
+  role: z.enum(["pengurus", "superadmin"]),
   isActive: z.boolean(),
 });
 
@@ -14,7 +14,7 @@ export const userEditFormSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter"),
   email: z.string().trim().email("Email tidak valid"),
   password: z.string().optional(),
-  role: z.enum(["admin", "superadmin"]),
+  role: z.enum(["pengurus", "superadmin"]),
   isActive: z.boolean(),
 }).superRefine((values, ctx) => {
   if (values.password && values.password.length > 0 && values.password.length < 8) {

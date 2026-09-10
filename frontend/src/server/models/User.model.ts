@@ -1,13 +1,14 @@
 import bcrypt from "bcryptjs";
 import mongoose, { Schema, model, models, type Document, type Model } from "mongoose";
 
-export type UserRole = "superadmin" | "admin";
+export type UserRole = "pengurus" | "superadmin";
+export type StoredUserRole = UserRole | "admin";
 
 export interface IUser {
   name: string;
   email: string;
   password: string;
-  role: UserRole;
+  role: StoredUserRole;
   isActive: boolean;
   avatar?: string;
 }
@@ -42,7 +43,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     role: {
       type: String,
-      enum: ["superadmin", "admin"],
+      enum: ["superadmin", "pengurus", "admin"],
       required: [true, "Role wajib diisi"],
     },
     isActive: {
@@ -72,8 +73,14 @@ userSchema.methods.comparePassword = async function (candidatePassword: string) 
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-if (models.User && !models.User.schema.path("avatar")) {
-  mongoose.deleteModel("User");
+if (models.User) {
+  const roleEnum = (models.User.schema.path("role") as { options?: { enum?: string[] } } | undefined)
+    ?.options?.enum;
+  const missingAvatar = !models.User.schema.path("avatar");
+  const missingPengurus = Array.isArray(roleEnum) && !roleEnum.includes("pengurus");
+  if (missingAvatar || missingPengurus) {
+    mongoose.deleteModel("User");
+  }
 }
 
 export const User = (models.User as UserModel) || model<IUser, UserModel>("User", userSchema);

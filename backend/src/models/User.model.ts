@@ -1,13 +1,14 @@
 import bcrypt from "bcryptjs";
 import { Schema, model, type Document, type Model } from "mongoose";
 
-export type UserRole = "superadmin" | "admin";
+export type UserRole = "pengurus" | "superadmin";
+export type StoredUserRole = UserRole | "admin";
 
 export interface IUser {
   name: string;
   email: string;
   password: string;
-  role: UserRole;
+  role: StoredUserRole;
   isActive: boolean;
   avatar?: string;
 }
@@ -42,7 +43,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     role: {
       type: String,
-      enum: ["superadmin", "admin"],
+      enum: ["superadmin", "pengurus", "admin"],
       required: [true, "Role wajib diisi"],
     },
     isActive: {

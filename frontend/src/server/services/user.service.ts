@@ -2,6 +2,7 @@ import { AppError } from "@/server/errors";
 import { User } from "@/server/models";
 import type { CreateUserInput, UpdateUserInput } from "@/server/schemas/user.schema";
 import type { AuthUser } from "@/server/auth";
+import { normalizeRole } from "@/lib/roles";
 
 function formatUser(user: {
   _id: { toString(): string };
@@ -17,7 +18,7 @@ function formatUser(user: {
     id: user._id.toString(),
     name: user.name,
     email: user.email,
-    role: user.role,
+    role: normalizeRole(user.role),
     isActive: user.isActive,
     avatar: user.avatar ?? null,
     createdAt: user.createdAt,

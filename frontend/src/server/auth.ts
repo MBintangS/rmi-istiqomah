@@ -3,6 +3,7 @@ import jwt, { type SignOptions } from "jsonwebtoken";
 import { AppError } from "@/server/errors";
 import { getServerEnv } from "@/server/env";
 import type { UserRole } from "@/server/models/User.model";
+import { isCmsRole, isSuperAdminRole, normalizeRole } from "@/lib/roles";
 
 export interface AuthUser {
   id: string;
@@ -13,7 +14,7 @@ export interface AuthUser {
 export interface JwtPayload {
   sub: string;
   email: string;
-  role: UserRole;
+  role: string;
 }
 
 export function signToken(payload: JwtPayload): string {
@@ -52,7 +53,7 @@ export function authenticate(request: Request): AuthUser {
   return {
     id: payload.sub,
     email: payload.email,
-    role: payload.role,
+    role: normalizeRole(payload.role),
   };
 }
 
@@ -67,7 +68,7 @@ export function optionalAuthenticate(request: Request): AuthUser | undefined {
     return {
       id: payload.sub,
       email: payload.email,
-      role: payload.role,
+      role: normalizeRole(payload.role),
     };
   } catch {
     return undefined;
@@ -79,7 +80,7 @@ export function requireAdmin(user?: AuthUser): AuthUser {
     throw new AppError(401, "UNAUTHORIZED", "Token autentikasi diperlukan");
   }
 
-  if (user.role !== "admin" && user.role !== "superadmin") {
+  if (!isCmsRole(user.role)) {
     throw new AppError(403, "FORBIDDEN", "Anda tidak memiliki akses ke resource ini");
   }
 
@@ -91,7 +92,7 @@ export function requireSuperAdmin(user?: AuthUser): AuthUser {
     throw new AppError(401, "UNAUTHORIZED", "Token autentikasi diperlukan");
   }
 
-  if (user.role !== "superadmin") {
+  if (!isSuperAdminRole(user.role)) {
     throw new AppError(403, "FORBIDDEN", "Anda tidak memiliki akses ke resource ini");
   }
 

@@ -7,7 +7,7 @@ export default function AdminPenggunaPage() {
     <SuperAdminGuard>
       <AdminPageHeader
         title="Kelola Pengguna"
-        description="Akun admin dan superadmin untuk akses CMS."
+        description="Akun pengurus dan superadmin untuk akses CMS."
       />
       <AdminPenggunaList />
     </SuperAdminGuard>

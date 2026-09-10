@@ -49,7 +49,7 @@ Endpoint admin membutuhkan header:
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-Token didapat dari `POST /api/auth/login`. Role yang diizinkan untuk operasi admin: `admin`, `superadmin`.
+Token didapat dari `POST /api/auth/login`. Role CMS: `pengurus` (dulu `admin`) dan `superadmin`. Nilai `admin` pada JWT/database lama tetap diterima dan dinormalisasi menjadi `pengurus`.
 
 ### Optional Auth
 
@@ -202,7 +202,7 @@ Profil user dari token.
 
 Perbarui profil akun yang sedang login: nama, email, foto, dan password.
 
-**Auth:** Bearer token (admin atau superadmin)
+**Auth:** Bearer token (pengurus atau superadmin)
 
 **Body:**
 
@@ -240,7 +240,7 @@ Perbarui profil akun yang sedang login: nama, email, foto, dan password.
       "id": "6a4f70ecf9fb145d25794f52",
       "name": "Admin Konten",
       "email": "konten@rmi-masjid.org",
-      "role": "admin",
+      "role": "pengurus",
       "avatar": "https://res.cloudinary.com/demo/image/upload/avatar.jpg"
     }
   }
@@ -292,7 +292,7 @@ Buat akun admin baru.
   "name": "Admin Konten",
   "email": "konten@rmi-masjid.org",
   "password": "PasswordBaru123",
-  "role": "admin",
+  "role": "pengurus",
   "isActive": true
 }
 ```
@@ -302,7 +302,7 @@ Buat akun admin baru.
 | `name` | ✅ | Nama pengguna |
 | `email` | ✅ | Unik |
 | `password` | ✅ | Minimal 8 karakter |
-| `role` | ✅ | `admin` atau `superadmin` |
+| `role` | ✅ | `pengurus` atau `superadmin` (`admin` masih diterima sebagai alias `pengurus`) |
 | `isActive` | — | Default `true` |
 
 **Response `201`:** object user (tanpa password) + `message`
@@ -1572,6 +1572,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-10 | — | Role CMS `admin` diubah menjadi `pengurus` (alias `admin` tetap diterima) |
 | 2026-09-10 | — | PUT /auth/me: update profil (nama, email, avatar, password); field avatar di user |
 | 2026-09-10 | — | POST/PUT/DELETE /kategori dan /banner: Super Admin only |
 | 2026-09-10 | — | GET /dashboard/analytics: periods + series; exclude localhost & /admin |

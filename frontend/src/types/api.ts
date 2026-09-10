@@ -388,7 +388,7 @@ export interface ContactMessageListItem {
   createdAt: string;
 }
 
-export type AuthRole = "admin" | "superadmin";
+export type AuthRole = "pengurus" | "superadmin";
 
 export interface AuthUser {
   id: string;

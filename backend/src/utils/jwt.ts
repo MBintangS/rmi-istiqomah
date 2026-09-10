@@ -5,7 +5,7 @@ import type { UserRole } from "../models/User.model";
 export interface JwtPayload {
   sub: string;
   email: string;
-  role: UserRole;
+  role: UserRole | "admin";
 }
 
 function getJwtSecret(): string {
