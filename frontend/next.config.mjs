@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ["mongoose", "bcryptjs", "cloudinary"],
+    serverComponentsExternalPackages: [
+      "mongoose",
+      "bcryptjs",
+      "cloudinary",
+      "@google-analytics/data",
+    ],
   },
   transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
   images: {

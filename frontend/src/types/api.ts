@@ -446,6 +446,41 @@ export interface DashboardStats {
   totalMessages: number;
 }
 
+export interface DashboardAnalyticsPage {
+  path: string;
+  title: string;
+  views: number;
+}
+
+export interface DashboardAnalyticsTotals {
+  activeUsers: number;
+  pageViews: number;
+}
+
+export interface DashboardAnalyticsPoint {
+  date: string;
+  activeUsers: number;
+  pageViews: number;
+}
+
+export interface DashboardAnalyticsPeriods {
+  today: DashboardAnalyticsTotals;
+  yesterday: DashboardAnalyticsTotals;
+  last30Days: DashboardAnalyticsTotals;
+  last365Days: DashboardAnalyticsTotals;
+}
+
+export interface DashboardAnalytics {
+  configured: boolean;
+  rangeDays: number;
+  activeUsers: number;
+  pageViews: number;
+  periods: DashboardAnalyticsPeriods;
+  seriesDaily: DashboardAnalyticsPoint[];
+  seriesMonthly: DashboardAnalyticsPoint[];
+  topPages: DashboardAnalyticsPage[];
+}
+
 export interface KategoriItem {
   id: string;
   name: string;

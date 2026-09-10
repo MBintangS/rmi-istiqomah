@@ -41,7 +41,7 @@ export function DashboardWelcome() {
             {user?.name ? `, ${user.name.split(" ")[0]}` : ""}
           </h2>
           <p className="mt-1 text-sm text-foreground/60">
-            Ringkasan konten dan pesan masuk Remaja Masjid Istiqomah.
+            Ringkasan kunjungan, konten, dan pesan masuk Remaja Masjid Istiqomah.
           </p>
         </div>
         <div className="mt-3 shrink-0 text-left sm:mt-0 sm:text-right">

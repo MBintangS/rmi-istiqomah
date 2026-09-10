@@ -70,6 +70,7 @@ export const queryKeys = {
   dashboard: {
     all: ["dashboard"] as const,
     stats: () => [...queryKeys.dashboard.all, "stats"] as const,
+    analytics: () => [...queryKeys.dashboard.all, "analytics", "v2"] as const,
   },
   contact: {
     all: ["contact"] as const,

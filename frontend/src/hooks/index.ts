@@ -2,6 +2,7 @@ export { useDokumen } from "./useDokumen";
 export { useGaleriById } from "./useGaleriById";
 export { useAuth } from "./useAuth";
 export { useBanners } from "./useBanners";
+export { useDashboardAnalytics } from "./useDashboardAnalytics";
 export { useDashboardStats } from "./useDashboardStats";
 export { useHasMounted } from "./useHasMounted";
 export { useKategori } from "./useKategori";

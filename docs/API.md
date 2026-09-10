@@ -1215,6 +1215,53 @@ Statistik ringkas untuk panel admin.
 }
 ```
 
+### `GET /dashboard/analytics`
+
+Ringkasan kunjungan GA4 untuk panel admin (Data API, bukan realtime).
+
+**Auth:** Admin
+
+**Catatan:**
+- Membaca `GA4_PROPERTY_ID`, `GA4_CLIENT_EMAIL`, `GA4_PRIVATE_KEY` (server-only)
+- Jika ketiga env belum lengkap: `configured: false` dengan angka 0 (bukan error)
+- Hostname `localhost` / `127.0.0.1` dikecualikan
+- Respons di-cache di server ±15 menit
+- Laporan GA4 bisa tertunda 24–48 jam; `today` sering belum lengkap
+- `activeUsers` / `pageViews` = 28 hari; `periods` = hari ini, kemarin, 30 hari, 365 hari
+- `seriesDaily` mengisi tanggal tanpa kunjungan dengan 0; `seriesMonthly` 12 bulan
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "configured": true,
+    "rangeDays": 28,
+    "activeUsers": 42,
+    "pageViews": 180,
+    "periods": {
+      "today": { "activeUsers": 2, "pageViews": 5 },
+      "yesterday": { "activeUsers": 3, "pageViews": 8 },
+      "last30Days": { "activeUsers": 40, "pageViews": 170 },
+      "last365Days": { "activeUsers": 120, "pageViews": 540 }
+    },
+    "seriesDaily": [
+      { "date": "2026-08-14", "activeUsers": 1, "pageViews": 3 }
+    ],
+    "seriesMonthly": [
+      { "date": "2026-09", "activeUsers": 8, "pageViews": 14 }
+    ],
+    "topPages": [
+      { "path": "/", "title": "Beranda", "views": 90 },
+      { "path": "/kegiatan", "title": "Kegiatan", "views": 24 }
+    ]
+  }
+}
+```
+
+**Error relevan:** `401`, `403`, `502` (`GA4_PERMISSION` / `GA4_AUTH` / `GA4_ERROR`)
+
 ---
 
 ## Search
@@ -1473,6 +1520,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-10 | — | GET /dashboard/analytics: periods + seriesDaily/Monthly + top pages |
 | 2026-09-09 | — | Next.js Route Handlers `/api` (parity Express); `POST /upload/signature`; Express tetap fallback |
 | 2026-07-13 | — | GET list/detail: draft/nonaktif hanya dengan includeUnpublished=true + admin |
 | 2026-07-12 | — | POST/PUT/DELETE /donasi: Super Admin only |

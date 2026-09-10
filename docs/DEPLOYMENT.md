@@ -90,6 +90,9 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 | `NEXT_PUBLIC_API_URL` | Saat ini: `https://rmi-istiqomah-api.onrender.com/api`. Setelah cutover: `/api` |
 | `NEXT_PUBLIC_SITE_URL` | `https://your-app.vercel.app` (atau domain custom) |
 | `NEXT_PUBLIC_GA_ID` | Measurement ID GA4 (`G-XXXXXXXXXX`). Redeploy setelah diisi |
+| `GA4_PROPERTY_ID` | Property ID numerik (bukan `G-...`). Dashboard admin |
+| `GA4_CLIENT_EMAIL` | Email service account Viewer di properti GA4 |
+| `GA4_PRIVATE_KEY` | Private key PEM; di Vercel biarkan `\n` sebagai teks |
 | `MONGODB_URI` | Wajib untuk Route Handlers (server-only, tanpa `NEXT_PUBLIC_`) |
 | `JWT_SECRET` | Sama dengan backend agar token admin tetap valid |
 | `JWT_EXPIRES_IN` | `7d` (opsional) |
