@@ -14,20 +14,12 @@ export function DashboardContactMessages() {
   const items = data ?? [];
 
   return (
-    <section id="pesan-kontak" className="scroll-mt-20 space-y-3">
-      <div className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h3 className="text-sm font-semibold tracking-tight text-heading">Pesan kontak</h3>
-          <p className="text-caption text-foreground/55">
-            Pesan dari formulir halaman Kontak.
-          </p>
-        </div>
-        {!isLoading && !isError ? (
-          <span className="rounded-md bg-surface px-2 py-1 text-[11px] font-medium text-foreground/55">
-            {items.length} pesan
-          </span>
-        ) : null}
-      </div>
+    <section className="space-y-3">
+      {!isLoading && !isError ? (
+        <p className="text-right text-[11px] font-medium text-foreground/55">
+          {items.length} pesan
+        </p>
+      ) : null}
 
       <AdminPanel padding="none">
         {isLoading ? (

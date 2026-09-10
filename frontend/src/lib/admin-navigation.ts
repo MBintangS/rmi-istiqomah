@@ -29,16 +29,17 @@ export const adminNavGroupOrder: AdminNavGroupId[] = [
 
 export const adminNavItems: AdminNavItem[] = [
   { label: "Dashboard", href: "/admin/dashboard", group: "utama" },
+  { label: "Pesan kontak", href: "/admin/pesan-kontak", group: "utama" },
   { label: "Artikel", href: "/admin/artikel", group: "konten" },
   { label: "Kegiatan", href: "/admin/kegiatan", group: "konten" },
   { label: "Galeri", href: "/admin/galeri", group: "media" },
-  { label: "Banner", href: "/admin/banner", group: "media" },
+  { label: "Dokumen", href: "/admin/dokumen", group: "media" },
   { label: "Pengurus", href: "/admin/pengurus", group: "organisasi", roles: ["superadmin"] },
   { label: "Program", href: "/admin/program", group: "organisasi", roles: ["superadmin"] },
-  { label: "Dokumen", href: "/admin/dokumen", group: "media" },
+  { label: "Banner", href: "/admin/banner", group: "organisasi", roles: ["superadmin"] },
+  { label: "Kategori", href: "/admin/kategori", group: "organisasi", roles: ["superadmin"] },
   { label: "Donasi", href: "/admin/donasi", group: "organisasi", roles: ["superadmin"] },
   { label: "Testimoni", href: "/admin/testimoni", group: "organisasi", roles: ["superadmin"] },
-  { label: "Kategori", href: "/admin/kategori", group: "konten" },
   { label: "Pengguna", href: "/admin/pengguna", group: "sistem", roles: ["superadmin"] },
   { label: "Pengaturan", href: "/admin/pengaturan", group: "sistem", roles: ["superadmin"] },
 ];

@@ -1,4 +1,4 @@
-import { authenticate, optionalAuthenticate, requireAdmin } from "@/server/auth";
+import { authenticate, optionalAuthenticate, requireSuperAdmin } from "@/server/auth";
 import { apiRoute, jsonSuccess, parseBody, queryObject } from "@/server/http";
 import { createBannerSchema } from "@/server/schemas/galeri.schema";
 import { createBanner, listBanner } from "@/server/services/banner.service";
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireSuperAdmin(authenticate(request));
     const data = await parseBody(request, createBannerSchema);
     return jsonSuccess(await createBanner(data), {
       status: 201,

@@ -15,7 +15,7 @@ const allCards = [
   { key: "totalPengurus", label: "Pengurus", href: "/admin/pengurus", hint: "Struktur organisasi", superAdminOnly: true },
   { key: "totalProgram", label: "Program", href: "/admin/program", hint: "Program unggulan", superAdminOnly: true },
   { key: "totalDokumen", label: "Dokumen", href: "/admin/dokumen", hint: "File publik" },
-  { key: "totalMessages", label: "Pesan kontak", href: "#pesan-kontak", hint: "Inbox pengunjung" },
+  { key: "totalMessages", label: "Pesan kontak", href: "/admin/pesan-kontak", hint: "Inbox pengunjung" },
 ] as const;
 
 export function DashboardStatsGrid() {

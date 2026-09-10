@@ -316,7 +316,7 @@ List kategori.
 
 Buat kategori baru. Slug auto-generate dari `name` jika `slug` tidak dikirim.
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -340,7 +340,7 @@ Buat kategori baru. Slug auto-generate dari `name` jika `slug` tidak dikirim.
 
 Perbarui kategori. Slug hanya diubah jika field `slug` dikirim.
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:** partial — `name`, `type`, `slug`
 
@@ -350,7 +350,7 @@ Perbarui kategori. Slug hanya diubah jika field `slug` dikirim.
 
 Hapus kategori. Gagal jika masih dipakai artikel, kegiatan, atau galeri.
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Response `200`:** `{ id }` + `message`
 
@@ -705,7 +705,7 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 ### `POST /banner`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 **Body:**
 
@@ -731,11 +731,11 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 ### `PUT /banner/:id`
 
-**Auth:** Admin — body partial
+**Auth:** Super Admin — body partial
 
 ### `DELETE /banner/:id`
 
-**Auth:** Admin
+**Auth:** Super Admin
 
 ---
 
@@ -1520,6 +1520,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-10 | — | POST/PUT/DELETE /kategori dan /banner: Super Admin only |
 | 2026-09-10 | — | GET /dashboard/analytics: periods + series; exclude localhost & /admin |
 | 2026-09-09 | — | Next.js Route Handlers `/api` (parity Express); `POST /upload/signature`; Express tetap fallback |
 | 2026-07-13 | — | GET list/detail: draft/nonaktif hanya dengan includeUnpublished=true + admin |
