@@ -37,7 +37,7 @@ function issueSession(user: {
 
   return {
     token,
-    user: formatAuthUser({ ...user, role }),
+    user: formatAuthUser(user),
   };
 }
 
