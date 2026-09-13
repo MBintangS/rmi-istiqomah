@@ -59,7 +59,16 @@ export async function sendInvitationEmail(input: {
     html: `
       <div style="margin:0;background:#f6f7f3;padding:32px 16px;font-family:Arial,sans-serif;color:#263019">
         <div style="margin:0 auto;max-width:560px;border:1px solid #e2e7da;border-radius:16px;background:#ffffff;padding:32px">
-          <p style="margin:0 0 20px;font-size:14px;font-weight:700;color:#4e830a">RMI ISTIQOMAH</p>
+          <div style="margin:0 0 24px;text-align:center">
+            <img
+              src="https://www.rmiistiqomah.web.id/logo.png"
+              width="72"
+              height="72"
+              alt="RMI Istiqomah"
+              style="display:block;margin:0 auto 10px;width:72px;height:72px;border:0"
+            />
+            <p style="margin:0;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#4e830a">RMI ISTIQOMAH</p>
+          </div>
           <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#1f2917">Aktifkan akun pengurus</h1>
           <p style="margin:0 0 12px;line-height:1.7">Assalamu'alaikum ${safeName},</p>
           <p style="margin:0 0 24px;line-height:1.7">
