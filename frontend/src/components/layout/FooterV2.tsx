@@ -59,12 +59,12 @@ function ContactLink({ href, children }: { href: string; children: ReactNode }) 
 }
 
 export function FooterV2() {
-  const { siteName, tagline, address, phone, email, whatsapp, socialMedia, googleMapsEmbed } =
-    useSettingsValue();
+  const { siteName, tagline, address, email, socialMedia } = useSettingsValue();
 
-  const socials = SOCIAL_PLATFORMS.filter((platform) => socialMedia[platform.key]);
-  const telHref = phone ? `tel:${phone.replace(/\s/g, "")}` : null;
-  const waHref = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : null;
+  const socials = SOCIAL_PLATFORMS.flatMap((platform) => {
+    const href = socialMedia[platform.key];
+    return href ? [{ ...platform, href }] : [];
+  });
 
   return (
     <footer className="relative isolate overflow-x-clip bg-ink text-on-ink">
@@ -155,7 +155,7 @@ export function FooterV2() {
                     return (
                       <li key={platform.key}>
                         <a
-                          href={socialMedia[platform.key]}
+                          href={platform.href}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={platform.label}
