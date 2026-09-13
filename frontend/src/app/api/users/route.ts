@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     const data = await parseBody(request, createUserSchema);
     return jsonSuccess(await createUser(data), {
       status: 201,
-      message: "Pengguna berhasil dibuat",
+      message: "Undangan pengguna berhasil dikirim",
     });
   });
 }

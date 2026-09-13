@@ -10,18 +10,26 @@ export const userRoleSchema = storedRoleSchema.transform((role): UserRole =>
 export const createUserSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi"),
   email: z.string().trim().email("Email tidak valid"),
-  password: z.string().min(8, "Password minimal 8 karakter"),
   role: userRoleSchema,
-  isActive: z.boolean().optional(),
 });
 
 export const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi").optional(),
   email: z.string().trim().email("Email tidak valid").optional(),
-  password: z.string().min(8, "Password minimal 8 karakter").optional(),
   role: userRoleSchema.optional(),
   isActive: z.boolean().optional(),
 });
+
+export const activateInvitationSchema = z
+  .object({
+    token: z.string().trim().min(1, "Token aktivasi wajib diisi"),
+    password: z.string().min(8, "Password minimal 8 karakter"),
+    confirmPassword: z.string().min(1, "Konfirmasi password wajib diisi"),
+  })
+  .refine((values) => values.password === values.confirmPassword, {
+    message: "Konfirmasi password tidak sama",
+    path: ["confirmPassword"],
+  });
 
 export const updateProfileSchema = z
   .object({
@@ -63,4 +71,5 @@ export const updateProfileSchema = z
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
+export type ActivateInvitationInput = z.infer<typeof activateInvitationSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

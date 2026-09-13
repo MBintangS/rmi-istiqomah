@@ -19,10 +19,16 @@ import {
   AdminRowActions,
   AdminEditButton,
   AdminDeleteButton,
+  AdminIconButton,
   AdminToggleActiveButton,
 } from "@/components/admin/AdminRowActions";
 import { AdminUserAvatar } from "@/components/admin/AdminUserAvatar";
-import { AdminDataTable, AdminPanel, AdminTableHead, AdminToolbar } from "@/components/admin/AdminChrome";
+import {
+  AdminDataTable,
+  AdminPanel,
+  AdminTableHead,
+  AdminToolbar,
+} from "@/components/admin/AdminChrome";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/hooks/useUsers";
 import { getApiErrorMessage } from "@/lib/api";
@@ -33,7 +39,7 @@ import {
   type UserCreateFormValues,
   type UserEditFormValues,
 } from "@/lib/user-form-schema";
-import { createUser, deleteUser, updateUser } from "@/services/users.service";
+import { createUser, deleteUser, resendUserInvitation, updateUser } from "@/services/users.service";
 import { normalizeRole, roleLabel } from "@/lib/roles";
 import type { AdminUserListItem } from "@/types/api";
 
@@ -50,9 +56,7 @@ export function AdminPenggunaList() {
     defaultValues: {
       name: "",
       email: "",
-      password: "",
       role: "pengurus",
-      isActive: true,
     },
   });
 
@@ -61,7 +65,6 @@ export function AdminPenggunaList() {
     defaultValues: {
       name: "",
       email: "",
-      password: "",
       role: "pengurus",
       isActive: true,
     },
@@ -72,7 +75,6 @@ export function AdminPenggunaList() {
     editForm.reset({
       name: editTarget.name,
       email: editTarget.email,
-      password: "",
       role: normalizeRole(editTarget.role),
       isActive: editTarget.isActive,
     });
@@ -87,9 +89,7 @@ export function AdminPenggunaList() {
       createUser({
         name: values.name,
         email: values.email,
-        password: values.password,
         role: values.role,
-        isActive: values.isActive,
       }),
     onSuccess: (response) => {
       toast.success(response.message ?? "Pengguna berhasil dibuat");
@@ -97,13 +97,14 @@ export function AdminPenggunaList() {
       createForm.reset({
         name: "",
         email: "",
-        password: "",
         role: "pengurus",
-        isActive: true,
       });
       invalidate();
     },
-    onError: (err) => toast.error(getApiErrorMessage(err)),
+    onError: (err) => {
+      toast.error(getApiErrorMessage(err));
+      invalidate();
+    },
   });
 
   const updateMutation = useMutation({
@@ -114,7 +115,6 @@ export function AdminPenggunaList() {
         email: values.email,
         role: values.role,
         isActive: values.isActive,
-        ...(values.password ? { password: values.password } : {}),
       });
     },
     onSuccess: (response) => {
@@ -145,6 +145,15 @@ export function AdminPenggunaList() {
     onError: (err) => toast.error(getApiErrorMessage(err)),
   });
 
+  const resendMutation = useMutation({
+    mutationFn: (id: string) => resendUserInvitation(id),
+    onSuccess: (response) => {
+      toast.success(response.message ?? "Email undangan berhasil dikirim ulang");
+      invalidate();
+    },
+    onError: (err) => toast.error(getApiErrorMessage(err)),
+  });
+
   const items = data ?? [];
 
   return (
@@ -155,9 +164,7 @@ export function AdminPenggunaList() {
             createForm.reset({
               name: "",
               email: "",
-              password: "",
               role: "pengurus",
-              isActive: true,
             });
             setCreateOpen(true);
           }}
@@ -173,83 +180,116 @@ export function AdminPenggunaList() {
       ) : isError ? (
         <AdminPanel>
           <EmptyState
-          title="Gagal memuat pengguna"
-          description={getApiErrorMessage(error)}
-          actionLabel="Coba lagi"
-          onAction={() => refetch()}
-        />
+            title="Gagal memuat pengguna"
+            description={getApiErrorMessage(error)}
+            actionLabel="Coba lagi"
+            onAction={() => refetch()}
+          />
         </AdminPanel>
       ) : items.length === 0 ? (
         <AdminPanel>
           <EmptyState
-          title="Belum ada pengguna"
-          description="Buat akun admin baru untuk mengelola CMS."
-          actionLabel="Tambah Pengguna"
-          onAction={() => setCreateOpen(true)}
-        />
+            title="Belum ada pengguna"
+            description="Buat akun admin baru untuk mengelola CMS."
+            actionLabel="Tambah Pengguna"
+            onAction={() => setCreateOpen(true)}
+          />
         </AdminPanel>
       ) : (
         <AdminDataTable>
-            <AdminTableHead>
-              <tr>
-                <th className="px-3.5 py-2.5 font-medium">Nama</th>
-                <th className="px-3.5 py-2.5 font-medium">Email</th>
-                <th className="px-3.5 py-2.5 font-medium">Role</th>
-                <th className="px-3.5 py-2.5 font-medium">Status</th>
-                <th className="px-3.5 py-2.5 font-medium">Aksi</th>
-              </tr>
-            </AdminTableHead>
-            <tbody>
-              {items.map((item) => {
-                const isSelf = currentUser?.id === item.id;
-                return (
-                  <tr key={item.id} className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0">
-                    <td className="px-3.5 py-2.5">
-                      <div className="flex items-center gap-2.5">
-                        <AdminUserAvatar name={item.name} avatar={item.avatar} size={32} />
-                        <div>
-                          <p className="font-medium text-heading">{item.name}</p>
-                          {isSelf ? (
-                            <p className="text-caption text-foreground/50">Anda</p>
-                          ) : null}
-                        </div>
+          <AdminTableHead>
+            <tr>
+              <th className="px-3.5 py-2.5 font-medium">Nama</th>
+              <th className="px-3.5 py-2.5 font-medium">Email</th>
+              <th className="px-3.5 py-2.5 font-medium">Role</th>
+              <th className="px-3.5 py-2.5 font-medium">Status</th>
+              <th className="px-3.5 py-2.5 font-medium">Aksi</th>
+            </tr>
+          </AdminTableHead>
+          <tbody>
+            {items.map((item) => {
+              const isSelf = currentUser?.id === item.id;
+              return (
+                <tr
+                  key={item.id}
+                  className="border-b border-foreground/5 transition-colors hover:bg-surface/70 last:border-0"
+                >
+                  <td className="px-3.5 py-2.5">
+                    <div className="flex items-center gap-2.5">
+                      <AdminUserAvatar name={item.name} avatar={item.avatar} size={32} />
+                      <div>
+                        <p className="font-medium text-heading">{item.name}</p>
+                        {isSelf ? <p className="text-caption text-foreground/50">Anda</p> : null}
                       </div>
-                    </td>
-                    <td className="px-3.5 py-2.5 text-foreground/70">{item.email}</td>
-                    <td className="px-3.5 py-2.5">
-                      <Badge variant={item.role === "superadmin" ? "success" : "default"}>
-                        {roleLabel(item.role)}
-                      </Badge>
-                    </td>
-                    <td className="px-3.5 py-2.5">
-                      <Badge variant={item.isActive ? "success" : "warning"}>
-                        {item.isActive ? "aktif" : "nonaktif"}
-                      </Badge>
-                    </td>
-                    <td className="px-3.5 py-2.5">
-                      <AdminRowActions>
-                        <AdminEditButton onClick={() => setEditTarget(item)} />
-                        <AdminToggleActiveButton
-                          active={item.isActive}
-                          disabled={toggleMutation.isPending || isSelf}
-                          onClick={() =>
-                            toggleMutation.mutate({
-                              id: item.id,
-                              isActive: !item.isActive,
-                            })
-                          }
-                        />
-                        <AdminDeleteButton
-                          disabled={isSelf}
-                          onClick={() => setDeleteTarget(item)}
-                        />
-                      </AdminRowActions>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </AdminDataTable>
+                    </div>
+                  </td>
+                  <td className="px-3.5 py-2.5 text-foreground/70">{item.email}</td>
+                  <td className="px-3.5 py-2.5">
+                    <Badge variant={item.role === "superadmin" ? "success" : "default"}>
+                      {roleLabel(item.role)}
+                    </Badge>
+                  </td>
+                  <td className="px-3.5 py-2.5">
+                    <Badge
+                      variant={
+                        item.invitationStatus === "pending"
+                          ? "warning"
+                          : item.isActive
+                            ? "success"
+                            : "warning"
+                      }
+                    >
+                      {item.invitationStatus === "pending"
+                        ? "menunggu aktivasi"
+                        : item.isActive
+                          ? "aktif"
+                          : "nonaktif"}
+                    </Badge>
+                  </td>
+                  <td className="px-3.5 py-2.5">
+                    <AdminRowActions>
+                      {item.invitationStatus === "pending" ? (
+                        <AdminIconButton
+                          label="Kirim ulang undangan"
+                          disabled={resendMutation.isPending}
+                          onClick={() => resendMutation.mutate(item.id)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="m22 2-7 20-4-9-9-4Z" />
+                            <path d="M22 2 11 13" />
+                          </svg>
+                        </AdminIconButton>
+                      ) : null}
+                      <AdminEditButton onClick={() => setEditTarget(item)} />
+                      <AdminToggleActiveButton
+                        active={item.isActive}
+                        disabled={toggleMutation.isPending || isSelf}
+                        onClick={() =>
+                          toggleMutation.mutate({
+                            id: item.id,
+                            isActive: !item.isActive,
+                          })
+                        }
+                      />
+                      <AdminDeleteButton disabled={isSelf} onClick={() => setDeleteTarget(item)} />
+                    </AdminRowActions>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </AdminDataTable>
       )}
 
       <Modal open={createOpen} onClose={() => setCreateOpen(false)} title="Tambah Pengguna">
@@ -290,53 +330,23 @@ export function AdminPenggunaList() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="create-password" required>
-              Password
+            <Label htmlFor="create-role" required>
+              Role
             </Label>
-            <Input
-              id="create-password"
-              type="password"
-              autoComplete="new-password"
-              error={Boolean(createForm.formState.errors.password)}
-              {...createForm.register("password")}
-            />
-            {createForm.formState.errors.password && (
-              <p className="text-caption text-red-600">
-                {createForm.formState.errors.password.message}
-              </p>
-            )}
+            <Select id="create-role" {...createForm.register("role")}>
+              <option value="pengurus">Pengurus</option>
+              <option value="superadmin">Super Admin</option>
+            </Select>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="create-role" required>
-                Role
-              </Label>
-              <Select id="create-role" {...createForm.register("role")}>
-                <option value="pengurus">Pengurus</option>
-                <option value="superadmin">Super Admin</option>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="create-active" required>
-                Status
-              </Label>
-              <Select
-                id="create-active"
-                {...createForm.register("isActive", {
-                  setValueAs: (value) => value === "true" || value === true,
-                })}
-              >
-                <option value="true">Aktif</option>
-                <option value="false">Nonaktif</option>
-              </Select>
-            </div>
-          </div>
+          <p className="text-caption leading-relaxed text-foreground/60">
+            Pengguna akan menerima email berisi tautan untuk membuat password dan mengaktifkan akun.
+          </p>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setCreateOpen(false)}>
               Batal
             </Button>
             <Button type="submit" disabled={createMutation.isPending}>
-              {createMutation.isPending ? "Menyimpan..." : "Buat"}
+              {createMutation.isPending ? "Mengirim..." : "Kirim Undangan"}
             </Button>
           </div>
         </form>
@@ -373,22 +383,6 @@ export function AdminPenggunaList() {
             />
             {editForm.formState.errors.email && (
               <p className="text-caption text-red-600">{editForm.formState.errors.email.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="edit-password">Password baru (opsional)</Label>
-            <Input
-              id="edit-password"
-              type="password"
-              autoComplete="new-password"
-              placeholder="Kosongkan jika tidak diubah"
-              error={Boolean(editForm.formState.errors.password)}
-              {...editForm.register("password")}
-            />
-            {editForm.formState.errors.password && (
-              <p className="text-caption text-red-600">
-                {editForm.formState.errors.password.message}
-              </p>
             )}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -432,7 +426,11 @@ export function AdminPenggunaList() {
         </form>
       </Modal>
 
-      <Modal open={Boolean(deleteTarget)} onClose={() => setDeleteTarget(null)} title="Hapus pengguna?">
+      <Modal
+        open={Boolean(deleteTarget)}
+        onClose={() => setDeleteTarget(null)}
+        title="Hapus pengguna?"
+      >
         <p className="text-body text-foreground/80">
           Akun <strong>{deleteTarget?.name}</strong> ({deleteTarget?.email}) akan dihapus permanen.
         </p>

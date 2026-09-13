@@ -3,14 +3,18 @@ import mongoose, { Schema, model, models, type Document, type Model } from "mong
 
 export type UserRole = "pengurus" | "superadmin";
 export type StoredUserRole = UserRole | "admin";
+export type InvitationStatus = "pending" | "accepted";
 
 export interface IUser {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: StoredUserRole;
   isActive: boolean;
   avatar?: string;
+  invitationStatus: InvitationStatus;
+  invitationTokenHash?: string;
+  invitationExpiresAt?: Date;
 }
 
 export interface IUserMethods {
@@ -37,7 +41,6 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     password: {
       type: String,
-      required: [true, "Password wajib diisi"],
       minlength: 8,
       select: false,
     },
@@ -54,6 +57,20 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
       type: String,
       trim: true,
     },
+    invitationStatus: {
+      type: String,
+      enum: ["pending", "accepted"],
+      default: "accepted",
+      required: true,
+    },
+    invitationTokenHash: {
+      type: String,
+      select: false,
+    },
+    invitationExpiresAt: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -61,7 +78,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
 );
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+  if (!this.isModified("password") || !this.password) {
     return next();
   }
 
@@ -70,15 +87,18 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword: string) {
+  if (!this.password) return false;
   return bcrypt.compare(candidatePassword, this.password);
 };
 
 if (models.User) {
-  const roleEnum = (models.User.schema.path("role") as { options?: { enum?: string[] } } | undefined)
-    ?.options?.enum;
+  const roleEnum = (
+    models.User.schema.path("role") as { options?: { enum?: string[] } } | undefined
+  )?.options?.enum;
   const missingAvatar = !models.User.schema.path("avatar");
+  const missingInvitationStatus = !models.User.schema.path("invitationStatus");
   const missingPengurus = Array.isArray(roleEnum) && !roleEnum.includes("pengurus");
-  if (missingAvatar || missingPengurus) {
+  if (missingAvatar || missingInvitationStatus || missingPengurus) {
     mongoose.deleteModel("User");
   }
 }

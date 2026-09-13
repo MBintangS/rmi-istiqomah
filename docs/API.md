@@ -143,6 +143,31 @@ Cek status server dan koneksi database.
 
 ## Auth
 
+### `POST /auth/activate`
+
+Aktifkan akun dari email undangan dan buat password. Endpoint ini tersedia pada Next.js Route Handler `/api`.
+
+**Auth:** Tidak
+
+**Body:**
+
+```json
+{
+  "token": "token-dari-tautan-email",
+  "password": "PasswordBaru123",
+  "confirmPassword": "PasswordBaru123"
+}
+```
+
+**Aturan:**
+- Token berlaku sekali selama 24 jam (dapat diubah melalui `INVITATION_EXPIRES_HOURS`)
+- Password minimal 8 karakter dan konfirmasi harus sama
+- Akun yang dinonaktifkan superadmin tidak dapat diaktivasi
+
+**Response `200`:** `{ email }` + `message`
+
+**Error relevan:** `INVALID_INVITATION`, `ACCOUNT_INACTIVE`, `VALIDATION_ERROR`
+
 ### `POST /auth/login`
 
 Login admin, mendapat JWT.
@@ -271,6 +296,7 @@ List semua akun admin.
       "email": "admin@rmi-masjid.org",
       "role": "superadmin",
       "isActive": true,
+      "invitationStatus": "accepted",
       "avatar": null,
       "createdAt": "2026-07-09T10:00:00.000Z",
       "updatedAt": "2026-07-09T10:00:00.000Z"
@@ -281,7 +307,7 @@ List semua akun admin.
 
 ### `POST /users`
 
-Buat akun admin baru.
+Buat akun pending dan kirim email undangan aktivasi. Endpoint Next.js tidak menerima password; pengguna membuat password sendiri dari tautan email.
 
 **Auth:** Super Admin
 
@@ -291,9 +317,7 @@ Buat akun admin baru.
 {
   "name": "Admin Konten",
   "email": "konten@rmi-masjid.org",
-  "password": "PasswordBaru123",
-  "role": "pengurus",
-  "isActive": true
+  "role": "pengurus"
 }
 ```
 
@@ -301,25 +325,35 @@ Buat akun admin baru.
 |-------|----------|------------|
 | `name` | ✅ | Nama pengguna |
 | `email` | ✅ | Unik |
-| `password` | ✅ | Minimal 8 karakter |
 | `role` | ✅ | `pengurus` atau `superadmin` (`admin` masih diterima sebagai alias `pengurus`) |
-| `isActive` | — | Default `true` |
 
-**Response `201`:** object user (tanpa password) + `message`
+**Response `201`:** object user dengan `invitationStatus: "pending"` + `message`
+
+Jika akun berhasil dibuat tetapi pengiriman email gagal, API mengembalikan `EMAIL_DELIVERY_ERROR`; akun tetap tampil dan undangan dapat dikirim ulang.
 
 ### `PUT /users/:id`
 
-Perbarui pengguna. Password opsional (hanya diubah jika dikirim).
+Perbarui nama, email, role, atau status pengguna. Password tidak dapat ditentukan superadmin.
 
 **Auth:** Super Admin
 
-**Body:** partial — `name`, `email`, `password`, `role`, `isActive`
+**Body:** partial — `name`, `email`, `role`, `isActive`
 
 **Aturan:**
 - Tidak bisa menonaktifkan / mengubah role akun sendiri
 - Minimal satu superadmin aktif harus tetap ada
 
 **Response `200`:** object user + `message`
+
+### `POST /users/:id/resend-invitation`
+
+Buat token baru dan kirim ulang undangan untuk akun yang masih `pending`. Token sebelumnya langsung tidak berlaku.
+
+**Auth:** Super Admin
+
+**Response `200`:** object user + `message`
+
+**Error relevan:** `NOT_FOUND`, `VALIDATION_ERROR` jika akun sudah aktif, `EMAIL_DELIVERY_ERROR`
 
 ### `DELETE /users/:id`
 
@@ -1572,6 +1606,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-13 | — | Undangan akun via Resend: POST /auth/activate dan POST /users/:id/resend-invitation (Next.js `/api`) |
 | 2026-09-10 | — | Role CMS `admin` diubah menjadi `pengurus` (alias `admin` tetap diterima) |
 | 2026-09-10 | — | PUT /auth/me: update profil (nama, email, avatar, password); field avatar di user |
 | 2026-09-10 | — | POST/PUT/DELETE /kategori dan /banner: Super Admin only |

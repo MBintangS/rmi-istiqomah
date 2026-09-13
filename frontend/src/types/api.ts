@@ -404,6 +404,7 @@ export interface AdminUserListItem {
   email: string;
   role: AuthRole;
   isActive: boolean;
+  invitationStatus: "pending" | "accepted";
   avatar: string | null;
   createdAt: string;
   updatedAt: string;
@@ -420,17 +421,20 @@ export interface ProfileUpdatePayload {
 export interface UserCreatePayload {
   name: string;
   email: string;
-  password: string;
   role: AuthRole;
-  isActive?: boolean;
 }
 
 export interface UserUpdatePayload {
   name?: string;
   email?: string;
-  password?: string;
   role?: AuthRole;
   isActive?: boolean;
+}
+
+export interface ActivateInvitationPayload {
+  token: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface LoginPayload {

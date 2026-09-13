@@ -100,9 +100,24 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 | `CLOUDINARY_API_KEY` | … |
 | `CLOUDINARY_API_SECRET` | … |
 | `CLOUDINARY_FOLDER` | `rmi-prod` |
+| `RESEND_API_KEY` | API key server-only dari Resend |
+| `EMAIL_FROM` | `RMI Istiqomah <noreply@rmiistiqomah.web.id>` |
+| `EMAIL_REPLY_TO` | Gmail resmi RMI (opsional) |
+| `APP_URL` | `https://www.rmiistiqomah.web.id` |
+| `INVITATION_EXPIRES_HOURS` | `24` |
 
 4. Deploy. Catat URL frontend.
 5. Kembali ke Render → update `CORS_ORIGIN` ke URL Vercel (tanpa trailing slash) → **Manual Deploy** agar CORS aktif.
+
+### Email undangan akun (Resend)
+
+1. Tambahkan dan verifikasi domain `rmiistiqomah.web.id` di Resend.
+2. Pasang record DKIM, SPF, MX sending, dan DMARC dari Resend di Cloudflare tanpa mengubah record website.
+3. Simpan `RESEND_API_KEY` hanya sebagai environment server-side di Vercel.
+4. Setelah menambah atau mengubah environment, lakukan redeploy.
+5. Uji dari CMS: buat pengguna, buka email, buat password melalui `/aktivasi-akun`, lalu login.
+
+Fitur undangan menggunakan Next.js `/api`; fallback Express/Render tidak menyediakan endpoint aktivasi dan kirim ulang undangan.
 
 ### Urutan saling ketergantungan
 
