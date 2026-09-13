@@ -41,7 +41,7 @@ function PeriodCard({
         {formatCount(totals.pageViews)}
       </p>
       <p className="mt-1 text-[11px] text-foreground/40">
-        {formatCount(totals.activeUsers)} pengunjung · {hint}
+        {hint} | {formatCount(totals.activeUsers)} pengunjung 
       </p>
     </article>
   );
