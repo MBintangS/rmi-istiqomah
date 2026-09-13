@@ -2,7 +2,6 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { GalleryPreviewSection } from "@/components/home/GalleryPreviewSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { JejakRail } from "@/components/home/JejakRail";
-import { JoinCtaSection } from "@/components/home/JoinCtaSection";
 import { LatestArticlesSection } from "@/components/home/LatestArticlesSection";
 import { ProgramsSection } from "@/components/home/ProgramsSection";
 import { LatestKegiatanSection } from "@/components/home/LatestKegiatanSection";
@@ -36,7 +35,7 @@ export default function HomePage() {
         <LatestArticlesSection />
         <GalleryPreviewSection />
         <TestimonialsSection />
-        <JoinCtaSection />
+        {/* <JoinCtaSection /> */}
       </div>
     </>
   );

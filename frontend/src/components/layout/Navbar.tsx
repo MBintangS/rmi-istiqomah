@@ -52,7 +52,7 @@ function ChevronDownIcon() {
 
 export function Navbar() {
   const pathname = usePathname();
-  const navItems = useMainNavItems();
+  const navItems = useMainNavItems().filter((item) => item.href !== "/");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
 

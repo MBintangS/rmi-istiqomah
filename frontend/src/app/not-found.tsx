@@ -1,5 +1,5 @@
 import { JejakLine } from "@/components/layout/JejakLine";
-import { Footer } from "@/components/layout/Footer";
+import { FooterV2 } from "@/components/layout/FooterV2";
 import { Navbar } from "@/components/layout/Navbar";
 import { SkipToContent } from "@/components/layout/SkipToContent";
 import { Button } from "@/components/ui";
@@ -33,7 +33,7 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-      <Footer />
+      <FooterV2 />
     </PublicThemeProvider>
   );
 }
