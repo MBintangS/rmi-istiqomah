@@ -84,4 +84,9 @@ export const queryKeys = {
     all: ["kategori"] as const,
     list: (type?: string) => [...queryKeys.kategori.all, "list", type ?? "all"] as const,
   },
+  prayerTimes: {
+    all: ["prayer-times"] as const,
+    day: (date?: string) => [...queryKeys.prayerTimes.all, "day", date ?? "today"] as const,
+    month: (date?: string) => [...queryKeys.prayerTimes.all, "month", date ?? "today"] as const,
+  },
 } as const;

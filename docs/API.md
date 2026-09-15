@@ -146,6 +146,61 @@ Cek status server dan koneksi database.
 
 ---
 
+## Jadwal Sholat
+
+Sumber data: [EQuran.id](https://equran.id/apidev/shalat) (Bimas Islam Kemenag). Endpoint ini hanya ada di Next.js Route Handler `/api`. Browser tidak memanggil EQuran langsung.
+
+Default lokasi: **Kota Bogor, Jawa Barat**. Dapat diubah lewat `PRAYER_TIMES_PROVINSI` dan `PRAYER_TIMES_KABKOTA`.
+
+### `GET /prayer-times`
+
+Jadwal sholat harian. Tanpa query, memakai tanggal hari ini (zona `Asia/Jakarta`).
+
+**Auth:** Tidak
+
+**Query:**
+
+| Parameter | Type | Keterangan |
+|-----------|------|------------|
+| `date` | `YYYY-MM-DD` | Opsional. Default: hari ini (WIB) |
+| `scope` | `day` \| `month` | Default `day`. `month` menyertakan seluruh hari pada bulan tersebut |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "source": "equran",
+    "provinsi": "Jawa Barat",
+    "kabkota": "Kota Bogor",
+    "month": 9,
+    "year": 2026,
+    "monthName": "September",
+    "date": "2026-09-15",
+    "times": {
+      "date": "2026-09-15",
+      "day": 15,
+      "weekday": "Selasa",
+      "imsak": "04:22",
+      "subuh": "04:32",
+      "terbit": "05:39",
+      "dhuha": "06:10",
+      "dzuhur": "11:52",
+      "ashar": "15:05",
+      "maghrib": "17:58",
+      "isya": "19:02"
+    }
+  }
+}
+```
+
+Hasil bulan EQuran di-cache sekitar 1 jam di server.
+
+**Error relevan:** `VALIDATION_ERROR`, `NOT_FOUND`, `UPSTREAM_ERROR`, `RATE_LIMITED`
+
+---
+
 ## Auth
 
 ### `POST /auth/activate`
@@ -1611,6 +1666,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-15 | — | GET /prayer-times (Next.js `/api`, EQuran Kota Bogor) |
 | 2026-09-15 | — | Tambah role `anggota`; Pengurus mengelola modul organisasi, Super Admin tetap khusus Pengguna/Pengaturan |
 | 2026-09-13 | — | Undangan akun via Resend: POST /auth/activate dan POST /users/:id/resend-invitation (Next.js `/api`) |
 | 2026-09-10 | — | Role CMS `admin` diubah menjadi `pengurus` (alias `admin` tetap diterima) |

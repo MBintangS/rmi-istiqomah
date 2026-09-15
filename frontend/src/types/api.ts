@@ -29,6 +29,32 @@ export interface HealthData {
   status: string;
 }
 
+export interface PrayerTimesDay {
+  date: string;
+  day: number;
+  weekday: string;
+  imsak: string;
+  subuh: string;
+  terbit: string;
+  dhuha: string;
+  dzuhur: string;
+  ashar: string;
+  maghrib: string;
+  isya: string;
+}
+
+export interface PrayerTimesResult {
+  source: "equran";
+  provinsi: string;
+  kabkota: string;
+  month: number;
+  year: number;
+  monthName: string;
+  date: string;
+  times: PrayerTimesDay;
+  days?: PrayerTimesDay[];
+}
+
 export interface ArtikelCategoryRef {
   id: string;
   name: string;

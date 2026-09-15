@@ -54,47 +54,48 @@ export function Navbar() {
   const pathname = usePathname();
   const navItems = useMainNavItems().filter((item) => item.href !== "/");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [programOpen, setProgramOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   return (
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:h-[4.5rem] lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+        <Link
+          href="/"
+          className="flex min-w-0 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
           <RmiLogo size={36} priority />
           <span className="hidden truncate font-display text-sm font-semibold tracking-tight text-heading sm:inline">
             Remaja Masjid Istiqomah
           </span>
         </Link>
 
-        <nav className="hidden h-full items-center gap-1 lg:flex" aria-label="Navigasi utama">
+        <nav className="hidden h-full items-center gap-0.5 lg:flex" aria-label="Navigasi utama">
           {navItems.map((item) =>
             item.children ? (
               <div
                 key={item.href}
                 className="relative h-full"
-                onMouseEnter={() => setProgramOpen(true)}
-                onMouseLeave={() => setProgramOpen(false)}
-                onFocus={() => setProgramOpen(true)}
+                onMouseEnter={() => setOpenDropdown(item.href)}
+                onMouseLeave={() => setOpenDropdown(null)}
+                onFocus={() => setOpenDropdown(item.href)}
                 onBlur={(event) => {
                   if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                    setProgramOpen(false);
+                    setOpenDropdown(null);
                   }
                 }}
               >
                 <Link
                   href={item.href}
-                  aria-expanded={programOpen}
+                  aria-expanded={openDropdown === item.href}
                   aria-haspopup="true"
                   className={cn(
-                    "relative inline-flex h-full items-center gap-1 px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                    isActive(item.href)
-                      ? "text-primary"
-                      : "text-foreground/80 hover:text-primary",
+                    "relative inline-flex h-full cursor-pointer items-center gap-1 px-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                    isActive(item.href) ? "text-primary" : "text-foreground/80 hover:text-primary",
                   )}
                 >
                   {item.label}
@@ -106,8 +107,8 @@ export function Navbar() {
                     />
                   ) : null}
                 </Link>
-                {programOpen && (
-                  <div className="absolute left-0 top-full z-50 min-w-[180px] pt-2">
+                {openDropdown === item.href ? (
+                  <div className="absolute left-0 top-full z-50 min-w-[200px] pt-2">
                     <div
                       className="rounded-rmi border border-foreground/10 bg-surface py-2 shadow-soft"
                       role="menu"
@@ -117,24 +118,27 @@ export function Navbar() {
                           key={child.href}
                           href={child.href}
                           role="menuitem"
-                          className="block px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-primary/5 hover:text-primary focus-visible:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                          className={cn(
+                            "block cursor-pointer px-4 py-2 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary",
+                            pathname === child.href || pathname.startsWith(`${child.href}/`)
+                              ? "bg-primary/5 font-medium text-primary"
+                              : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
+                          )}
                         >
                           {child.label}
                         </Link>
                       ))}
                     </div>
                   </div>
-                )}
+                ) : null}
               </div>
             ) : (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative flex h-full items-center px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  isActive(item.href)
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary",
+                  "relative flex h-full cursor-pointer items-center px-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                  isActive(item.href) ? "text-primary" : "text-foreground/80 hover:text-primary",
                 )}
               >
                 {item.label}
@@ -162,7 +166,7 @@ export function Navbar() {
           <ThemeToggle />
           <button
             type="button"
-            className="rounded-full p-2 text-heading transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="cursor-pointer rounded-full p-2 text-heading transition-colors duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label="Buka menu"
             aria-expanded={drawerOpen}
             onClick={() => setDrawerOpen(true)}
@@ -180,7 +184,7 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setDrawerOpen(false)}
                 className={cn(
-                  "block rounded-rmi px-3 py-2.5 text-body transition-colors",
+                  "block cursor-pointer rounded-rmi px-3 py-2.5 text-body transition-colors duration-200",
                   isActive(item.href)
                     ? "bg-primary/10 font-medium text-primary"
                     : "text-foreground hover:bg-primary/5 hover:text-primary",
@@ -188,7 +192,7 @@ export function Navbar() {
               >
                 {item.label}
               </Link>
-              {item.children && (
+              {item.children ? (
                 <div className="ml-3 mt-1 space-y-1 border-l-2 border-primary/20 pl-3">
                   {item.children.map((child) => (
                     <Link
@@ -196,7 +200,7 @@ export function Navbar() {
                       href={child.href}
                       onClick={() => setDrawerOpen(false)}
                       className={cn(
-                        "block rounded-rmi px-3 py-2 text-sm transition-colors",
+                        "block cursor-pointer rounded-rmi px-3 py-2 text-sm transition-colors duration-200",
                         pathname === child.href
                           ? "font-medium text-primary"
                           : "text-foreground/70 hover:text-primary",
@@ -206,7 +210,7 @@ export function Navbar() {
                     </Link>
                   ))}
                 </div>
-              )}
+              ) : null}
             </div>
           ))}
           <div className="mt-4 flex items-center gap-2 border-t border-foreground/10 pt-4">

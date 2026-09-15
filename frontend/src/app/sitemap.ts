@@ -6,7 +6,11 @@ import { fetchProgramList } from "@/services/program.service";
 
 export const revalidate = 3600;
 
-const STATIC_ROUTES: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }> = [
+const STATIC_ROUTES: Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}> = [
   { path: "/", changeFrequency: "weekly", priority: 1 },
   { path: "/tentang-kami", changeFrequency: "monthly", priority: 0.8 },
   { path: "/program", changeFrequency: "weekly", priority: 0.9 },
@@ -16,6 +20,7 @@ const STATIC_ROUTES: Array<{ path: string; changeFrequency: MetadataRoute.Sitema
   { path: "/dokumen", changeFrequency: "monthly", priority: 0.6 },
   { path: "/donasi", changeFrequency: "monthly", priority: 0.7 },
   { path: "/kontak", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/ibadah/jadwal-sholat", changeFrequency: "daily", priority: 0.8 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

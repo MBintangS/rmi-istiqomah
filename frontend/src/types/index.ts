@@ -11,6 +11,8 @@ export type {
   ArtikelListResult,
   HealthData,
   PaginationMeta,
+  PrayerTimesDay,
+  PrayerTimesResult,
   ProgramDetail,
   ProgramListItem,
   KategoriRef,
