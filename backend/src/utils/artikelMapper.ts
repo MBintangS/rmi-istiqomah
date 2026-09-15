@@ -1,5 +1,6 @@
 import type { Types } from "mongoose";
 import type { IArtikel } from "../models/Artikel.model";
+import { isCmsRole, isPengurusRole } from "./roles";
 
 interface PopulatedCategory {
   _id: Types.ObjectId;
@@ -66,7 +67,7 @@ export function formatArtikel(artikel: PopulatedArtikel, options?: { includeCont
 }
 
 export function isAdminUser(user?: { role: string }): boolean {
-  return user?.role === "pengurus" || user?.role === "admin" || user?.role === "superadmin";
+  return isCmsRole(user?.role);
 }
 
 /** Parse query flag for CMS list/detail that may include drafts/inactive. */
@@ -81,7 +82,10 @@ export function parseIncludeUnpublished(value: unknown): boolean {
 export function canViewUnpublished(
   user: { role: string } | undefined,
   query: { includeUnpublished?: unknown } | Record<string, unknown>,
+  minimumRole: "anggota" | "pengurus" = "anggota",
 ): boolean {
-  return isAdminUser(user) && parseIncludeUnpublished(query.includeUnpublished);
+  const hasRole =
+    minimumRole === "pengurus" ? isPengurusRole(user?.role) : isAdminUser(user);
+  return hasRole && parseIncludeUnpublished(query.includeUnpublished);
 }
 

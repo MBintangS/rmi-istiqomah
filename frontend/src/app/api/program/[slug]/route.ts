@@ -1,4 +1,4 @@
-import { authenticate, optionalAuthenticate, requireSuperAdmin } from "@/server/auth";
+import { authenticate, optionalAuthenticate, requirePengurus } from "@/server/auth";
 import { apiRoute, jsonSuccess, parseBody, queryObject } from "@/server/http";
 import { updateProgramSchema } from "@/server/schemas/organisasi.schema";
 import { deleteProgram, getProgramBySlug, updateProgram } from "@/server/services/program.service";
@@ -15,7 +15,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
 
 export async function PUT(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requirePengurus(authenticate(request));
     const data = await parseBody(request, updateProgramSchema);
     return jsonSuccess(await updateProgram(params.slug, data), {
       message: "Program berhasil diperbarui",
@@ -25,7 +25,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
 
 export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requirePengurus(authenticate(request));
     return jsonSuccess(await deleteProgram(params.slug), { message: "Program berhasil dihapus" });
   });
 }

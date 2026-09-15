@@ -7,7 +7,7 @@ import { canViewUnpublished } from "@/server/utils/artikelMapper";
 import { formatProgram } from "@/server/utils/programMapper";
 
 export async function listProgram(query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<IProgram> = {};
   if (!includeUnpublished) {
     filter.isActive = true;
@@ -17,7 +17,7 @@ export async function listProgram(query: Record<string, unknown>, user?: AuthUse
 }
 
 export async function getProgramBySlug(slug: string, query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<IProgram> = { slug };
   if (!includeUnpublished) {
     filter.isActive = true;

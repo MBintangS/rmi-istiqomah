@@ -6,7 +6,7 @@ import { canViewUnpublished } from "@/server/utils/artikelMapper";
 import { formatBanner } from "@/server/utils/bannerMapper";
 
 export async function listBanner(query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter = includeUnpublished ? {} : { isActive: true };
   const items = await Banner.find(filter).sort({ order: 1, createdAt: -1 });
   return items.map((item) => formatBanner(item));

@@ -5,25 +5,48 @@ import { EmptyState, Skeleton } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
 import { useDashboardStats } from "@/hooks/useDashboardStats";
 import { getApiErrorMessage } from "@/lib/api";
+import { isPengurusRole } from "@/lib/roles";
 import { cn } from "@/lib/utils";
 
 const allCards = [
-  { key: "publishedArtikel", label: "Artikel terbit", href: "/admin/artikel", hint: "Kelola artikel" },
+  {
+    key: "publishedArtikel",
+    label: "Artikel terbit",
+    href: "/admin/artikel",
+    hint: "Kelola artikel",
+  },
   { key: "draftArtikel", label: "Artikel draft", href: "/admin/artikel", hint: "Siap diterbitkan" },
   { key: "publishedKegiatan", label: "Kegiatan", href: "/admin/kegiatan", hint: "Lihat kegiatan" },
   { key: "totalGaleri", label: "Galeri", href: "/admin/galeri", hint: "Album foto" },
-  { key: "totalPengurus", label: "Pengurus", href: "/admin/pengurus", hint: "Struktur organisasi", superAdminOnly: true },
-  { key: "totalProgram", label: "Program", href: "/admin/program", hint: "Program unggulan", superAdminOnly: true },
+  {
+    key: "totalPengurus",
+    label: "Pengurus",
+    href: "/admin/pengurus",
+    hint: "Struktur organisasi",
+    pengurusOnly: true,
+  },
+  {
+    key: "totalProgram",
+    label: "Program",
+    href: "/admin/program",
+    hint: "Program unggulan",
+    pengurusOnly: true,
+  },
   { key: "totalDokumen", label: "Dokumen", href: "/admin/dokumen", hint: "File publik" },
-  { key: "totalMessages", label: "Pesan kontak", href: "/admin/pesan-kontak", hint: "Inbox pengunjung" },
+  {
+    key: "totalMessages",
+    label: "Pesan kontak",
+    href: "/admin/pesan-kontak",
+    hint: "Inbox pengunjung",
+  },
 ] as const;
 
 export function DashboardStatsGrid() {
   const { user } = useAuth();
   const { data, isLoading, isError, error, refetch } = useDashboardStats();
-  const isSuperAdmin = user?.role === "superadmin";
+  const canManageOrganization = isPengurusRole(user?.role);
   const cards = allCards.filter(
-    (card) => !("superAdminOnly" in card && card.superAdminOnly) || isSuperAdmin,
+    (card) => !("pengurusOnly" in card && card.pengurusOnly) || canManageOrganization,
   );
 
   if (isLoading) {

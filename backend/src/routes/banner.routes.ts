@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createBanner, deleteBanner, listBanner, updateBanner } from "../controllers/banner.controller";
-import { authenticate, optionalAuthenticate, requireSuperAdmin } from "../middleware/auth";
+import { authenticate, optionalAuthenticate, requirePengurus } from "../middleware/auth";
 import { validateBody } from "../middleware/validate";
 import { createBannerSchema, updateBannerSchema } from "../schemas/galeri.schema";
 import { asyncHandler } from "../utils/asyncHandler";
@@ -8,8 +8,8 @@ import { asyncHandler } from "../utils/asyncHandler";
 const router = Router();
 
 router.get("/", optionalAuthenticate, asyncHandler(listBanner));
-router.post("/", authenticate, requireSuperAdmin, validateBody(createBannerSchema), asyncHandler(createBanner));
-router.put("/:id", authenticate, requireSuperAdmin, validateBody(updateBannerSchema), asyncHandler(updateBanner));
-router.delete("/:id", authenticate, requireSuperAdmin, asyncHandler(deleteBanner));
+router.post("/", authenticate, requirePengurus, validateBody(createBannerSchema), asyncHandler(createBanner));
+router.put("/:id", authenticate, requirePengurus, validateBody(updateBannerSchema), asyncHandler(updateBanner));
+router.delete("/:id", authenticate, requirePengurus, asyncHandler(deleteBanner));
 
 export default router;

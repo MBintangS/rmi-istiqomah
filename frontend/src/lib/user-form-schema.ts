@@ -3,7 +3,7 @@ import { z } from "zod";
 export const userCreateFormSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter"),
   email: z.string().trim().email("Email tidak valid"),
-  role: z.enum(["pengurus", "superadmin"]),
+  role: z.enum(["anggota", "pengurus", "superadmin"]),
 });
 
 export type UserCreateFormValues = z.infer<typeof userCreateFormSchema>;
@@ -11,7 +11,7 @@ export type UserCreateFormValues = z.infer<typeof userCreateFormSchema>;
 export const userEditFormSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter"),
   email: z.string().trim().email("Email tidak valid"),
-  role: z.enum(["pengurus", "superadmin"]),
+  role: z.enum(["anggota", "pengurus", "superadmin"]),
   isActive: z.boolean(),
 });
 

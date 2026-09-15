@@ -7,7 +7,7 @@ import { canViewUnpublished } from "@/server/utils/artikelMapper";
 import { formatDonasi } from "@/server/utils/donasiMapper";
 
 export async function listDonasi(query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<IDonasi> = {};
   if (!includeUnpublished) {
     filter.isActive = true;
@@ -17,7 +17,7 @@ export async function listDonasi(query: Record<string, unknown>, user?: AuthUser
 }
 
 export async function getDonasiById(id: string, query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<IDonasi> = { _id: id };
   if (!includeUnpublished) {
     filter.isActive = true;

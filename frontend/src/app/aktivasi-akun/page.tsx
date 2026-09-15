@@ -23,7 +23,7 @@ export default function ActivateAccountPage() {
           </div>
           <h1 className="text-2xl font-semibold tracking-tight text-heading">Aktivasi Akun</h1>
           <p className="mt-2 text-sm leading-relaxed text-foreground/65">
-            Buat password untuk menyelesaikan aktivasi akun pengurus RMI Istiqomah.
+            Buat password untuk menyelesaikan aktivasi akun CMS RMI Istiqomah.
           </p>
         </div>
 

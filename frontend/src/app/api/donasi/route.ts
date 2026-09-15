@@ -1,4 +1,4 @@
-import { authenticate, optionalAuthenticate, requireSuperAdmin } from "@/server/auth";
+import { authenticate, optionalAuthenticate, requirePengurus } from "@/server/auth";
 import { apiRoute, jsonSuccess, parseBody, queryObject } from "@/server/http";
 import { createDonasiSchema } from "@/server/schemas/donasi.schema";
 import { createDonasi, listDonasi } from "@/server/services/donasi.service";
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requirePengurus(authenticate(request));
     const data = await parseBody(request, createDonasiSchema);
     return jsonSuccess(await createDonasi(data), {
       status: 201,

@@ -8,7 +8,7 @@ import { formatTestimoni } from "../utils/testimoniMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listTestimoni(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<ITestimoni> = {};
 
   if (!includeUnpublished) {

@@ -7,7 +7,7 @@ import { canViewUnpublished } from "@/server/utils/artikelMapper";
 import { formatTestimoni } from "@/server/utils/testimoniMapper";
 
 export async function listTestimoni(query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<ITestimoni> = {};
   if (!includeUnpublished) {
     filter.isActive = true;

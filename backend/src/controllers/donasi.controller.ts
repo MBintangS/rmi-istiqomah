@@ -8,7 +8,7 @@ import { formatDonasi } from "../utils/donasiMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listDonasi(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<IDonasi> = {};
 
   if (!includeUnpublished) {
@@ -21,7 +21,7 @@ export async function listDonasi(req: Request, res: Response): Promise<void> {
 }
 
 export async function getDonasiById(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<IDonasi> = { _id: req.params.id };
 
   if (!includeUnpublished) {

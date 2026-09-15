@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import mongoose, { Schema, model, models, type Document, type Model } from "mongoose";
 
-export type UserRole = "pengurus" | "superadmin";
+export type UserRole = "anggota" | "pengurus" | "superadmin";
 export type StoredUserRole = UserRole | "admin";
 export type InvitationStatus = "pending" | "accepted";
 
@@ -46,7 +46,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     role: {
       type: String,
-      enum: ["superadmin", "pengurus", "admin"],
+      enum: ["superadmin", "pengurus", "anggota", "admin"],
       required: [true, "Role wajib diisi"],
     },
     isActive: {
@@ -97,8 +97,10 @@ if (models.User) {
   )?.options?.enum;
   const missingAvatar = !models.User.schema.path("avatar");
   const missingInvitationStatus = !models.User.schema.path("invitationStatus");
-  const missingPengurus = Array.isArray(roleEnum) && !roleEnum.includes("pengurus");
-  if (missingAvatar || missingInvitationStatus || missingPengurus) {
+  const missingCmsRoles =
+    Array.isArray(roleEnum) &&
+    (!roleEnum.includes("pengurus") || !roleEnum.includes("anggota"));
+  if (missingAvatar || missingInvitationStatus || missingCmsRoles) {
     mongoose.deleteModel("User");
   }
 }

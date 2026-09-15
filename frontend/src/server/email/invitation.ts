@@ -46,11 +46,11 @@ export async function sendInvitationEmail(input: {
     from: config.from,
     to: input.email,
     ...(config.replyTo ? { replyTo: config.replyTo } : {}),
-    subject: "Aktifkan akun pengurus RMI Istiqomah",
+    subject: "Aktifkan akun CMS RMI Istiqomah",
     text: [
       `Assalamu'alaikum ${input.name},`,
       "",
-      "Anda diundang untuk menjadi pengurus website RMI Istiqomah.",
+      "Anda diundang untuk mengakses CMS website RMI Istiqomah.",
       `Buat password akun Anda melalui tautan berikut: ${activationUrl.toString()}`,
       "",
       `Tautan ini hanya dapat digunakan sekali dan berlaku selama ${input.expiresInHours} jam.`,
@@ -69,10 +69,10 @@ export async function sendInvitationEmail(input: {
             />
             <p style="margin:0;font-size:14px;font-weight:700;letter-spacing:0.04em;color:#4e830a">RMI ISTIQOMAH</p>
           </div>
-          <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#1f2917">Aktifkan akun pengurus</h1>
+          <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#1f2917">Aktifkan akun CMS</h1>
           <p style="margin:0 0 12px;line-height:1.7">Assalamu'alaikum ${safeName},</p>
           <p style="margin:0 0 24px;line-height:1.7">
-            Anda diundang untuk menjadi pengurus website RMI Istiqomah. Silakan buat password akun Anda melalui tombol berikut.
+            Anda diundang untuk mengakses CMS website RMI Istiqomah. Silakan buat password akun Anda melalui tombol berikut.
           </p>
           <a href="${safeUrl}" style="display:inline-block;border-radius:10px;background:#4e830a;padding:13px 20px;color:#ffffff;text-decoration:none;font-weight:700">
             Aktifkan akun

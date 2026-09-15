@@ -7,7 +7,7 @@ import { formatBanner } from "../utils/bannerMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listBanner(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter = includeUnpublished ? {} : { isActive: true };
   const items = await Banner.find(filter).sort({ order: 1, createdAt: -1 });
 

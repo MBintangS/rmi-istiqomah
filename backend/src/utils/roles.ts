@@ -1,13 +1,18 @@
-export type UserRole = "pengurus" | "superadmin";
+export type UserRole = "anggota" | "pengurus" | "superadmin";
 
 export type StoredUserRole = UserRole | "admin";
 
 export function normalizeRole(role: string | null | undefined): UserRole {
   if (role === "superadmin") return "superadmin";
-  return "pengurus";
+  if (role === "pengurus" || role === "admin") return "pengurus";
+  return "anggota";
 }
 
 export function isCmsRole(role: string | null | undefined): boolean {
+  return role === "anggota" || role === "pengurus" || role === "admin" || role === "superadmin";
+}
+
+export function isPengurusRole(role: string | null | undefined): boolean {
   return role === "pengurus" || role === "admin" || role === "superadmin";
 }
 

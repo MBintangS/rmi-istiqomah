@@ -49,7 +49,12 @@ Endpoint admin membutuhkan header:
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-Token didapat dari `POST /api/auth/login`. Role CMS: `pengurus` (dulu `admin`) dan `superadmin`. Nilai `admin` pada JWT/database lama tetap diterima dan dinormalisasi menjadi `pengurus`.
+Token didapat dari `POST /api/auth/login`. Role CMS: `anggota`, `pengurus`, dan `superadmin`. Nilai `admin` pada JWT/database lama tetap diterima dan dinormalisasi menjadi `pengurus`.
+
+Hierarki akses:
+- `anggota`: Dashboard, Pesan Kontak, Artikel, Kegiatan, Galeri, Dokumen, dan Profil
+- `pengurus`: seluruh akses Anggota ditambah Pengurus, Program, Banner, Kategori, Donasi, dan Testimoni
+- `superadmin`: seluruh menu, termasuk Pengguna dan Pengaturan
 
 ### Optional Auth
 
@@ -325,7 +330,7 @@ Buat akun pending dan kirim email undangan aktivasi. Endpoint Next.js tidak mene
 |-------|----------|------------|
 | `name` | ✅ | Nama pengguna |
 | `email` | ✅ | Unik |
-| `role` | ✅ | `pengurus` atau `superadmin` (`admin` masih diterima sebagai alias `pengurus`) |
+| `role` | ✅ | `anggota`, `pengurus`, atau `superadmin` (`admin` tetap alias `pengurus`) |
 
 **Response `201`:** object user dengan `invitationStatus: "pending"` + `message`
 
@@ -402,7 +407,7 @@ List kategori.
 
 Buat kategori baru. Slug auto-generate dari `name` jika `slug` tidak dikirim.
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -426,7 +431,7 @@ Buat kategori baru. Slug auto-generate dari `name` jika `slug` tidak dikirim.
 
 Perbarui kategori. Slug hanya diubah jika field `slug` dikirim.
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:** partial — `name`, `type`, `slug`
 
@@ -436,7 +441,7 @@ Perbarui kategori. Slug hanya diubah jika field `slug` dikirim.
 
 Hapus kategori. Gagal jika masih dipakai artikel, kegiatan, atau galeri.
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Response `200`:** `{ id }` + `message`
 
@@ -760,11 +765,11 @@ Detail album galeri by MongoDB ObjectId.
 
 List banner untuk homepage/hero.
 
-**Auth:** Optional (admin melihat semua; publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Aturan:**
 - Publik: hanya `isActive: true`
-- Admin (Bearer token): semua banner
+- Pengurus/Super Admin (Bearer token + `includeUnpublished=true`): semua banner
 - Sort `order` ascending, lalu `createdAt` descending
 
 **Response `200`:**
@@ -791,7 +796,7 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 ### `POST /banner`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -817,11 +822,11 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 ### `PUT /banner/:id`
 
-**Auth:** Super Admin — body partial
+**Auth:** Pengurus atau Super Admin — body partial
 
 ### `DELETE /banner/:id`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 ---
 
@@ -831,7 +836,7 @@ Banner dengan `isActive: false` **tidak** muncul di endpoint ini.
 
 List pengurus organisasi.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Aturan:** Sort `order` ascending, lalu `createdAt` descending
 
@@ -858,7 +863,7 @@ List pengurus organisasi.
 
 ### `POST /pengurus`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -884,11 +889,11 @@ List pengurus organisasi.
 
 ### `PUT /pengurus/:id`
 
-**Auth:** Super Admin — body partial
+**Auth:** Pengurus atau Super Admin — body partial
 
 ### `DELETE /pengurus/:id`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 ---
 
@@ -898,7 +903,7 @@ List pengurus organisasi.
 
 List program RMI.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Response `200`:** array program (tanpa field `content`)
 
@@ -925,13 +930,13 @@ List program RMI.
 
 Detail program by slug.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Response `200`:** object program + field `content`
 
 ### `POST /program`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -956,11 +961,11 @@ Slug auto-generate dari `name`.
 
 ### `PUT /program/:id`
 
-**Auth:** Super Admin — body partial
+**Auth:** Pengurus atau Super Admin — body partial
 
 ### `DELETE /program/:id`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 ---
 
@@ -970,7 +975,7 @@ Slug auto-generate dari `name`.
 
 List rekening donasi.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Aturan:** Sort `order` ascending, lalu `createdAt` descending
 
@@ -998,11 +1003,11 @@ List rekening donasi.
 
 Detail rekening by MongoDB ObjectId.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 ### `POST /donasi`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -1028,11 +1033,11 @@ Detail rekening by MongoDB ObjectId.
 
 ### `PUT /donasi/:id`
 
-**Auth:** Super Admin — body partial
+**Auth:** Pengurus atau Super Admin — body partial
 
 ### `DELETE /donasi/:id`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 ---
 
@@ -1042,7 +1047,7 @@ Detail rekening by MongoDB ObjectId.
 
 List testimoni untuk homepage.
 
-**Auth:** Optional (publik: hanya `isActive: true`)
+**Auth:** Optional (Pengurus/Super Admin melihat semua; publik dan Anggota: hanya `isActive: true`)
 
 **Aturan:** Sort `order` ascending, lalu `createdAt` descending
 
@@ -1068,7 +1073,7 @@ List testimoni untuk homepage.
 
 ### `POST /testimoni`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 **Body:**
 
@@ -1094,11 +1099,11 @@ List testimoni untuk homepage.
 
 ### `PUT /testimoni/:id`
 
-**Auth:** Super Admin — body partial
+**Auth:** Pengurus atau Super Admin — body partial
 
 ### `DELETE /testimoni/:id`
 
-**Auth:** Super Admin
+**Auth:** Pengurus atau Super Admin
 
 ---
 
@@ -1606,6 +1611,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-15 | — | Tambah role `anggota`; Pengurus mengelola modul organisasi, Super Admin tetap khusus Pengguna/Pengaturan |
 | 2026-09-13 | — | Undangan akun via Resend: POST /auth/activate dan POST /users/:id/resend-invitation (Next.js `/api`) |
 | 2026-09-10 | — | Role CMS `admin` diubah menjadi `pengurus` (alias `admin` tetap diterima) |
 | 2026-09-10 | — | PUT /auth/me: update profil (nama, email, avatar, password); field avatar di user |

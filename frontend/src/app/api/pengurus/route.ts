@@ -1,4 +1,4 @@
-import { authenticate, optionalAuthenticate, requireSuperAdmin } from "@/server/auth";
+import { authenticate, optionalAuthenticate, requirePengurus } from "@/server/auth";
 import { apiRoute, jsonSuccess, parseBody, queryObject } from "@/server/http";
 import { createPengurusSchema } from "@/server/schemas/organisasi.schema";
 import { createPengurus, listPengurus } from "@/server/services/pengurus.service";
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requirePengurus(authenticate(request));
     const data = await parseBody(request, createPengurusSchema);
     return jsonSuccess(await createPengurus(data), {
       status: 201,

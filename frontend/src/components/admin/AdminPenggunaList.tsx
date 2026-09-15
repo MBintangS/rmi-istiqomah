@@ -56,7 +56,7 @@ export function AdminPenggunaList() {
     defaultValues: {
       name: "",
       email: "",
-      role: "pengurus",
+      role: "anggota",
     },
   });
 
@@ -65,7 +65,7 @@ export function AdminPenggunaList() {
     defaultValues: {
       name: "",
       email: "",
-      role: "pengurus",
+      role: "anggota",
       isActive: true,
     },
   });
@@ -97,7 +97,7 @@ export function AdminPenggunaList() {
       createForm.reset({
         name: "",
         email: "",
-        role: "pengurus",
+        role: "anggota",
       });
       invalidate();
     },
@@ -164,7 +164,7 @@ export function AdminPenggunaList() {
             createForm.reset({
               name: "",
               email: "",
-              role: "pengurus",
+              role: "anggota",
             });
             setCreateOpen(true);
           }}
@@ -334,6 +334,7 @@ export function AdminPenggunaList() {
               Role
             </Label>
             <Select id="create-role" {...createForm.register("role")}>
+              <option value="anggota">Anggota</option>
               <option value="pengurus">Pengurus</option>
               <option value="superadmin">Super Admin</option>
             </Select>
@@ -395,6 +396,7 @@ export function AdminPenggunaList() {
                 disabled={currentUser?.id === editTarget?.id}
                 {...editForm.register("role")}
               >
+                <option value="anggota">Anggota</option>
                 <option value="pengurus">Pengurus</option>
                 <option value="superadmin">Super Admin</option>
               </Select>

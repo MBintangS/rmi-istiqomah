@@ -3,7 +3,12 @@ import jwt, { type SignOptions } from "jsonwebtoken";
 import { AppError } from "@/server/errors";
 import { getServerEnv } from "@/server/env";
 import type { UserRole } from "@/server/models/User.model";
-import { isCmsRole, isSuperAdminRole, normalizeRole } from "@/lib/roles";
+import {
+  isCmsRole,
+  isPengurusRole,
+  isSuperAdminRole,
+  normalizeRole,
+} from "@/lib/roles";
 
 export interface AuthUser {
   id: string;
@@ -81,6 +86,18 @@ export function requireAdmin(user?: AuthUser): AuthUser {
   }
 
   if (!isCmsRole(user.role)) {
+    throw new AppError(403, "FORBIDDEN", "Anda tidak memiliki akses ke resource ini");
+  }
+
+  return user;
+}
+
+export function requirePengurus(user?: AuthUser): AuthUser {
+  if (!user) {
+    throw new AppError(401, "UNAUTHORIZED", "Token autentikasi diperlukan");
+  }
+
+  if (!isPengurusRole(user.role)) {
     throw new AppError(403, "FORBIDDEN", "Anda tidak memiliki akses ke resource ini");
   }
 

@@ -8,7 +8,7 @@ import { formatProgram } from "../utils/programMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listProgram(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<IProgram> = {};
 
   if (!includeUnpublished) {
@@ -21,7 +21,7 @@ export async function listProgram(req: Request, res: Response): Promise<void> {
 }
 
 export async function getProgramBySlug(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<IProgram> = { slug: req.params.slug };
 
   if (!includeUnpublished) {

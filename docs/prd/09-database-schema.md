@@ -69,9 +69,12 @@
   _id: ObjectId,
   name: string,          // required
   email: string,         // required, unique
-  password: string,      // required, hashed
-  role: 'superadmin' | 'admin',  // required
+  password?: string,     // hashed; diisi saat undangan diterima
+  role: 'anggota' | 'pengurus' | 'superadmin',  // required
   isActive: boolean,     // default: true
+  invitationStatus: 'pending' | 'accepted',
+  invitationTokenHash?: string,
+  invitationExpiresAt?: Date,
   createdAt: Date,
   updatedAt: Date
 }

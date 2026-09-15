@@ -1,11 +1,13 @@
 import { z } from "zod";
 import type { UserRole } from "../utils/roles";
 
-const storedRoleSchema = z.enum(["pengurus", "superadmin", "admin"]);
+const storedRoleSchema = z.enum(["anggota", "pengurus", "superadmin", "admin"]);
 
-export const userRoleSchema = storedRoleSchema.transform((role): UserRole =>
-  role === "superadmin" ? "superadmin" : "pengurus",
-);
+export const userRoleSchema = storedRoleSchema.transform((role): UserRole => {
+  if (role === "superadmin") return "superadmin";
+  if (role === "anggota") return "anggota";
+  return "pengurus";
+});
 
 export const createUserSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi"),

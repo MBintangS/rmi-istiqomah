@@ -8,7 +8,7 @@ import { formatPengurus } from "../utils/pengurusMapper";
 import { sendSuccess } from "../utils/response";
 
 export async function listPengurus(req: Request, res: Response): Promise<void> {
-  const includeUnpublished = canViewUnpublished(req.user, req.query);
+  const includeUnpublished = canViewUnpublished(req.user, req.query, "pengurus");
   const filter: FilterQuery<IPengurus> = {};
 
   if (!includeUnpublished) {

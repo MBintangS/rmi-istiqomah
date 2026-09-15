@@ -159,7 +159,7 @@ Setiap modul CRUD harus memiliki operasi berikut:
 | **Pengurus** | nama, jabatan, foto, periode, urutan |
 | **Program** | nama, slug, deskripsi, icon/gambar, konten detail |
 | **Dokumen** | nama, file, kategori, deskripsi |
-| **Pengguna** | nama, email, password, role (superadmin/admin) |
+| **Pengguna** | nama, email, status undangan, role (`anggota`/`pengurus`/`superadmin`) |
 
 ---
 

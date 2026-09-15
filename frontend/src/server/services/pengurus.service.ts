@@ -7,7 +7,7 @@ import { canViewUnpublished } from "@/server/utils/artikelMapper";
 import { formatPengurus } from "@/server/utils/pengurusMapper";
 
 export async function listPengurus(query: Record<string, unknown>, user?: AuthUser) {
-  const includeUnpublished = canViewUnpublished(user, query);
+  const includeUnpublished = canViewUnpublished(user, query, "pengurus");
   const filter: FilterQuery<IPengurus> = {};
   if (!includeUnpublished) {
     filter.isActive = true;

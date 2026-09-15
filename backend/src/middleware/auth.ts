@@ -1,6 +1,11 @@
 import type { NextFunction, Request, Response } from "express";
 import { AppError } from "./errorHandler";
-import { isCmsRole, isSuperAdminRole, normalizeRole } from "../utils/roles";
+import {
+  isCmsRole,
+  isPengurusRole,
+  isSuperAdminRole,
+  normalizeRole,
+} from "../utils/roles";
 import { verifyToken } from "../utils/jwt";
 
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
@@ -40,6 +45,7 @@ function requireRoles(check: (role: string) => boolean) {
 }
 
 export const requireAdmin = requireRoles(isCmsRole);
+export const requirePengurus = requireRoles(isPengurusRole);
 export const requireSuperAdmin = requireRoles(isSuperAdminRole);
 
 export function optionalAuthenticate(req: Request, _res: Response, next: NextFunction): void {
