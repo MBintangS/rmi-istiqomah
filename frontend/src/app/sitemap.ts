@@ -20,6 +20,7 @@ const STATIC_ROUTES: Array<{
   { path: "/dokumen", changeFrequency: "monthly", priority: 0.6 },
   { path: "/donasi", changeFrequency: "monthly", priority: 0.7 },
   { path: "/kontak", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/ibadah", changeFrequency: "weekly", priority: 0.8 },
   { path: "/ibadah/jadwal-sholat", changeFrequency: "daily", priority: 0.8 },
 ];
 
