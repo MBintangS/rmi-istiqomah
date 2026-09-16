@@ -89,4 +89,9 @@ export const queryKeys = {
     day: (date?: string) => [...queryKeys.prayerTimes.all, "day", date ?? "today"] as const,
     month: (date?: string) => [...queryKeys.prayerTimes.all, "month", date ?? "today"] as const,
   },
+  doa: {
+    all: ["doa"] as const,
+    list: () => [...queryKeys.doa.all, "list"] as const,
+    detail: (id: number) => [...queryKeys.doa.all, "detail", id] as const,
+  },
 } as const;

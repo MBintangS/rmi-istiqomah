@@ -55,6 +55,25 @@ export interface PrayerTimesResult {
   days?: PrayerTimesDay[];
 }
 
+export interface DoaItem {
+  id: number;
+  group: string;
+  name: string;
+  arabic: string;
+  latin: string;
+  translation: string;
+  source: string;
+  tags: string[];
+}
+
+export interface DoaCatalog {
+  source: "equran";
+  total: number;
+  groups: string[];
+  tags: string[];
+  items: DoaItem[];
+}
+
 export interface ArtikelCategoryRef {
   id: string;
   name: string;

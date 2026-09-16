@@ -19,6 +19,7 @@ export const mainNavItems: NavItemWithChildren[] = [
     href: "/ibadah",
     children: [
       { label: "Jadwal Sholat", href: "/ibadah/jadwal-sholat" },
+      { label: "Doa", href: "/ibadah/doa" },
       { label: "Al-Qur'an", href: "/ibadah/al-quran" },
     ],
   },

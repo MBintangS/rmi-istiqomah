@@ -73,7 +73,7 @@ function PrayerTimesCard() {
     <Link
       href="/ibadah/jadwal-sholat"
       className={cn(
-        "group relative flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-[1.75rem] bg-ink px-6 pb-7 pt-14 text-on-ink sm:min-h-[28rem] sm:px-8 sm:pb-8",
+        "group relative flex min-h-[16rem] flex-col justify-end overflow-hidden rounded-[1.75rem] bg-ink px-6 pb-7 pt-14 text-on-ink sm:min-h-[18rem] sm:px-8 sm:pb-8 lg:min-h-[20rem]",
         "transition-shadow hover:shadow-soft",
         cardFocus,
       )}
@@ -164,11 +164,58 @@ function QuranCard({ arabicClassName }: { arabicClassName: string }) {
   );
 }
 
+function DoaCard({ arabicClassName }: { arabicClassName: string }) {
+  return (
+    <Link
+      href="/ibadah/doa"
+      className={cn(
+        "group relative flex min-h-[22rem] flex-col overflow-hidden rounded-[1.75rem] border border-foreground/10 bg-surface px-6 py-7 sm:min-h-[28rem] sm:px-8 sm:py-8",
+        "transition-shadow hover:shadow-soft",
+        cardFocus,
+      )}
+    >
+      <span className="absolute bottom-8 left-0 top-8 w-1 rounded-full bg-secondary" aria-hidden="true" />
+
+      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Kumpulan Doa</p>
+
+      <p
+        lang="ar"
+        dir="rtl"
+        className={cn(
+          arabicClassName,
+          "mt-10 pt-4 text-center text-5xl font-bold leading-snug text-heading sm:mt-auto sm:text-6xl",
+        )}
+      >
+        رَبِّ زِدْنِي عِلْمًا
+      </p>
+      <p className="mt-6 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-secondary-alt">
+        QS. Thaha 20:114
+      </p>
+
+      <div className="mt-10 sm:mt-auto">
+        <h2 className="font-display text-3xl font-bold tracking-tight text-heading sm:text-4xl">Doa</h2>
+        <p className="mt-2 max-w-[28ch] text-sm text-foreground/65">
+          Cari doa tidur, perjalanan, ilmu, dan lainnya. Baca Arab, latin, dan artinya.
+        </p>
+        <span className="mt-5 inline-flex items-center text-caption font-medium text-primary">
+          Buka kumpulan
+          <span className="ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true">
+            →
+          </span>
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 export function IbadahPageContent({ arabicClassName }: { arabicClassName: string }) {
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="space-y-5">
       <PrayerTimesCard />
-      <QuranCard arabicClassName={arabicClassName} />
+      <div className="grid gap-5 md:grid-cols-2">
+        <DoaCard arabicClassName={arabicClassName} />
+        <QuranCard arabicClassName={arabicClassName} />
+      </div>
     </div>
   );
 }

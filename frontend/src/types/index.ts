@@ -13,6 +13,8 @@ export type {
   PaginationMeta,
   PrayerTimesDay,
   PrayerTimesResult,
+  DoaItem,
+  DoaCatalog,
   ProgramDetail,
   ProgramListItem,
   KategoriRef,

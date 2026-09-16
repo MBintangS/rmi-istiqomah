@@ -399,7 +399,7 @@ export function PrayerTimesPageContent() {
     <>
       <PageHero
         title="Jadwal Sholat"
-        description="Waktu sholat Kota Bogor. Lihat yang berikutnya, atau pilih hari lain."
+        description="Waktu sholat Kota Bogor."
         breadcrumb={[
           { label: "Beranda", href: "/" },
           { label: "Ibadah", href: "/ibadah" },

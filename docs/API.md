@@ -201,6 +201,66 @@ Hasil bulan EQuran di-cache sekitar 1 jam di server.
 
 ---
 
+## Doa
+
+Sumber data: [EQuran.id API Doa](https://equran.id/apidev/doa). Endpoint ini hanya ada di Next.js Route Handler `/api`. Browser tidak memanggil EQuran langsung.
+
+Daftar doa di-cache sekitar 24 jam di server.
+
+### `GET /doa`
+
+Daftar doa dan dzikir. Tanpa query, mengembalikan seluruh katalog plus daftar `groups` dan `tags` (dari katalog penuh, tidak terpengaruh filter).
+
+**Auth:** Tidak
+
+**Query:**
+
+| Parameter | Type | Keterangan |
+|-----------|------|------------|
+| `grup` | string | Opsional. Filter nama kumpulan persis |
+| `tag` | string | Opsional. Filter tag (contoh: `tidur`, `perjalanan`) |
+| `q` | string | Opsional. Cari di nama, kumpulan, latin, terjemah, dan tag |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "source": "equran",
+    "total": 1,
+    "groups": ["Doa Memohon Ilmu", "Doa Sebelum dan Sesudah Tidur"],
+    "tags": ["tidur", "umum"],
+    "items": [
+      {
+        "id": 95,
+        "group": "Doa Memohon Ilmu",
+        "name": "Doa Memohon Ilmu 1",
+        "arabic": "رَبِّ زِدْنِي عِلْمًا",
+        "latin": "Robbi zidnii 'ilman.",
+        "translation": "Wahai Rabb-ku, tambahkanlah ilmu kepadaku. (QS. Thaha [20]: 114).",
+        "source": "Allah Ta'ala memerintahkan Nabi-Nya...",
+        "tags": ["umum"]
+      }
+    ]
+  }
+}
+```
+
+**Error relevan:** `VALIDATION_ERROR`, `UPSTREAM_ERROR`, `RATE_LIMITED`
+
+### `GET /doa/:id`
+
+Detail satu doa.
+
+**Auth:** Tidak
+
+**Response `200`:** `{ success: true, data: DoaItem }`
+
+**Error relevan:** `VALIDATION_ERROR`, `NOT_FOUND`, `UPSTREAM_ERROR`
+
+---
+
 ## Auth
 
 ### `POST /auth/activate`
@@ -1666,6 +1726,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-16 | — | GET /doa dan GET /doa/:id (Next.js `/api`, EQuran Hisnul Muslim) |
 | 2026-09-15 | — | GET /prayer-times (Next.js `/api`, EQuran Kota Bogor) |
 | 2026-09-15 | — | Tambah role `anggota`; Pengurus mengelola modul organisasi, Super Admin tetap khusus Pengguna/Pengaturan |
 | 2026-09-13 | — | Undangan akun via Resend: POST /auth/activate dan POST /users/:id/resend-invitation (Next.js `/api`) |

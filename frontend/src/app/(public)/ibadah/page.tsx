@@ -11,7 +11,7 @@ const amiri = Amiri({
 
 export const metadata = buildPageMetadata({
   title: "Ibadah",
-  description: "Jadwal sholat dan Al-Qur'an Remaja Masjid Istiqomah.",
+  description: "Jadwal sholat, doa, dan Al-Qur'an Remaja Masjid Istiqomah.",
   path: "/ibadah",
 });
 
@@ -20,7 +20,7 @@ export default function IbadahIndexPage() {
     <>
       <PageHero
         title="Ibadah"
-        description="Jadwal sholat Kota Bogor dan Al-Qur'an digital RMI."
+        description="Jadwal sholat Kota Bogor, kumpulan doa, dan Al-Qur'an digital RMI."
         breadcrumb={[{ label: "Beranda", href: "/" }, { label: "Ibadah" }]}
       />
 
