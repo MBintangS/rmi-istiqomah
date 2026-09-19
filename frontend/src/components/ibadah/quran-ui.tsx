@@ -112,10 +112,10 @@ export function QuranPlaceFilter({
   onChange: (value: QuranRevelationPlace | "") => void;
   counts: { all: number; mekah: number; madinah: number };
 }) {
-  const options = [
+  const options: Array<{ id: QuranRevelationPlace | ""; label: string; hint: string }> = [
     { id: "", label: "Semua", hint: `${counts.all} surat` },
-    { id: "Mekah" as const, label: "Makkiyah", hint: "Turun di Mekah" },
-    { id: "Madinah" as const, label: "Madaniyah", hint: "Turun di Madinah" },
+    { id: "Mekah", label: "Makkiyah", hint: "Turun di Mekah" },
+    { id: "Madinah", label: "Madaniyah", hint: "Turun di Madinah" },
   ];
 
   return (
