@@ -67,7 +67,7 @@ export function HeroSection() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-background via-background/85 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl flex-col items-center px-4 pb-10 pt-10 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-6xl flex-col items-center px-4 pb-12 pt-10 sm:px-6 sm:pb-14 sm:pt-12 lg:min-h-0 lg:px-8 lg:pb-20 lg:pt-20">
         <div className="relative w-full pb-6 md:pb-10">
           <div
             className="relative z-20 mx-auto h-[260px] w-full max-w-[600px] sm:h-[320px] md:h-[380px]"

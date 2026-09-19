@@ -30,40 +30,67 @@ function QuranSuratCard({
       className={cn(
         "group flex h-full cursor-pointer flex-col",
         quranFrameOuter,
+        "p-[3px] sm:p-[6px]",
         "motion-safe:transition-[border-color,box-shadow] motion-safe:duration-200",
         "hover:border-secondary hover:shadow-soft",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
       )}
     >
-      <div className={cn("relative flex h-full min-h-[13.5rem] flex-col px-4 py-4 sm:px-5", quranFrameInner)}>
+      <div
+        className={cn(
+          "relative flex h-full items-center gap-3 px-3 py-2.5",
+          "sm:min-h-[13.5rem] sm:flex-col sm:items-stretch sm:gap-0 sm:px-5 sm:py-4",
+          quranFrameInner,
+        )}
+      >
         <span
-          className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-secondary/70 to-transparent"
+          className="pointer-events-none absolute inset-x-8 top-0 hidden h-px bg-gradient-to-r from-transparent via-secondary/70 to-transparent sm:block"
           aria-hidden="true"
         />
 
-        <div className="flex items-start justify-between gap-3">
-          <SuratMedallion number={surat.number} />
-          <span className="rounded-full border border-secondary/35 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-secondary-alt">
+        <div className="flex shrink-0 items-center sm:w-full sm:items-start sm:justify-between">
+          <span className="sm:hidden">
+            <SuratMedallion number={surat.number} size="sm" />
+          </span>
+          <span className="hidden sm:inline-flex">
+            <SuratMedallion number={surat.number} />
+          </span>
+          <span className="hidden rounded-full border border-secondary/35 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-secondary-alt sm:inline">
             {suratPlaceLabel(surat.revelationPlace)}
           </span>
         </div>
 
-        <p
-          lang="ar"
-          dir="rtl"
-          className={cn(
-            arabicClassName,
-            "mt-5 text-center text-[1.85rem] font-bold leading-none text-heading sm:text-[2rem]",
-          )}
-        >
-          {surat.nameArabic}
-        </p>
-        <h2 className="font-display mt-3 text-center text-lg font-bold tracking-tight text-heading">
-          {surat.nameLatin}
-        </h2>
-        <p className="mt-1 text-center text-sm text-foreground/65">{surat.meaning}</p>
+        <div className="min-w-0 flex-1 sm:mt-5 sm:flex sm:flex-1 sm:flex-col sm:items-center sm:text-center">
+          <h2 className="font-display truncate text-sm font-bold tracking-tight text-heading sm:order-2 sm:mt-3 sm:text-center sm:text-lg">
+            {surat.nameLatin}
+          </h2>
+          <p
+            lang="ar"
+            dir="rtl"
+            className={cn(
+              arabicClassName,
+              "hidden font-bold leading-none text-heading sm:order-1 sm:mt-0 sm:block sm:text-center sm:text-[2rem]",
+            )}
+          >
+            {surat.nameArabic}
+          </p>
+          <p className="mt-0.5 truncate text-caption text-foreground/65 sm:order-3 sm:mt-1 sm:text-center sm:text-sm">
+            {surat.meaning}
+          </p>
+        </div>
 
-        <p className="mt-auto flex items-center justify-between pt-5 text-caption text-primary">
+        <div className="shrink-0 text-right sm:hidden">
+          <p
+            lang="ar"
+            dir="rtl"
+            className={cn(arabicClassName, "text-lg font-bold leading-none text-heading")}
+          >
+            {surat.nameArabic}
+          </p>
+          <p className="mt-1 text-[11px] tabular-nums text-primary">{surat.verseCount} ayat</p>
+        </div>
+
+        <p className="mt-0 hidden items-center justify-between pt-0 text-caption text-primary sm:mt-auto sm:flex sm:w-full sm:pt-5">
           <span>{surat.verseCount} ayat</span>
           <span className="inline-flex items-center font-medium">
             Baca
@@ -116,9 +143,9 @@ export function QuranIndexContent({ arabicClassName }: { arabicClassName: string
       <section className="bg-background py-10 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           {isLoading && !data ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
+            <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3" aria-busy="true">
               {Array.from({ length: 9 }).map((_, index) => (
-                <Skeleton key={index} className="h-56 rounded-[1.5rem]" />
+                <Skeleton key={index} className="h-16 rounded-[1.5rem] sm:h-56" />
               ))}
             </div>
           ) : isError || !data ? (
@@ -159,7 +186,7 @@ export function QuranIndexContent({ arabicClassName }: { arabicClassName: string
                   }}
                 />
               ) : (
-                <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul className="grid gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
                   {filtered.map((surat) => (
                     <li key={surat.number}>
                       <QuranSuratCard surat={surat} arabicClassName={arabicClassName} />
