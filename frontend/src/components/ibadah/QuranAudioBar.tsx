@@ -47,7 +47,7 @@ function PreferenceToggle({
       role="switch"
       aria-checked={checked}
       onClick={onToggle}
-      className="inline-flex min-h-11 items-center gap-2 rounded-full px-1 text-caption font-medium text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-0.5 text-caption font-medium text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:gap-2 sm:px-1"
     >
       {label}
       <span
@@ -81,8 +81,8 @@ export function QuranAudioBar({
   onToggleSurah,
 }: QuranAudioBarProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-[1.25rem] border border-secondary/40 bg-surface px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+    <div className="flex flex-col gap-3 rounded-[1.25rem] border border-secondary/40 bg-surface px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+      <div className="min-w-0 sm:flex-1">
         <label className="sr-only" htmlFor="quran-qari">
           Qari
         </label>
@@ -90,7 +90,7 @@ export function QuranAudioBar({
           id="quran-qari"
           value={qariId}
           onChange={(event) => onQariChange(event.target.value)}
-          className="h-11 max-w-[16rem] border-secondary/30"
+          className="h-11 w-full border-secondary/30 sm:max-w-[16rem]"
         >
           {qari.length === 0 ? (
             <option value={qariId}>Memuat qari…</option>
@@ -102,14 +102,19 @@ export function QuranAudioBar({
             ))
           )}
         </Select>
-        <Button type="button" size="sm" className="min-h-11" variant={surahPlaying ? "secondary" : "primary"} onClick={onToggleSurah}>
-          {surahPlaying ? <PauseIcon /> : <PlayIcon />}
-          <span className="ml-2">{surahPlaying ? "Jeda surat" : "Putar surat"}</span>
-        </Button>
       </div>
-      <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-        <PreferenceToggle label="Latin" checked={showLatin} onToggle={onToggleLatin} />
-        <PreferenceToggle label="Terjemah" checked={showTranslation} onToggle={onToggleTranslation} />
+      <div className="flex flex-nowrap items-center justify-between gap-2 sm:shrink-0 sm:justify-end sm:gap-3">
+        <Button type="button" size="sm" className="min-h-11 shrink-0" variant={surahPlaying ? "secondary" : "primary"} onClick={onToggleSurah}>
+          {surahPlaying ? <PauseIcon /> : <PlayIcon />}
+          <span className="ml-2">
+            {surahPlaying ? "Jeda" : "Putar"}
+            <span className="hidden sm:inline"> surat</span>
+          </span>
+        </Button>
+        <div className="flex flex-nowrap shrink-0 items-center gap-1 sm:gap-2">
+          <PreferenceToggle label="Latin" checked={showLatin} onToggle={onToggleLatin} />
+          <PreferenceToggle label="Terjemah" checked={showTranslation} onToggle={onToggleTranslation} />
+        </div>
       </div>
     </div>
   );

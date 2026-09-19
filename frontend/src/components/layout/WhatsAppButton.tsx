@@ -1,6 +1,10 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useSettingsValue } from "@/hooks/useSettings";
+import { cn } from "@/lib/utils";
+
+const SURAH_READER_PATH = /^\/ibadah\/al-quran\/\d+\/?$/;
 
 function WhatsAppIcon() {
   return (
@@ -18,7 +22,9 @@ function WhatsAppIcon() {
 }
 
 export function WhatsAppButton() {
+  const pathname = usePathname();
   const { whatsapp } = useSettingsValue();
+  const aboveAudioBar = SURAH_READER_PATH.test(pathname);
 
   if (!whatsapp) {
     return null;
@@ -32,7 +38,15 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Hubungi via WhatsApp"
-      className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
+      className={cn(
+        "fixed right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg",
+        "transition-transform hover:scale-105 hover:shadow-xl",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "sm:right-6 sm:h-14 sm:w-14",
+        aboveAudioBar
+          ? "bottom-[calc(9.25rem+env(safe-area-inset-bottom))] sm:bottom-[calc(6.75rem+env(safe-area-inset-bottom))] lg:bottom-6"
+          : "bottom-4 sm:bottom-6",
+      )}
     >
       <WhatsAppIcon />
     </a>
