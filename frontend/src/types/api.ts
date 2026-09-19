@@ -74,6 +74,48 @@ export interface DoaCatalog {
   items: DoaItem[];
 }
 
+export type QuranRevelationPlace = "Mekah" | "Madinah";
+
+export interface QuranQari {
+  id: string;
+  name: string;
+}
+
+export interface QuranSuratSummary {
+  number: number;
+  nameArabic: string;
+  nameLatin: string;
+  verseCount: number;
+  revelationPlace: QuranRevelationPlace;
+  meaning: string;
+}
+
+export interface QuranAyat {
+  number: number;
+  arabic: string;
+  latin: string;
+  translation: string;
+  audio: Record<string, string>;
+}
+
+export interface QuranSuratNeighbor {
+  number: number;
+  nameLatin: string;
+}
+
+export interface QuranSuratDetail extends QuranSuratSummary {
+  audioFull: Record<string, string>;
+  verses: QuranAyat[];
+  previous: QuranSuratNeighbor | null;
+  next: QuranSuratNeighbor | null;
+}
+
+export interface QuranCatalog {
+  source: "equran";
+  qari: QuranQari[];
+  items: QuranSuratSummary[];
+}
+
 export interface ArtikelCategoryRef {
   id: string;
   name: string;

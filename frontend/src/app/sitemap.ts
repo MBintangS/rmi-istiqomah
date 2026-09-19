@@ -23,6 +23,7 @@ const STATIC_ROUTES: Array<{
   { path: "/ibadah", changeFrequency: "weekly", priority: 0.8 },
   { path: "/ibadah/jadwal-sholat", changeFrequency: "daily", priority: 0.8 },
   { path: "/ibadah/doa", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/ibadah/al-quran", changeFrequency: "weekly", priority: 0.8 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

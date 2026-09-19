@@ -128,8 +128,8 @@ function QuranCard({ arabicClassName }: { arabicClassName: string }) {
         aria-hidden="true"
       />
 
-      <p className="inline-flex w-fit items-center rounded-full border border-secondary/40 bg-secondary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
-        Dalam Pengembangan
+      <p className="inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+        114 surat
       </p>
 
       <p
@@ -151,10 +151,10 @@ function QuranCard({ arabicClassName }: { arabicClassName: string }) {
           {"Al-Qur'an"}
         </h2>
         <p className="mt-2 max-w-[28ch] text-sm text-foreground/65">
-          Mushaf digital belum bisa dibuka. Masih dalam tahap pengembangan.
+          Mushaf digital: pilih surat, baca ayat, dan dengar tilawah.
         </p>
         <span className="mt-5 inline-flex items-center text-caption font-medium text-primary">
-          Lihat halaman
+          Buka mushaf
           <span className="ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true">
             →
           </span>

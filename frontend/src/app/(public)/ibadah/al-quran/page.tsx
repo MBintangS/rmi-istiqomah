@@ -1,5 +1,5 @@
 import { Amiri } from "next/font/google";
-import { QuranComingSoon } from "@/components/ibadah/QuranComingSoon";
+import { QuranIndexContent } from "@/components/ibadah/QuranIndexContent";
 import { buildPageMetadata } from "@/lib/seo";
 
 const amiri = Amiri({
@@ -11,11 +11,10 @@ const amiri = Amiri({
 export const metadata = buildPageMetadata({
   title: "Al-Qur'an",
   description:
-    "Mushaf digital Remaja Masjid Istiqomah sedang dirakit. Sementara ini, jaga waktu sholat dulu.",
+    "Baca 114 surat Al-Qur'an: Arab, latin, terjemah Indonesia, dan tilawah. Remaja Masjid Istiqomah.",
   path: "/ibadah/al-quran",
-  noIndex: true,
 });
 
 export default function AlQuranPage() {
-  return <QuranComingSoon arabicClassName={amiri.className} />;
+  return <QuranIndexContent arabicClassName={amiri.className} />;
 }

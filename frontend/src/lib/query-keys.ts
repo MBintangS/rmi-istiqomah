@@ -94,4 +94,9 @@ export const queryKeys = {
     list: () => [...queryKeys.doa.all, "list"] as const,
     detail: (id: number) => [...queryKeys.doa.all, "detail", id] as const,
   },
+  quran: {
+    all: ["quran"] as const,
+    list: () => [...queryKeys.quran.all, "list"] as const,
+    surat: (nomor: number) => [...queryKeys.quran.all, "surat", nomor] as const,
+  },
 } as const;

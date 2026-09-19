@@ -261,6 +261,56 @@ Detail satu doa.
 
 ---
 
+## Al-Qur'an
+
+Sumber data: [EQuran NPM / API v2](https://equran.id/apidev/npm). Endpoint ini hanya ada di Next.js Route Handler `/api`. Browser tidak memanggil EQuran langsung. Paket `equran` dipakai di server saja.
+
+Daftar dan detail surat di-cache sekitar 24 jam di server. Audio hanya URL CDN, bukan file.
+
+### `GET /quran/surat`
+
+Daftar 114 surat plus daftar qari.
+
+**Auth:** Tidak
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "source": "equran",
+    "qari": [{ "id": "05", "name": "Misyari Rasyid Al-Afasi" }],
+    "items": [
+      {
+        "number": 1,
+        "nameArabic": "الفاتحة",
+        "nameLatin": "Al-Fatihah",
+        "verseCount": 7,
+        "revelationPlace": "Mekah",
+        "meaning": "Pembukaan"
+      }
+    ]
+  }
+}
+```
+
+**Error relevan:** `UPSTREAM_ERROR`, `RATE_LIMITED`
+
+### `GET /quran/surat/:nomor`
+
+Detail satu surat beserta ayat, latin, terjemah Indonesia, dan URL audio (full + per ayat). `nomor` 1–114.
+
+**Auth:** Tidak
+
+**Response `200`:** `{ success: true, data: QuranSuratDetail }`
+
+Field penting: `audioFull`, `verses[].arabic|latin|translation|audio`, `previous`, `next`.
+
+**Error relevan:** `VALIDATION_ERROR`, `NOT_FOUND`, `UPSTREAM_ERROR`, `RATE_LIMITED`
+
+---
+
 ## Auth
 
 ### `POST /auth/activate`
@@ -1726,6 +1776,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-16 | — | GET /quran/surat dan GET /quran/surat/:nomor (Next.js `/api`, paket equran) |
 | 2026-09-16 | — | GET /doa dan GET /doa/:id (Next.js `/api`, EQuran Hisnul Muslim) |
 | 2026-09-15 | — | GET /prayer-times (Next.js `/api`, EQuran Kota Bogor) |
 | 2026-09-15 | — | Tambah role `anggota`; Pengurus mengelola modul organisasi, Super Admin tetap khusus Pengguna/Pengaturan |
