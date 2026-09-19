@@ -16,7 +16,40 @@ import { useQuranPrefs } from "@/hooks/useQuranPrefs";
 import { getApiErrorMessage } from "@/lib/api";
 import { filterQuranSurat, suratPlaceLabel } from "@/lib/quran";
 import { cn } from "@/lib/utils";
-import type { QuranSuratSummary } from "@/types/api";
+import type { QuranSuratNeighbor, QuranSuratSummary } from "@/types/api";
+
+function SuratAdjacentNav({
+  previous,
+  next,
+}: {
+  previous: QuranSuratNeighbor | null;
+  next: QuranSuratNeighbor | null;
+}) {
+  return (
+    <nav aria-label="Surat sebelumnya dan berikutnya" className="grid grid-cols-2 gap-2">
+      {previous ? (
+        <Link
+          href={`/ibadah/al-quran/${previous.number}`}
+          className="inline-flex min-h-10 max-w-full items-center justify-self-start truncate rounded-full border border-secondary/35 px-3 text-caption font-medium text-primary hover:border-secondary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          ← {previous.nameLatin}
+        </Link>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <Link
+          href={`/ibadah/al-quran/${next.number}`}
+          className="inline-flex min-h-10 max-w-full items-center justify-self-end truncate rounded-full border border-secondary/35 px-3 text-caption font-medium text-primary hover:border-secondary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          {next.nameLatin} →
+        </Link>
+      ) : (
+        <span />
+      )}
+    </nav>
+  );
+}
 
 function SuratNavList({
   items,
@@ -219,27 +252,8 @@ export function QuranReaderContent({
                           {data.nameArabic}
                         </p>
                       </div>
-                      <div className="mt-3 grid grid-cols-2 gap-2">
-                        {data.previous ? (
-                          <Link
-                            href={`/ibadah/al-quran/${data.previous.number}`}
-                            className="inline-flex min-h-10 max-w-full items-center justify-self-start truncate rounded-full border border-secondary/35 px-3 text-caption font-medium text-primary hover:border-secondary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                          >
-                            ← {data.previous.nameLatin}
-                          </Link>
-                        ) : (
-                          <span />
-                        )}
-                        {data.next ? (
-                          <Link
-                            href={`/ibadah/al-quran/${data.next.number}`}
-                            className="inline-flex min-h-10 max-w-full items-center justify-self-end truncate rounded-full border border-secondary/35 px-3 text-caption font-medium text-primary hover:border-secondary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                          >
-                            {data.next.nameLatin} →
-                          </Link>
-                        ) : (
-                          <span />
-                        )}
+                      <div className="mt-3">
+                        <SuratAdjacentNav previous={data.previous} next={data.next} />
                       </div>
                     </div>
                   </header>
@@ -300,6 +314,12 @@ export function QuranReaderContent({
                       );
                     })}
                   </ol>
+
+                  <div className={quranFrameOuter}>
+                    <div className={cn("px-4 py-4 sm:px-5", quranFrameInner)}>
+                      <SuratAdjacentNav previous={data.previous} next={data.next} />
+                    </div>
+                  </div>
                 </>
               ) : null}
             </div>
