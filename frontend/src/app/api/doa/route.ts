@@ -3,6 +3,7 @@ import { doaListQuerySchema } from "@/server/schemas/doa.schema";
 import { getDoaCatalog } from "@/server/services/doa.service";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   return apiHandler(async () => {

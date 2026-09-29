@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { Toaster } from "@/components/ui/Toaster";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -58,6 +59,7 @@ export default function RootLayout({
         <QueryProvider>{children}</QueryProvider>
         <Toaster />
         <GoogleAnalytics />
+        <Analytics />
       </body>
     </html>
   );

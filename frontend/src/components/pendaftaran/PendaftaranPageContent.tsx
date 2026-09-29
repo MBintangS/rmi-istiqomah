@@ -21,6 +21,7 @@ type RegistrationReceipt = {
   closesAt: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- dipakai kembali jika stamp "Tercatat" diaktifkan (lihat JSX tercomment)
 function RecordedStamp() {
   return (
     <span
@@ -60,7 +61,7 @@ export function PendaftaranPageContent({
   periodeSlug?: string;
 }) {
   const { data, isLoading, isError, error, refetch } = useOpenPendaftaran();
-  const items = data ?? [];
+  const items = useMemo(() => data ?? [], [data]);
 
   const programs = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
