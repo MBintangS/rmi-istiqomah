@@ -76,6 +76,13 @@ export const queryKeys = {
     all: ["contact"] as const,
     list: () => [...queryKeys.contact.all, "list"] as const,
   },
+  pendaftaran: {
+    all: ["pendaftaran"] as const,
+    open: (program?: string) => [...queryKeys.pendaftaran.all, "open", program ?? ""] as const,
+    admin: () => [...queryKeys.pendaftaran.all, "admin"] as const,
+    detail: (id: string) => [...queryKeys.pendaftaran.all, "detail", id] as const,
+    peserta: (id: string) => [...queryKeys.pendaftaran.all, "peserta", id] as const,
+  },
   stats: {
     all: ["stats"] as const,
     count: () => [...queryKeys.stats.all, "count"] as const,

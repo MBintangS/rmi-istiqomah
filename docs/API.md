@@ -1134,6 +1134,117 @@ Slug auto-generate dari `name`.
 
 ---
 
+## Pendaftaran
+
+Periode pendaftaran yang dibuka admin untuk satu program. Status tidak disimpan: `draft` (belum terbit), `scheduled` (terbit, belum `opensAt`), `open` (terbit dan sekarang berada di antara `opensAt` dan `closesAt`), `closed` (lewat `closesAt`).
+
+### `GET /pendaftaran`
+
+Daftar periode yang sedang `open`.
+
+**Auth:** Publik
+
+**Query:**
+
+| Param | Keterangan |
+|-------|------------|
+| `program` | Slug program. Jika diisi, hanya periode program itu. Program nonaktif atau tidak dikenal mengembalikan array kosong. |
+
+**Response `200`:** array periode (tanpa `pesertaCount`)
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "...",
+      "title": "Pendaftaran Tahfidz 2026",
+      "slug": "pendaftaran-tahfidz-2026",
+      "description": "Untuk remaja masjid",
+      "opensAt": "2026-09-01T00:00:00.000Z",
+      "closesAt": "2026-09-30T16:59:00.000Z",
+      "isPublished": true,
+      "status": "open",
+      "program": { "id": "...", "name": "Tahfidz Quran", "slug": "tahfidz-quran" },
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  ]
+}
+```
+
+### `GET /pendaftaran/:slug`
+
+Detail periode yang sedang `open`. `404` jika draft, terjadwal, ditutup, atau slug tidak ada.
+
+**Auth:** Publik
+
+### `POST /pendaftaran/:slug`
+
+Kirim data peserta ke periode yang sedang `open`.
+
+**Auth:** Publik
+
+**Body:**
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `name` | ✅ | Minimal 2 karakter |
+| `whatsapp` | ✅ | 8–20 karakter angka, `+`, spasi, atau `-`. Disimpan sebagai digit saja |
+| `age` | ✅ | Usia dalam tahun, bilangan bulat 1–100 |
+| `address` | ✅ | Alamat, 5–300 karakter |
+| `email` | — | Jika diisi, harus email valid |
+| `notes` | — | Maksimal 1000 karakter |
+
+Nomor WhatsApp yang sama boleh dikirim lebih dari sekali pada periode yang sama.
+
+**Response `201`:** `{ id, name, whatsapp, age, address, email, createdAt }` + `message`
+
+### `GET /pendaftaran/admin`
+
+Daftar semua periode, termasuk draft. Setiap item punya `pesertaCount`.
+
+**Auth:** Pengurus atau Super Admin
+
+### `POST /pendaftaran/admin`
+
+**Auth:** Pengurus atau Super Admin
+
+**Body:**
+
+| Field | Required | Keterangan |
+|-------|----------|------------|
+| `programId` | ✅ | ObjectId program yang `isActive` |
+| `title` | ✅ | Minimal 3 karakter. Slug dibuat dari judul |
+| `description` | — | |
+| `opensAt` | ✅ | Tanggal buka |
+| `closesAt` | ✅ | Harus setelah `opensAt` |
+| `isPublished` | — | Default `false` |
+
+**Response `201`:** periode + `pesertaCount: 0` + `message`
+
+### `GET /pendaftaran/admin/:id`
+
+**Auth:** Pengurus atau Super Admin
+
+**Response `200`:** periode + `pesertaCount`
+
+### `PUT /pendaftaran/admin/:id`
+
+**Auth:** Pengurus atau Super Admin — body partial, aturan sama dengan POST
+
+### `DELETE /pendaftaran/admin/:id`
+
+**Auth:** Pengurus atau Super Admin. Menghapus periode beserta peserta.
+
+### `GET /pendaftaran/admin/:id/peserta`
+
+**Auth:** Pengurus atau Super Admin
+
+**Response `200`:** array `{ id, name, whatsapp, age, address, email, notes, createdAt }` urut terbaru
+
+---
+
 ## Donasi
 
 ### `GET /donasi`
@@ -1776,6 +1887,9 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-23 | — | POST /pendaftaran/:slug: nomor WhatsApp yang sama boleh didaftarkan berkali-kali |
+| 2026-09-23 | — | POST /pendaftaran/:slug: field wajib `age` dan `address` |
+| 2026-09-23 | — | Pendaftaran: GET/POST publik `/pendaftaran`, CRUD admin `/pendaftaran/admin`, daftar peserta |
 | 2026-09-16 | — | GET /quran/surat dan GET /quran/surat/:nomor (Next.js `/api`, paket equran) |
 | 2026-09-16 | — | GET /doa dan GET /doa/:id (Next.js `/api`, EQuran Hisnul Muslim) |
 | 2026-09-15 | — | GET /prayer-times (Next.js `/api`, EQuran Kota Bogor) |

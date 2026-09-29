@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button, EmptyState, RichTextContent } from "@/components/ui";
+import { useOpenPendaftaran } from "@/hooks/usePendaftaran";
 import { useProgram } from "@/hooks/useProgram";
 import { getApiErrorMessage } from "@/lib/api";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
@@ -18,6 +19,8 @@ interface ProgramDetailViewProps {
 
 export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
   const { data, isLoading, isError, error, refetch } = useProgram(slug);
+  const openRegistration = useOpenPendaftaran(slug);
+  const registrationOpen = (openRegistration.data?.length ?? 0) > 0;
 
   if (isLoading) {
     return <ProgramDetailSkeleton />;
@@ -134,10 +137,16 @@ export function ProgramDetailView({ slug }: ProgramDetailViewProps) {
               <div className="rounded-rmi bg-ink p-6 text-on-ink">
                 <h2 className="mb-2 text-lg text-on-ink">Tertarik bergabung?</h2>
                 <p className="text-body mb-4 text-on-ink/80">
-                  Hubungi pengurus RMI untuk informasi pendaftaran dan detail kegiatan.
+                  {registrationOpen
+                    ? "Pendaftaran program ini sedang dibuka. Isi formulir untuk mendaftar."
+                    : "Hubungi pengurus RMI untuk informasi pendaftaran dan detail kegiatan."}
                 </p>
-                <Button href="/kontak" variant="primary" className="w-full">
-                  Info lebih lanjut
+                <Button
+                  href={registrationOpen ? `/pendaftaran?program=${program.slug}` : "/kontak"}
+                  variant="primary"
+                  className="w-full"
+                >
+                  {registrationOpen ? "Daftar sekarang" : "Info lebih lanjut"}
                 </Button>
               </div>
             </aside>

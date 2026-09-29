@@ -47,6 +47,12 @@ export const adminNavItems: AdminNavItem[] = [
     roles: ["pengurus", "superadmin"],
   },
   {
+    label: "Pendaftaran",
+    href: "/admin/pendaftaran",
+    group: "organisasi",
+    roles: ["pengurus", "superadmin"],
+  },
+  {
     label: "Banner",
     href: "/admin/banner",
     group: "organisasi",

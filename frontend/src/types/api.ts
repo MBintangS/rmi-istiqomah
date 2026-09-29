@@ -310,6 +310,58 @@ export interface ProgramWritePayload {
   isActive?: boolean;
 }
 
+export type PendaftaranStatus = "draft" | "scheduled" | "open" | "closed";
+
+export interface PendaftaranProgramRef {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export interface PendaftaranItem {
+  id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  opensAt: string;
+  closesAt: string;
+  isPublished: boolean;
+  status: PendaftaranStatus;
+  program: PendaftaranProgramRef | null;
+  pesertaCount?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PendaftaranWritePayload {
+  programId: string;
+  title: string;
+  description?: string;
+  opensAt: string;
+  closesAt: string;
+  isPublished?: boolean;
+}
+
+export interface PesertaItem {
+  id: string;
+  name: string;
+  whatsapp: string;
+  age: number | null;
+  address: string | null;
+  email: string | null;
+  notes: string | null;
+  createdAt: string;
+}
+
+export interface PesertaWritePayload {
+  name: string;
+  whatsapp: string;
+  age: number;
+  address: string;
+  email?: string;
+  notes?: string;
+}
+
 export interface DokumenWritePayload {
   name: string;
   fileUrl: string;

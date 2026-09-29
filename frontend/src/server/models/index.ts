@@ -10,6 +10,8 @@ export { Testimoni, type ITestimoni, type TestimoniDocument } from "./Testimoni.
 export { Dokumen, type IDokumen, type DokumenDocument } from "./Dokumen.model";
 export { Donasi, type IDonasi, type DonasiDocument } from "./Donasi.model";
 export { ContactMessage, type IContactMessage, type ContactMessageDocument } from "./ContactMessage.model";
+export { Pendaftaran, type IPendaftaran, type PendaftaranDocument } from "./Pendaftaran.model";
+export { Peserta, type IPeserta, type PesertaDocument } from "./Peserta.model";
 export {
   Settings,
   type ISettings,

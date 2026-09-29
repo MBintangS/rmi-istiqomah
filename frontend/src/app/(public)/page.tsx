@@ -8,7 +8,7 @@ import { LatestKegiatanSection } from "@/components/home/LatestKegiatanSection";
 import { SocialMarquee } from "@/components/home/SocialMarquee";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { UpcomingEventsSection } from "@/components/home/UpcomingEventsSection";
+import { OpenPendaftaranSection } from "@/components/home/OpenPendaftaranSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildPageMetadata, organizationJsonLd } from "@/lib/seo";
 
@@ -30,7 +30,7 @@ export default function HomePage() {
         <AboutSection />
         <StatsSection />
         <LatestKegiatanSection />
-        <UpcomingEventsSection />
+        <OpenPendaftaranSection />
         <ProgramsSection />
         <LatestArticlesSection />
         <GalleryPreviewSection />
