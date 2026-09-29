@@ -31,7 +31,6 @@ export function jsonError(
   code: string,
   message: string,
   details?: unknown,
-  headers?: Record<string, string>,
 ) {
   return NextResponse.json(
     {
@@ -42,17 +41,13 @@ export function jsonError(
         ...(details !== undefined ? { details } : {}),
       },
     },
-    { status, headers },
+    { status },
   );
 }
 
 export function mapError(err: unknown) {
   if (err instanceof AppError) {
-    const headers: Record<string, string> | undefined =
-      typeof err.retryAfterSec === "number"
-        ? { "Retry-After": String(Math.max(1, Math.ceil(err.retryAfterSec))) }
-        : undefined;
-    return jsonError(err.statusCode, err.code, err.message, err.details, headers);
+    return jsonError(err.statusCode, err.code, err.message, err.details);
   }
 
   if (err instanceof mongoose.Error.ValidationError) {
@@ -104,12 +99,7 @@ export function parseQuery<T>(request: Request, schema: ZodSchema<T>): T {
   const result = schema.safeParse(queryObject(request));
 
   if (!result.success) {
-    throw new AppError(
-      400,
-      "VALIDATION_ERROR",
-      "Query tidak valid",
-      result.error.flatten().fieldErrors,
-    );
+    throw new AppError(400, "VALIDATION_ERROR", "Query tidak valid", result.error.flatten().fieldErrors);
   }
 
   return result.data;
@@ -128,12 +118,7 @@ export async function parseBody<T>(request: Request, schema: ZodSchema<T>): Prom
   const result = schema.safeParse(raw);
 
   if (!result.success) {
-    throw new AppError(
-      400,
-      "VALIDATION_ERROR",
-      "Data tidak valid",
-      result.error.flatten().fieldErrors,
-    );
+    throw new AppError(400, "VALIDATION_ERROR", "Data tidak valid", result.error.flatten().fieldErrors);
   }
 
   return result.data;
