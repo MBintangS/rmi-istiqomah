@@ -29,9 +29,6 @@ export function OpenPendaftaranSection() {
         <div className="mb-10 max-w-2xl">
           <p className="text-caption font-semibold uppercase tracking-[0.16em] text-secondary-alt">Sedang dibuka</p>
           <h2 className="mt-3 max-w-[16ch]">Pendaftaran kegiatan</h2>
-          <p className="text-body mt-3 max-w-[52ch] text-foreground/70">
-            Pilih periode yang sedang menerima peserta. Kartu membuka formulir pendaftaran itu langsung.
-          </p>
         </div>
 
         {isPending ? (
