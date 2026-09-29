@@ -343,7 +343,7 @@ Aktifkan akun dari email undangan dan buat password. Endpoint ini tersedia pada 
 Login admin, mendapat JWT.
 
 **Auth:** Tidak  
-**Rate limit:** 5 request / 15 menit per IP
+**Rate limit:** 5 request / 15 menit per IP, plus lockout per email: 5 kegagalan / 15 menit (email dinormalisasi lowercase). Counter kegagalan di-reset saat login berhasil. Respons `429` menyertakan header `Retry-After` (detik).
 
 **Body:**
 
@@ -368,6 +368,18 @@ Login admin, mendapat JWT.
       "role": "superadmin",
       "avatar": null
     }
+  }
+}
+```
+
+**Response `429` (rate limited, termasuk header `Retry-After: <detik>`):**
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Terlalu banyak percobaan login. Silakan coba lagi dalam 900 detik."
   }
 }
 ```

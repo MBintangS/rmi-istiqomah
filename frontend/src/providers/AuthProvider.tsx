@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { clearAuthToken, getAuthToken, setAuthToken } from "@/lib/auth-token";
+import { clearAuthToken, getAuthToken, setAuthToken, syncAuthCookie } from "@/lib/auth-token";
 import { fetchAuthMe, loginAdmin } from "@/services/auth.service";
 import type { AuthUser, LoginPayload, LoginResult } from "@/types/api";
 
@@ -52,6 +52,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         return;
       }
+
+      // Sinkronkan cookie sesi agar gate server /admin lolos saat user
+      // kembali dari /admin/login (mis. cookie sebelumnya kedaluwarsa).
+      syncAuthCookie(token);
 
       try {
         const me = await fetchAuthMe();

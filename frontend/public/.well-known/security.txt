@@ -1,0 +1,9 @@
+# Security Contact — RMI Istiqomah
+# Situs: https://www.rmiistiqomah.web.id
+#
+# Lapor kerentanan: kirim email berisi deskripsi singkat, langkah reproduksi,
+# dan (jika ada) dampak potensial.
+
+Contact: mailto:alistiqomahrmi@gmail.com
+Expires: 2026-10-29T00:00:00.000Z
+Preferred-Languages: id,en
