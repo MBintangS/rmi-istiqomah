@@ -77,29 +77,20 @@ export async function updateMe(userId: string, data: UpdateProfileInput) {
   }
 
   const nextEmail = data.email.trim().toLowerCase();
-  const emailChanged = nextEmail !== user.email;
+  if (nextEmail !== user.email) {
+    throw new AppError(400, "VALIDATION_ERROR", "Email akun tidak dapat diubah dari profil");
+  }
+
   const passwordChanged = Boolean(data.newPassword);
 
-  if (emailChanged || passwordChanged) {
+  if (passwordChanged) {
     if (!data.currentPassword) {
-      throw new AppError(
-        400,
-        "VALIDATION_ERROR",
-        emailChanged ? "Password saat ini wajib diisi untuk mengubah email" : "Password saat ini wajib diisi",
-      );
+      throw new AppError(400, "VALIDATION_ERROR", "Password saat ini wajib diisi");
     }
     const matches = await user.comparePassword(data.currentPassword);
     if (!matches) {
       throw new AppError(400, "VALIDATION_ERROR", "Password saat ini salah");
     }
-  }
-
-  if (emailChanged) {
-    const existing = await User.findOne({ email: nextEmail, _id: { $ne: user._id } }).select("_id");
-    if (existing) {
-      throw new AppError(400, "VALIDATION_ERROR", "Email sudah terdaftar");
-    }
-    user.email = nextEmail;
   }
 
   user.name = data.name;

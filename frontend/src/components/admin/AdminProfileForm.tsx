@@ -18,6 +18,7 @@ export function AdminProfileForm() {
   const { user, applySession } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(user?.avatar ?? "");
+  const [changingPassword, setChangingPassword] = useState(false);
 
   const {
     register,
@@ -25,13 +26,13 @@ export function AdminProfileForm() {
     reset,
     setValue,
     setError,
+    clearErrors,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: user?.name ?? "",
-      email: user?.email ?? "",
       avatar: user?.avatar ?? "",
       currentPassword: "",
       newPassword: "",
@@ -44,7 +45,6 @@ export function AdminProfileForm() {
     setPreview(user.avatar ?? "");
     reset({
       name: user.name,
-      email: user.email,
       avatar: user.avatar ?? "",
       currentPassword: "",
       newPassword: "",
@@ -54,11 +54,23 @@ export function AdminProfileForm() {
 
   const avatar = watch("avatar");
 
+  const clearPasswordFields = () => {
+    setValue("currentPassword", "");
+    setValue("newPassword", "");
+    setValue("confirmPassword", "");
+    clearErrors(["currentPassword", "newPassword", "confirmPassword"]);
+  };
+
+  const cancelPasswordChange = () => {
+    setChangingPassword(false);
+    clearPasswordFields();
+  };
+
   const saveMutation = useMutation({
     mutationFn: (values: ProfileFormValues) =>
       updateMyProfile({
         name: values.name,
-        email: values.email,
+        email: user?.email ?? "",
         avatar: values.avatar ?? "",
         ...(values.currentPassword ? { currentPassword: values.currentPassword } : {}),
         ...(values.newPassword ? { newPassword: values.newPassword } : {}),
@@ -69,9 +81,9 @@ export function AdminProfileForm() {
       toast.success(
         values.newPassword ? "Profil dan password berhasil diperbarui" : "Profil berhasil diperbarui",
       );
+      setChangingPassword(false);
       reset({
         name: result.user.name,
-        email: result.user.email,
         avatar: result.user.avatar ?? "",
         currentPassword: "",
         newPassword: "",
@@ -99,15 +111,26 @@ export function AdminProfileForm() {
   return (
     <form
       onSubmit={handleSubmit((values) => {
-        const emailChanged = user
-          ? values.email.trim().toLowerCase() !== user.email.toLowerCase()
-          : false;
-        if (emailChanged && !values.currentPassword) {
-          setError("currentPassword", {
-            message: "Password saat ini wajib diisi untuk mengubah email",
-          });
+        if (!changingPassword) {
+          saveMutation.mutate(values);
           return;
         }
+
+        let invalid = false;
+        if (!values.currentPassword) {
+          setError("currentPassword", { message: "Password saat ini wajib diisi" });
+          invalid = true;
+        }
+        if (!values.newPassword) {
+          setError("newPassword", { message: "Password baru wajib diisi" });
+          invalid = true;
+        }
+        if (values.newPassword !== values.confirmPassword) {
+          setError("confirmPassword", { message: "Konfirmasi password tidak sama" });
+          invalid = true;
+        }
+        if (invalid) return;
+
         saveMutation.mutate(values);
       })}
       noValidate
@@ -163,71 +186,83 @@ export function AdminProfileForm() {
             {errors.name ? <p className="text-caption text-red-600">{errors.name.message}</p> : null}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email" required>
-              Email
-            </Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
-              autoComplete="email"
-              error={Boolean(errors.email)}
-              {...register("email")}
+              value={user?.email ?? ""}
+              readOnly
+              className="cursor-default bg-surface text-foreground/70"
             />
-            {errors.email ? <p className="text-caption text-red-600">{errors.email.message}</p> : null}
-            <p className="text-caption text-foreground/50">
-              Mengubah email memerlukan password saat ini.
-            </p>
           </div>
         </section>
 
         <section className="space-y-4">
-          <div>
-            <h3 className="text-sm font-semibold text-heading">Ubah password</h3>
-            <p className="text-caption mt-0.5 text-foreground/55">
-              Kosongkan jika tidak ingin mengganti password.
-            </p>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            {changingPassword ? (
+              <Button type="button" variant="ghost" size="sm" onClick={cancelPasswordChange}>
+                Batal
+              </Button>
+            ) : (
+              <Button type="button" variant="outline" size="sm" onClick={() => setChangingPassword(true)}>
+                Ganti password
+              </Button>
+            )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="currentPassword">Password saat ini</Label>
-            <Input
-              id="currentPassword"
-              type="password"
-              autoComplete="current-password"
-              error={Boolean(errors.currentPassword)}
-              {...register("currentPassword")}
-            />
-            {errors.currentPassword ? (
-              <p className="text-caption text-red-600">{errors.currentPassword.message}</p>
-            ) : null}
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">Password baru</Label>
-              <Input
-                id="newPassword"
-                type="password"
-                autoComplete="new-password"
-                error={Boolean(errors.newPassword)}
-                {...register("newPassword")}
-              />
-              {errors.newPassword ? (
-                <p className="text-caption text-red-600">{errors.newPassword.message}</p>
-              ) : null}
+
+          {changingPassword ? (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="currentPassword" required>
+                  Password saat ini
+                </Label>
+                <Input
+                  id="currentPassword"
+                  type="password"
+                  autoComplete="current-password"
+                  error={Boolean(errors.currentPassword)}
+                  {...register("currentPassword")}
+                />
+                {errors.currentPassword ? (
+                  <p className="text-caption text-red-600">{errors.currentPassword.message}</p>
+                ) : null}
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword" required>
+                    Password baru
+                  </Label>
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="Minimal 8 karakter"
+                    error={Boolean(errors.newPassword)}
+                    {...register("newPassword")}
+                  />
+                  {errors.newPassword ? (
+                    <p className="text-caption text-red-600">{errors.newPassword.message}</p>
+                  ) : null}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" required>
+                    Konfirmasi password
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="Ulangi password baru"
+                    error={Boolean(errors.confirmPassword)}
+                    {...register("confirmPassword")}
+                  />
+                  {errors.confirmPassword ? (
+                    <p className="text-caption text-red-600">{errors.confirmPassword.message}</p>
+                  ) : null}
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Konfirmasi password</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                error={Boolean(errors.confirmPassword)}
-                {...register("confirmPassword")}
-              />
-              {errors.confirmPassword ? (
-                <p className="text-caption text-red-600">{errors.confirmPassword.message}</p>
-              ) : null}
-            </div>
-          </div>
+          ) : null}
         </section>
 
         <div className="flex justify-end">

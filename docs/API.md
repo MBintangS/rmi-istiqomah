@@ -456,7 +456,7 @@ Profil user dari token.
 
 ### `PUT /auth/me`
 
-Perbarui profil akun yang sedang login: nama, email, foto, dan password.
+Perbarui profil akun yang sedang login: nama, foto, dan password. Email tidak dapat diubah dari endpoint ini.
 
 **Auth:** Bearer token (pengurus atau superadmin)
 
@@ -475,14 +475,15 @@ Perbarui profil akun yang sedang login: nama, email, foto, dan password.
 | Field | Required | Keterangan |
 |-------|----------|------------|
 | `name` | ✅ | Nama tampilan |
-| `email` | ✅ | Unik; ubah email wajib `currentPassword` |
+| `email` | ✅ | Harus sama dengan email akun yang sedang login |
 | `avatar` | — | URL foto; kirim `""` untuk menghapus |
-| `currentPassword` | — | Wajib jika mengubah email atau password |
+| `currentPassword` | — | Wajib jika mengubah password |
 | `newPassword` | — | Minimal 8 karakter |
 
 **Aturan:**
-- Mengubah email atau password memerlukan `currentPassword` yang benar
-- Response menyertakan token baru agar JWT tetap sinkron dengan email
+- Email akun tidak dapat diubah dari profil. Superadmin mengubahnya lewat `PUT /users/:id`
+- Mengubah password memerlukan `currentPassword` yang benar
+- Response menyertakan token baru
 
 **Response `200`:** `{ token, user }` + `message`
 
@@ -1948,6 +1949,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-30 | — | PUT /auth/me: email akun tidak dapat diubah dari profil |
 | 2026-09-30 | — | Lupa password via Resend: POST /auth/forgot-password dan POST /auth/reset-password (Next.js `/api`); JWT sebelum password berubah ditolak |
 | 2026-09-23 | — | POST /pendaftaran/:slug: nomor WhatsApp yang sama boleh didaftarkan berkali-kali |
 | 2026-09-23 | — | POST /pendaftaran/:slug: field wajib `age` dan `address` |

@@ -50,7 +50,6 @@ export type ResetPasswordFormValues = z.infer<typeof resetPasswordFormSchema>;
 export const profileFormSchema = z
   .object({
     name: z.string().trim().min(2, "Nama minimal 2 karakter"),
-    email: z.string().trim().email("Email tidak valid"),
     avatar: z.string().optional(),
     currentPassword: z.string().optional(),
     newPassword: z.string().optional(),
