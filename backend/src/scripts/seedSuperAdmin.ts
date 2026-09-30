@@ -2,8 +2,8 @@ import "dotenv/config";
 import { connectDatabase, disconnectDatabase } from "../config/database";
 import { User } from "../models";
 
-const DEFAULT_EMAIL = "admin@rmi-masjid.org";
-const DEFAULT_PASSWORD = "AdminRMI123";
+const DEFAULT_EMAIL = "admin@rmi.com";
+const DEFAULT_PASSWORD = "admin123";
 const DEFAULT_NAME = "Super Admin RMI";
 
 async function seedSuperAdmin() {

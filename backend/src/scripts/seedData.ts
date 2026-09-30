@@ -24,14 +24,14 @@ const SEED_IMAGES = {
 } as const;
 
 async function ensureAdminUser() {
-  const email = (process.env.SEED_ADMIN_EMAIL ?? "admin@rmi-masjid.org").toLowerCase();
+  const email = (process.env.SEED_ADMIN_EMAIL ?? "admin@rmi.com").toLowerCase();
   let user = await User.findOne({ email });
 
   if (!user) {
     user = await User.create({
       name: process.env.SEED_ADMIN_NAME ?? "Super Admin RMI",
       email,
-      password: process.env.SEED_ADMIN_PASSWORD ?? "AdminRMI123",
+      password: process.env.SEED_ADMIN_PASSWORD ?? "admin123",
       role: "superadmin",
       isActive: true,
     });
