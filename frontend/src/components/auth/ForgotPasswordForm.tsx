@@ -60,7 +60,7 @@ export function ForgotPasswordForm() {
           id="email"
           type="email"
           autoComplete="email"
-          placeholder="admin@rmi-masjid.org"
+          placeholder="admin@example.com"
           error={Boolean(errors.email)}
           {...register("email")}
         />
