@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     return jsonSuccess(await getDashboardStats());
   });
 }

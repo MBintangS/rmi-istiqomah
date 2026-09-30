@@ -576,6 +576,16 @@ export interface ActivateInvitationPayload {
   confirmPassword: string;
 }
 
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ResetPasswordPayload {
+  token: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface LoginPayload {
   email: string;
   password: string;

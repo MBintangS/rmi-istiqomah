@@ -29,6 +29,24 @@ export const activateInvitationFormSchema = z
 
 export type ActivateInvitationFormValues = z.infer<typeof activateInvitationFormSchema>;
 
+export const forgotPasswordFormSchema = z.object({
+  email: z.string().trim().email("Email tidak valid"),
+});
+
+export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordFormSchema>;
+
+export const resetPasswordFormSchema = z
+  .object({
+    password: z.string().min(8, "Password minimal 8 karakter"),
+    confirmPassword: z.string().min(1, "Konfirmasi password wajib diisi"),
+  })
+  .refine((values) => values.password === values.confirmPassword, {
+    message: "Konfirmasi password tidak sama",
+    path: ["confirmPassword"],
+  });
+
+export type ResetPasswordFormValues = z.infer<typeof resetPasswordFormSchema>;
+
 export const profileFormSchema = z
   .object({
     name: z.string().trim().min(2, "Nama minimal 2 karakter"),

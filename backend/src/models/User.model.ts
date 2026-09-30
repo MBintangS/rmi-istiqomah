@@ -11,6 +11,7 @@ export interface IUser {
   role: StoredUserRole;
   isActive: boolean;
   avatar?: string;
+  passwordChangedAt?: Date;
 }
 
 export interface IUserMethods {
@@ -54,6 +55,9 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
       type: String,
       trim: true,
     },
+    passwordChangedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -66,6 +70,7 @@ userSchema.pre("save", async function (next) {
   }
 
   this.password = await bcrypt.hash(this.password, 12);
+  this.passwordChangedAt = new Date();
   next();
 });
 

@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     return jsonSuccess(await getProgramBySlug(params.slug, queryObject(request), user));
   });
 }
 
 export async function PUT(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     const data = await parseBody(request, updateProgramSchema);
     return jsonSuccess(await updateProgram(params.slug, data), {
       message: "Program berhasil diperbarui",
@@ -25,7 +25,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
 
 export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     return jsonSuccess(await deleteProgram(params.slug), { message: "Program berhasil dihapus" });
   });
 }

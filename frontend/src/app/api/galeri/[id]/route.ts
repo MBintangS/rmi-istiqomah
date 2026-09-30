@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     return jsonSuccess(await getGaleriById(params.id, queryObject(request), user));
   });
 }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     const data = await parseBody(request, updateGaleriSchema);
     return jsonSuccess(await updateGaleri(params.id, data), { message: "Galeri berhasil diperbarui" });
   });
@@ -23,7 +23,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     return jsonSuccess(await deleteGaleri(params.id), { message: "Galeri berhasil dihapus" });
   });
 }

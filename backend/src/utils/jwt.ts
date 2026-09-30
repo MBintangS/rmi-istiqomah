@@ -6,6 +6,7 @@ export interface JwtPayload {
   sub: string;
   email: string;
   role: UserRole | "admin";
+  iat?: number;
 }
 
 function getJwtSecret(): string {

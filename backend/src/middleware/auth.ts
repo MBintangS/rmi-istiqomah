@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import { User } from "../models/User.model";
 import { AppError } from "./errorHandler";
 import {
   isCmsRole,
@@ -8,6 +9,32 @@ import {
 } from "../utils/roles";
 import { verifyToken } from "../utils/jwt";
 
+async function resolveSession(token: string) {
+  const payload = verifyToken(token);
+  const user = await User.findById(payload.sub).select("isActive passwordChangedAt");
+  if (!user || !user.isActive) {
+    throw new AppError(401, "UNAUTHORIZED", "Token tidak valid atau sudah kedaluwarsa");
+  }
+
+  if (
+    user.passwordChangedAt &&
+    typeof payload.iat === "number" &&
+    payload.iat < Math.floor(user.passwordChangedAt.getTime() / 1000)
+  ) {
+    throw new AppError(
+      401,
+      "UNAUTHORIZED",
+      "Sesi berakhir karena password telah diubah. Silakan login kembali.",
+    );
+  }
+
+  return {
+    id: payload.sub,
+    email: payload.email,
+    role: normalizeRole(payload.role),
+  };
+}
+
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
 
@@ -16,16 +43,13 @@ export function authenticate(req: Request, _res: Response, next: NextFunction): 
     return;
   }
 
-  const token = authHeader.slice(7);
-  const payload = verifyToken(token);
-
-  req.user = {
-    id: payload.sub,
-    email: payload.email,
-    role: normalizeRole(payload.role),
-  };
-
-  next();
+  void resolveSession(authHeader.slice(7)).then(
+    (user) => {
+      req.user = user;
+      next();
+    },
+    (error: unknown) => next(error),
+  );
 }
 
 function requireRoles(check: (role: string) => boolean) {
@@ -56,18 +80,17 @@ export function optionalAuthenticate(req: Request, _res: Response, next: NextFun
     return;
   }
 
-  try {
-    const token = authHeader.slice(7);
-    const payload = verifyToken(token);
-
-    req.user = {
-      id: payload.sub,
-      email: payload.email,
-      role: normalizeRole(payload.role),
-    };
-  } catch {
-    // Token tidak valid — perlakukan sebagai request publik
-  }
-
-  next();
+  void resolveSession(authHeader.slice(7)).then(
+    (user) => {
+      req.user = user;
+      next();
+    },
+    (error: unknown) => {
+      if (error instanceof AppError && error.statusCode === 401) {
+        next();
+        return;
+      }
+      next(error);
+    },
+  );
 }

@@ -1,5 +1,12 @@
 import { apiGet, apiPost, apiPut } from "@/lib/api";
-import type { AuthUser, LoginPayload, LoginResult, ProfileUpdatePayload } from "@/types/api";
+import type {
+  AuthUser,
+  ForgotPasswordPayload,
+  LoginPayload,
+  LoginResult,
+  ProfileUpdatePayload,
+  ResetPasswordPayload,
+} from "@/types/api";
 
 export async function loginAdmin(payload: LoginPayload): Promise<LoginResult> {
   const response = await apiPost<LoginResult>("/auth/login", payload);
@@ -14,4 +21,12 @@ export async function fetchAuthMe(): Promise<AuthUser> {
 export async function updateMyProfile(payload: ProfileUpdatePayload): Promise<LoginResult> {
   const response = await apiPut<LoginResult>("/auth/me", payload);
   return response.data;
+}
+
+export async function requestPasswordReset(payload: ForgotPasswordPayload) {
+  return apiPost<{ ok: true }, ForgotPasswordPayload>("/auth/forgot-password", payload);
+}
+
+export async function submitPasswordReset(payload: ResetPasswordPayload) {
+  return apiPost<{ email: string }, ResetPasswordPayload>("/auth/reset-password", payload);
 }

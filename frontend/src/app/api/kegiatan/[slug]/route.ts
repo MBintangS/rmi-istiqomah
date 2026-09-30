@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     return jsonSuccess(await getKegiatanBySlug(params.slug, queryObject(request), user));
   });
 }
 
 export async function PUT(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     const data = await parseBody(request, updateKegiatanSchema);
     return jsonSuccess(await updateKegiatan(params.slug, data), {
       message: "Kegiatan berhasil diperbarui",
@@ -25,7 +25,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
 
 export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     return jsonSuccess(await deleteKegiatan(params.slug), { message: "Kegiatan berhasil dihapus" });
   });
 }

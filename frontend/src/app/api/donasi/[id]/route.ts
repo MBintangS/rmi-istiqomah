@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     return jsonSuccess(await getDonasiById(params.id, queryObject(request), user));
   });
 }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     const data = await parseBody(request, updateDonasiSchema);
     return jsonSuccess(await updateDonasi(params.id, data), {
       message: "Rekening donasi berhasil diperbarui",
@@ -25,7 +25,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     return jsonSuccess(await deleteDonasi(params.id), {
       message: "Rekening donasi berhasil dihapus",
     });

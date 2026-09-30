@@ -12,7 +12,7 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requireSuperAdmin(await authenticate(request));
     const data = await parseBody(request, updateSettingsSchema);
     return jsonSuccess(await updateSettings(data), { message: "Pengaturan berhasil diperbarui" });
   });

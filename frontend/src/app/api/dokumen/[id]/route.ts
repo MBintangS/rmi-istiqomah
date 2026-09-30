@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     const data = await parseBody(request, updateDokumenSchema);
     return jsonSuccess(await updateDokumen(params.id, data), {
       message: "Dokumen berhasil diperbarui",
@@ -18,7 +18,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     return jsonSuccess(await deleteDokumen(params.id), { message: "Dokumen berhasil dihapus" });
   });
 }

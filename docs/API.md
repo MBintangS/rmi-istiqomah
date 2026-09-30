@@ -338,6 +338,67 @@ Aktifkan akun dari email undangan dan buat password. Endpoint ini tersedia pada 
 
 **Error relevan:** `INVALID_INVITATION`, `ACCOUNT_INACTIVE`, `VALIDATION_ERROR`
 
+### `POST /auth/forgot-password`
+
+Minta tautan reset password untuk akun CMS yang sudah aktif. Endpoint ini tersedia pada Next.js Route Handler `/api`. Respons selalu sama, baik email terdaftar maupun tidak.
+
+**Auth:** Tidak  
+**Rate limit:** 3 request / 1 jam per IP dan per email
+
+**Body:**
+
+```json
+{
+  "email": "admin@rmi-masjid.org"
+}
+```
+
+**Aturan:**
+- Email dikirim hanya jika akun aktif, undangan sudah diterima, dan password sudah ada
+- Akun `pending` tidak menerima email reset; mereka tetap memakai tautan aktivasi
+- Akun nonaktif tidak menerima email
+- Permintaan baru mengganti token reset sebelumnya
+- Kegagalan pengiriman email tidak mengubah respons, supaya keberadaan akun tidak terlihat
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": { "ok": true },
+  "message": "Jika email terdaftar pada akun aktif, tautan reset password telah dikirim."
+}
+```
+
+**Error relevan:** `VALIDATION_ERROR`, `TOO_MANY_REQUESTS`
+
+### `POST /auth/reset-password`
+
+Ganti password memakai token dari email reset. Endpoint ini tersedia pada Next.js Route Handler `/api`.
+
+**Auth:** Tidak  
+**Rate limit:** 10 request / 15 menit per IP
+
+**Body:**
+
+```json
+{
+  "token": "token-dari-tautan-email",
+  "password": "PasswordBaru123",
+  "confirmPassword": "PasswordBaru123"
+}
+```
+
+**Aturan:**
+- Token berlaku sekali selama 60 menit (dapat diubah melalui `PASSWORD_RESET_EXPIRES_MINUTES`, rentang 15–180)
+- Password minimal 8 karakter dan konfirmasi harus sama
+- Setelah berhasil, token dihapus dan `passwordChangedAt` diperbarui
+- JWT yang diterbitkan sebelum password berubah ditolak di Next.js maupun Express
+
+**Response `200`:** `{ email }` + `message`
+
+**Error relevan:** `INVALID_RESET_TOKEN`, `ACCOUNT_INACTIVE`, `VALIDATION_ERROR`, `TOO_MANY_REQUESTS`
+
 ### `POST /auth/login`
 
 Login admin, mendapat JWT.
@@ -1887,6 +1948,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/artikel" -Headers $headers
 
 | Tanggal | Sprint | Perubahan |
 |---------|--------|-----------|
+| 2026-09-30 | — | Lupa password via Resend: POST /auth/forgot-password dan POST /auth/reset-password (Next.js `/api`); JWT sebelum password berubah ditolak |
 | 2026-09-23 | — | POST /pendaftaran/:slug: nomor WhatsApp yang sama boleh didaftarkan berkali-kali |
 | 2026-09-23 | — | POST /pendaftaran/:slug: field wajib `age` dan `address` |
 | 2026-09-23 | — | Pendaftaran: GET/POST publik `/pendaftaran`, CRUD admin `/pendaftaran/admin`, daftar peserta |

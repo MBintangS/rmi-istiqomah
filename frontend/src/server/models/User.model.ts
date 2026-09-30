@@ -15,6 +15,9 @@ export interface IUser {
   invitationStatus: InvitationStatus;
   invitationTokenHash?: string;
   invitationExpiresAt?: Date;
+  resetTokenHash?: string;
+  resetExpiresAt?: Date;
+  passwordChangedAt?: Date;
 }
 
 export interface IUserMethods {
@@ -71,6 +74,17 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
       type: Date,
       select: false,
     },
+    resetTokenHash: {
+      type: String,
+      select: false,
+    },
+    resetExpiresAt: {
+      type: Date,
+      select: false,
+    },
+    passwordChangedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -83,6 +97,7 @@ userSchema.pre("save", async function (next) {
   }
 
   this.password = await bcrypt.hash(this.password, 12);
+  this.passwordChangedAt = new Date();
   next();
 });
 
@@ -97,10 +112,18 @@ if (models.User) {
   )?.options?.enum;
   const missingAvatar = !models.User.schema.path("avatar");
   const missingInvitationStatus = !models.User.schema.path("invitationStatus");
+  const missingResetToken = !models.User.schema.path("resetTokenHash");
+  const missingPasswordChangedAt = !models.User.schema.path("passwordChangedAt");
   const missingCmsRoles =
     Array.isArray(roleEnum) &&
     (!roleEnum.includes("pengurus") || !roleEnum.includes("anggota"));
-  if (missingAvatar || missingInvitationStatus || missingCmsRoles) {
+  if (
+    missingAvatar ||
+    missingInvitationStatus ||
+    missingCmsRoles ||
+    missingResetToken ||
+    missingPasswordChangedAt
+  ) {
     mongoose.deleteModel("User");
   }
 }

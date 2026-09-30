@@ -71,7 +71,24 @@ export const updateProfileSchema = z
     }
   });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().trim().email("Email tidak valid"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().trim().min(1, "Token reset wajib diisi"),
+    password: z.string().min(8, "Password minimal 8 karakter"),
+    confirmPassword: z.string().min(1, "Konfirmasi password wajib diisi"),
+  })
+  .refine((values) => values.password === values.confirmPassword, {
+    message: "Konfirmasi password tidak sama",
+    path: ["confirmPassword"],
+  });
+
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type ActivateInvitationInput = z.infer<typeof activateInvitationSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

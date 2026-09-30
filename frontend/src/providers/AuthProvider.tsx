@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { clearAuthToken, getAuthToken, setAuthToken } from "@/lib/auth-token";
+import { clearAuthToken, getAuthToken, onAuthSessionCleared, setAuthToken } from "@/lib/auth-token";
 import { fetchAuthMe, loginAdmin } from "@/services/auth.service";
 import type { AuthUser, LoginPayload, LoginResult } from "@/types/api";
 
@@ -38,6 +38,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const me = await fetchAuthMe();
     setUser(me);
+  }, []);
+
+  useEffect(() => {
+    return onAuthSessionCleared(() => {
+      setUser(null);
+    });
   }, []);
 
   useEffect(() => {

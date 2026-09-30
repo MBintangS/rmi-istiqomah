@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     return jsonSuccess(await listPengurus(queryObject(request), user));
   });
 }
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     const data = await parseBody(request, createPengurusSchema);
     return jsonSuccess(await createPengurus(data), {
       status: 201,

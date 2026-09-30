@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     const data = await parseBody(request, createKategoriSchema);
     return jsonSuccess(await createKategori(data), { status: 201, message: "Kategori berhasil dibuat" });
   });

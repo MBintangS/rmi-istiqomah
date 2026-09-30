@@ -75,6 +75,9 @@
   invitationStatus: 'pending' | 'accepted',
   invitationTokenHash?: string,
   invitationExpiresAt?: Date,
+  resetTokenHash?: string,
+  resetExpiresAt?: Date,
+  passwordChangedAt?: Date,
   createdAt: Date,
   updatedAt: Date
 }

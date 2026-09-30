@@ -105,6 +105,7 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 | `EMAIL_REPLY_TO` | Gmail resmi RMI (opsional) |
 | `APP_URL` | `https://www.rmiistiqomah.web.id` |
 | `INVITATION_EXPIRES_HOURS` | `24` |
+| `PASSWORD_RESET_EXPIRES_MINUTES` | `60` (opsional, rentang 15–180) |
 
 4. Deploy. Catat URL frontend.
 5. Kembali ke Render → update `CORS_ORIGIN` ke URL Vercel (tanpa trailing slash) → **Manual Deploy** agar CORS aktif.
@@ -116,8 +117,9 @@ Service dapat **sleep** setelah idle ~15 menit. Request pertama setelah sleep bi
 3. Simpan `RESEND_API_KEY` hanya sebagai environment server-side di Vercel.
 4. Setelah menambah atau mengubah environment, lakukan redeploy.
 5. Uji dari CMS: buat pengguna, buka email, buat password melalui `/aktivasi-akun`, lalu login.
+6. Uji lupa password dari `/admin/login`: kirim tautan, buka `/reset-password`, login dengan password baru. Sesi lama di perangkat lain harus berakhir.
 
-Fitur undangan menggunakan Next.js `/api`; fallback Express/Render tidak menyediakan endpoint aktivasi dan kirim ulang undangan.
+Fitur undangan dan lupa password menggunakan Next.js `/api`; fallback Express/Render tidak menyediakan endpoint aktivasi, kirim ulang undangan, atau reset password. Express tetap menolak JWT yang diterbitkan sebelum password terakhir diubah.
 
 ### Urutan saling ketergantungan
 

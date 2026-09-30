@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requireSuperAdmin(authenticate(request));
+    requireSuperAdmin(await authenticate(request));
     return jsonSuccess(await resendInvitation(params.id), {
       message: "Email undangan berhasil dikirim ulang",
     });

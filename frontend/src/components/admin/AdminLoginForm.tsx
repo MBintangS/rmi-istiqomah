@@ -91,6 +91,11 @@ export function AdminLoginForm() {
         {errors.password && (
           <p className="text-caption text-red-600">{errors.password.message}</p>
         )}
+        <div className="flex justify-end">
+          <Button href="/lupa-password" variant="ghost" size="sm" className="h-auto px-2">
+            Lupa password?
+          </Button>
+        </div>
       </div>
 
       <Button type="submit" className="w-full" disabled={isSubmitting}>

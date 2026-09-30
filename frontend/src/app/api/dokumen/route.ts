@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   return apiRoute(async () => {
-    const user = optionalAuthenticate(request);
+    const user = await optionalAuthenticate(request);
     const query = parseQuery(request, dokumenListQuerySchema);
     const result = await listDokumen(query, user);
     return jsonSuccess(result.data, { pagination: result.pagination });
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   return apiRoute(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     const data = await parseBody(request, createDokumenSchema);
     return jsonSuccess(await createDokumen(data), {
       status: 201,

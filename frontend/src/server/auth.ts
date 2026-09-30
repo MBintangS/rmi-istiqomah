@@ -2,7 +2,7 @@ import "server-only";
 import jwt, { type SignOptions } from "jsonwebtoken";
 import { AppError } from "@/server/errors";
 import { getServerEnv } from "@/server/env";
-import type { UserRole } from "@/server/models/User.model";
+import { User, type UserRole } from "@/server/models/User.model";
 import {
   isCmsRole,
   isPengurusRole,
@@ -20,6 +20,7 @@ export interface JwtPayload {
   sub: string;
   email: string;
   role: string;
+  iat?: number;
 }
 
 export function signToken(payload: JwtPayload): string {
@@ -40,6 +41,25 @@ export function verifyToken(token: string): JwtPayload {
   }
 }
 
+async function assertSessionCurrent(payload: JwtPayload) {
+  const user = await User.findById(payload.sub).select("isActive passwordChangedAt");
+  if (!user || !user.isActive) {
+    throw new AppError(401, "UNAUTHORIZED", "Token tidak valid atau sudah kedaluwarsa");
+  }
+
+  if (
+    user.passwordChangedAt &&
+    typeof payload.iat === "number" &&
+    payload.iat < Math.floor(user.passwordChangedAt.getTime() / 1000)
+  ) {
+    throw new AppError(
+      401,
+      "UNAUTHORIZED",
+      "Sesi berakhir karena password telah diubah. Silakan login kembali.",
+    );
+  }
+}
+
 function readBearer(request: Request): string | null {
   const header = request.headers.get("authorization");
   if (!header?.startsWith("Bearer ")) {
@@ -48,13 +68,14 @@ function readBearer(request: Request): string | null {
   return header.slice(7);
 }
 
-export function authenticate(request: Request): AuthUser {
+export async function authenticate(request: Request): Promise<AuthUser> {
   const token = readBearer(request);
   if (!token) {
     throw new AppError(401, "UNAUTHORIZED", "Token autentikasi diperlukan");
   }
 
   const payload = verifyToken(token);
+  await assertSessionCurrent(payload);
   return {
     id: payload.sub,
     email: payload.email,
@@ -62,7 +83,7 @@ export function authenticate(request: Request): AuthUser {
   };
 }
 
-export function optionalAuthenticate(request: Request): AuthUser | undefined {
+export async function optionalAuthenticate(request: Request): Promise<AuthUser | undefined> {
   const token = readBearer(request);
   if (!token) {
     return undefined;
@@ -70,6 +91,7 @@ export function optionalAuthenticate(request: Request): AuthUser | undefined {
 
   try {
     const payload = verifyToken(token);
+    await assertSessionCurrent(payload);
     return {
       id: payload.sub,
       email: payload.email,

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    const actor = requireSuperAdmin(authenticate(request));
+    const actor = requireSuperAdmin(await authenticate(request));
     const data = await parseBody(request, updateUserSchema);
     return jsonSuccess(await updateUser(params.id, data, actor), {
       message: "Pengguna berhasil diperbarui",
@@ -18,7 +18,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    const actor = requireSuperAdmin(authenticate(request));
+    const actor = requireSuperAdmin(await authenticate(request));
     return jsonSuccess(await deleteUser(params.id, actor), {
       message: "Pengguna berhasil dihapus",
     });

@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   return apiRoute(async () => {
-    const user = authenticate(request);
+    const user = await authenticate(request);
     return jsonSuccess(await getMe(user.id));
   });
 }
 
 export async function PUT(request: Request) {
   return apiRoute(async () => {
-    const user = authenticate(request);
+    const user = await authenticate(request);
     const data = await parseBody(request, updateProfileSchema);
     return jsonSuccess(await updateMe(user.id, data), {
       message: "Profil berhasil diperbarui",

@@ -1,5 +1,5 @@
 import axios, { type AxiosError, isAxiosError } from "axios";
-import { getAuthToken } from "@/lib/auth-token";
+import { clearAuthToken, getAuthToken } from "@/lib/auth-token";
 import type { ApiErrorResponse, ApiSuccessResponse } from "@/types/api";
 
 function resolveApiBaseUrl() {
@@ -110,6 +110,9 @@ api.interceptors.response.use(
   (error: AxiosError<ApiErrorResponse>) => {
     if (error.response?.data?.success === false) {
       const { code, message, details } = error.response.data.error;
+      if (typeof window !== "undefined" && error.response.status === 401 && code === "UNAUTHORIZED") {
+        clearAuthToken();
+      }
       return Promise.reject(new ApiRequestError(message, error.response.status, code, details));
     }
 

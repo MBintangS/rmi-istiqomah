@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     const data = await parseBody(request, updateBannerSchema);
     return jsonSuccess(await updateBanner(params.id, data), { message: "Banner berhasil diperbarui" });
   });
@@ -16,7 +16,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   return apiRoute(async () => {
-    requirePengurus(authenticate(request));
+    requirePengurus(await authenticate(request));
     return jsonSuccess(await deleteBanner(params.id), { message: "Banner berhasil dihapus" });
   });
 }

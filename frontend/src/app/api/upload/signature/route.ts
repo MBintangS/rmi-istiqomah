@@ -17,7 +17,7 @@ const signatureSchema = z.object({
 
 export async function POST(request: Request) {
   return apiHandler(async () => {
-    requireAdmin(authenticate(request));
+    requireAdmin(await authenticate(request));
     const query = queryObject(request);
     const body = await parseBody(request, signatureSchema);
     return jsonSuccess(
