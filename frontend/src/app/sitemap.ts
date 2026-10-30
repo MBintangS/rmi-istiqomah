@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { TOPIK_BELAJAR } from "@/data/belajar/topik";
+import { PERMAINAN_CATALOG } from "@/data/permainan/catalog";
 import { SITE_URL } from "@/lib/seo";
 import { fetchArtikelList } from "@/services/artikel.service";
 import { fetchKegiatanList } from "@/services/kegiatan.service";
@@ -25,6 +27,19 @@ const STATIC_ROUTES: Array<{
   { path: "/ibadah/jadwal-sholat", changeFrequency: "daily", priority: 0.8 },
   { path: "/ibadah/doa", changeFrequency: "weekly", priority: 0.8 },
   { path: "/ibadah/al-quran", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/edukasi", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/belajar", changeFrequency: "monthly", priority: 0.7 },
+  ...TOPIK_BELAJAR.map((topik) => ({
+    path: `/belajar/${topik.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  })),
+  { path: "/permainan", changeFrequency: "monthly", priority: 0.7 },
+  ...PERMAINAN_CATALOG.map((game) => ({
+    path: `/permainan/${game.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  })),
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

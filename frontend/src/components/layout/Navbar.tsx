@@ -58,7 +58,9 @@ export function Navbar() {
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    return pathname === href || pathname.startsWith(`${href}/`);
+    if (pathname === href || pathname.startsWith(`${href}/`)) return true;
+    const children = navItems.find((item) => item.href === href)?.children ?? [];
+    return children.some((child) => pathname === child.href || pathname.startsWith(`${child.href}/`));
   };
 
   return (

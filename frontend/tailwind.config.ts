@@ -37,6 +37,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-poppins)", "system-ui", "sans-serif"],
         display: ["var(--font-syne)", "var(--font-poppins)", "system-ui", "sans-serif"],
+        play: ["var(--font-play)", "var(--font-poppins)", "system-ui", "sans-serif"],
+        arabic: ["var(--font-arabic)", "serif"],
       },
       borderRadius: {
         rmi: "0.75rem",

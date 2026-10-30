@@ -23,6 +23,14 @@ export const mainNavItems: NavItemWithChildren[] = [
       { label: "Al-Qur'an", href: "/ibadah/al-quran" },
     ],
   },
+  {
+    label: "Edukasi",
+    href: "/edukasi",
+    children: [
+      { label: "Permainan", href: "/permainan" },
+      { label: "Belajar", href: "/belajar" },
+    ],
+  },
   { label: "Galeri", href: "/galeri" },
   { label: "Artikel", href: "/artikel" },
   { label: "Donasi", href: "/donasi" },

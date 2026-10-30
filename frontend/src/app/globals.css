@@ -190,6 +190,25 @@
       linear-gradient(-45deg, rgb(var(--color-primary) / 0.14) 1px, transparent 1px);
   }
 
+  /* Game card window: same diamond lattice as the hero, a little denser */
+  .play-lattice {
+    background-image:
+      linear-gradient(45deg, rgb(var(--color-heading) / 0.06) 1px, transparent 1px),
+      linear-gradient(-45deg, rgb(var(--color-heading) / 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Belajar: garis buku tulis, seperti halaman latihan menulis huruf */
+  .belajar-ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--rule-gap, 2.25rem) - 1px),
+      rgb(var(--color-primary) / 0.16) calc(var(--rule-gap, 2.25rem) - 1px),
+      rgb(var(--color-primary) / 0.16) var(--rule-gap, 2.25rem)
+    );
+  }
+
   .social-marquee-track {
     animation: social-marquee 36s linear infinite;
   }

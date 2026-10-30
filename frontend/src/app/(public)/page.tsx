@@ -5,6 +5,7 @@ import { JejakRail } from "@/components/home/JejakRail";
 import { LatestArticlesSection } from "@/components/home/LatestArticlesSection";
 import { ProgramsSection } from "@/components/home/ProgramsSection";
 import { LatestKegiatanSection } from "@/components/home/LatestKegiatanSection";
+import { PermainanTeaserSection } from "@/components/home/PermainanTeaserSection";
 import { SocialMarquee } from "@/components/home/SocialMarquee";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
@@ -32,6 +33,7 @@ export default function HomePage() {
         <LatestKegiatanSection />
         <OpenPendaftaranSection />
         <ProgramsSection />
+        <PermainanTeaserSection />
         <LatestArticlesSection />
         <GalleryPreviewSection />
         <TestimonialsSection />
