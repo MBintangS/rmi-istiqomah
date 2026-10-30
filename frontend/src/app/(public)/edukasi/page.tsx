@@ -13,7 +13,7 @@ export default function EdukasiPage() {
     <>
       <PageHero
         title="Edukasi"
-        description="Pelajari dasar-dasar Islam, lalu berlatih lewat permainan. Tanpa akun dan tanpa iklan."
+        description="Pelajari dasar-dasar Islam, lalu berlatih lewat permainan."
         breadcrumb={[{ label: "Beranda", href: "/" }, { label: "Edukasi" }]}
       />
       <section className="bg-background py-12 sm:py-16">

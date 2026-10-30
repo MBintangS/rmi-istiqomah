@@ -96,9 +96,6 @@ export function PermainanHub() {
                 <br />
                 lalu mulai bermain.
               </h1>
-              <p className="mt-5 max-w-[44ch] text-base text-foreground/75 sm:text-lg">
-                Permainan Islami tanpa akun dan tanpa iklan.
-              </p>
             </div>
 
             <div className="mx-auto w-full max-w-md lg:max-w-none">
