@@ -19,7 +19,7 @@ export const PERMAINAN_CATALOG: PermainanInfo[] = [
   },
   {
     slug: "kuis-lima-menit",
-    title: "Kuis 5 Menit",
+    title: "Kuis Singkat",
     summary: "Lima soal rukun, sholat, nabi, dan Al-Qur'an.",
     skill: "Pengetahuan dasar Islam",
     lanes: ["sedang", "sulit"],

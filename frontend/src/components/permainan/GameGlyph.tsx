@@ -23,7 +23,7 @@ export function GameGlyph({ slug, className }: { slug: PermainanSlug; className?
     case "kuis-lima-menit":
       return (
         <span className={cn("font-play text-[5.5rem] font-bold leading-none", className)} aria-hidden="true">
-          5?
+          ?
         </span>
       );
     case "cari-kata":

@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import type { PermainanInfo, SoalKuis } from "@/types/permainan";
 
 const QUESTIONS_PER_ROUND = 5;
-const SECONDS_PER_QUESTION = 20;
+const SECONDS_PER_QUESTION = 5;
 const CATEGORIES = Array.from(new Set(SOAL_KUIS.map((q) => q.category)));
 
 type Phase = "intro" | "playing" | "done";
