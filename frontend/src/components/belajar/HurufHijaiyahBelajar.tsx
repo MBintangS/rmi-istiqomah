@@ -130,6 +130,10 @@ export function HurufHijaiyahBelajar() {
   };
 
   const info = mode === "nama" ? null : HARAKAT_INFO[mode];
+  const indexHuruf = HURUF_BELAJAR.findIndex((huruf) => huruf.glyph === selected.glyph);
+  const hurufSebelumnya = indexHuruf > 0 ? HURUF_BELAJAR[indexHuruf - 1] : undefined;
+  const hurufSelanjutnya =
+    indexHuruf >= 0 && indexHuruf < HURUF_BELAJAR.length - 1 ? HURUF_BELAJAR[indexHuruf + 1] : undefined;
 
   return (
     <div className="space-y-8">
@@ -202,7 +206,14 @@ export function HurufHijaiyahBelajar() {
           Latihan di Kenal Hijaiyah →
         </Link>
       </div>
-      <TulisHurufDialog open={menulis} huruf={selected} onClose={() => setMenulis(false)} />
+      <TulisHurufDialog
+        open={menulis}
+        huruf={selected}
+        sebelumnya={hurufSebelumnya}
+        selanjutnya={hurufSelanjutnya}
+        onPindah={setSelected}
+        onClose={() => setMenulis(false)}
+      />
     </div>
   );
 }

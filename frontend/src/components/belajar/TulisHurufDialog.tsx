@@ -12,6 +12,16 @@ const LEBAR_PENA = 30;
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
+const tombolGaris = cn(
+  "inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-foreground/10 bg-surface px-2 text-xs font-semibold text-heading transition-colors hover:border-primary hover:bg-primary/10 sm:px-4 sm:text-sm",
+  focusRing,
+);
+
+const tombolIsi = cn(
+  "inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-primary px-2 text-xs font-semibold text-white transition-colors hover:bg-primary/90 sm:px-4 sm:text-sm",
+  focusRing,
+);
+
 const AWALAN = "Ikuti pola, termasuk titiknya.";
 
 type NilaiPapan = "awal" | "sesuai" | "belum";
@@ -34,7 +44,19 @@ function pesanHasil(hasil: HasilTulisan, name: string): string {
   return "Belum sesuai. Ikuti bentuk hurufnya, termasuk titiknya.";
 }
 
-function PapanTulis({ glyph, name }: { glyph: string; name: string }) {
+function PapanTulis({
+  glyph,
+  name,
+  sebelumnya,
+  selanjutnya,
+  onPindah,
+}: {
+  glyph: string;
+  name: string;
+  sebelumnya?: HurufBelajar;
+  selanjutnya?: HurufBelajar;
+  onPindah: (huruf: HurufBelajar) => void;
+}) {
   const data = goresanHuruf(glyph);
   const svgRef = useRef<SVGSVGElement>(null);
   const menggambar = useRef(false);
@@ -157,27 +179,33 @@ function PapanTulis({ glyph, name }: { glyph: string; name: string }) {
           )}
         </svg>
       </div>
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={ulang}
-          className={cn(
-            "inline-flex min-h-11 items-center justify-center rounded-full border border-foreground/10 bg-surface px-5 text-sm font-semibold text-heading transition-colors hover:border-primary hover:bg-primary/10",
-            focusRing,
-          )}
-        >
-          Ulangi
-        </button>
-        <button
-          type="button"
-          onClick={periksa}
-          className={cn(
-            "inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90",
-            focusRing,
-          )}
-        >
-          Periksa
-        </button>
+      <div className={cn("flex items-center gap-1.5 sm:gap-2", nilai === "sesuai" && "justify-between")}>
+        {nilai === "sesuai" ? (
+          <div className="flex flex-1 justify-start">
+            {sebelumnya ? (
+              <button type="button" onClick={() => onPindah(sebelumnya)} className={tombolGaris}>
+                Sebelumnya
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+        <div className="flex shrink-0 gap-1.5 sm:gap-2">
+          <button type="button" onClick={ulang} className={tombolGaris}>
+            Ulangi
+          </button>
+          <button type="button" onClick={periksa} className={tombolIsi}>
+            Periksa
+          </button>
+        </div>
+        {nilai === "sesuai" ? (
+          <div className="flex flex-1 justify-end">
+            {selanjutnya ? (
+              <button type="button" onClick={() => onPindah(selanjutnya)} className={tombolGaris}>
+                Selanjutnya
+              </button>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -186,15 +214,28 @@ function PapanTulis({ glyph, name }: { glyph: string; name: string }) {
 export function TulisHurufDialog({
   open,
   huruf,
+  sebelumnya,
+  selanjutnya,
+  onPindah,
   onClose,
 }: {
   open: boolean;
   huruf: HurufBelajar;
+  sebelumnya?: HurufBelajar;
+  selanjutnya?: HurufBelajar;
+  onPindah: (huruf: HurufBelajar) => void;
   onClose: () => void;
 }) {
   return (
     <Modal open={open} onClose={onClose} title={`Menulis ${huruf.name}`} className="sm:!max-w-xl">
-      <PapanTulis key={huruf.glyph} glyph={huruf.glyph} name={huruf.name} />
+      <PapanTulis
+        key={huruf.glyph}
+        glyph={huruf.glyph}
+        name={huruf.name}
+        sebelumnya={sebelumnya}
+        selanjutnya={selanjutnya}
+        onPindah={onPindah}
+      />
     </Modal>
   );
 }

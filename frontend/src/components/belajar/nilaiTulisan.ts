@@ -14,12 +14,15 @@ export interface HasilTulisan {
 const KOTAK = 400;
 const UKURAN = 180;
 const AMBANG = 140;
-/** Lebar pena saat menilai, dalam satuan viewBox. Lebih tebal dari garis yang terlihat. */
+/** Lebar pena untuk menutup bentuk. Lebih tebal dari garis yang terlihat supaya goresan yang mengikuti huruf tetap terhitung. */
 const KUAS = 52;
-/** Kelonggaran di luar siluet huruf sebelum tinta dihitung menyimpang. */
-const LONGAR = 36;
+/** Lebar pena untuk menghitung tinta yang menyimpang. Sama dengan garis yang digambar pengguna. */
+const KUAS_LUAR = 30;
+/** Kelonggaran kecil di luar siluet. Garis yang hanya memotong area huruf tetap dihitung menyimpang. */
+const LONGAR = 12;
 const TUTUP_MIN = 0.32;
-const LUAR_MAX = 0.45;
+/** Hanya sedikit tinta yang boleh berada di luar bentuk. */
+const LUAR_MAX = 0.28;
 /** Subpath yang hampir tidak tampak pada huruf jadi (lubang) tidak dinilai. */
 const LUBANG_MAX = 0.2;
 
@@ -43,17 +46,17 @@ function ambil(ctx: CanvasRenderingContext2D): ImageData {
   return ctx.getImageData(0, 0, UKURAN, UKURAN);
 }
 
-function gambarTinta(ctx: CanvasRenderingContext2D, goresan: readonly TitikGambar[][]) {
+function gambarTinta(ctx: CanvasRenderingContext2D, goresan: readonly TitikGambar[][], lebar: number) {
   ctx.fillStyle = "#000";
   ctx.strokeStyle = "#000";
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-  ctx.lineWidth = KUAS;
+  ctx.lineWidth = lebar;
   for (const garis of goresan) {
     if (garis.length === 0) continue;
     if (garis.length === 1) {
       ctx.beginPath();
-      ctx.arc(garis[0].x, garis[0].y, KUAS / 2, 0, Math.PI * 2);
+      ctx.arc(garis[0].x, garis[0].y, lebar / 2, 0, Math.PI * 2);
       ctx.fill();
       continue;
     }
@@ -104,8 +107,12 @@ export function nilaiTulisan(pathD: string, goresan: readonly TitikGambar[][]): 
   const zona = ambil(ctx);
 
   siap(ctx);
-  gambarTinta(ctx, goresan);
+  gambarTinta(ctx, goresan, KUAS);
   const tinta = ambil(ctx);
+
+  siap(ctx);
+  gambarTinta(ctx, goresan, KUAS_LUAR);
+  const tintaLuar = ambil(ctx);
 
   const bagian: { luas: number; kena: number }[] = [];
   for (const potongan of pecah(pathD)) {
@@ -129,8 +136,8 @@ export function nilaiTulisan(pathD: string, goresan: readonly TitikGambar[][]): 
 
   let tintaPx = 0;
   let luar = 0;
-  for (let i = 3; i < tinta.data.length; i += 4) {
-    if (tinta.data[i] <= AMBANG) continue;
+  for (let i = 3; i < tintaLuar.data.length; i += 4) {
+    if (tintaLuar.data[i] <= AMBANG) continue;
     tintaPx += 1;
     if (zona.data[i] <= AMBANG) luar += 1;
   }
