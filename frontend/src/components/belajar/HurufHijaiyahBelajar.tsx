@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { TulisHurufDialog } from "@/components/belajar/TulisHurufDialog";
 import { HARAKAT_INFO, HURUF_BELAJAR, hurufBerharakat } from "@/data/belajar/hijaiyah";
 import { cn } from "@/lib/utils";
 import type { Harakat, HurufBelajar } from "@/types/belajar";
@@ -59,7 +60,15 @@ function ModeSwitch({ mode, onChange }: { mode: Mode; onChange: (mode: Mode) => 
   );
 }
 
-function DetailHuruf({ huruf, mode }: { huruf: HurufBelajar; mode: Mode }) {
+function DetailHuruf({
+  huruf,
+  mode,
+  onTulis,
+}: {
+  huruf: HurufBelajar;
+  mode: Mode;
+  onTulis: () => void;
+}) {
   return (
     <div className="rounded-[1.75rem] border border-foreground/10 bg-surface p-5 sm:p-6" aria-live="polite">
       <div className="belajar-ruled flex h-40 items-center justify-center rounded-2xl bg-background [--rule-gap:2.5rem]">
@@ -91,6 +100,17 @@ function DetailHuruf({ huruf, mode }: { huruf: HurufBelajar; mode: Mode }) {
       {huruf.tip ? (
         <p className="mt-5 border-l-2 border-secondary pl-3 text-sm text-foreground/75">{huruf.tip}</p>
       ) : null}
+
+      <button
+        type="button"
+        onClick={onTulis}
+        className={cn(
+          "mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90",
+          focusRing,
+        )}
+      >
+        Latihan menulis
+      </button>
     </div>
   );
 }
@@ -98,6 +118,7 @@ function DetailHuruf({ huruf, mode }: { huruf: HurufBelajar; mode: Mode }) {
 export function HurufHijaiyahBelajar() {
   const [mode, setMode] = useState<Mode>("fathah");
   const [selected, setSelected] = useState(HURUF_BELAJAR[1]);
+  const [menulis, setMenulis] = useState(false);
   const detailRef = useRef<HTMLDivElement>(null);
 
   const pilih = (huruf: HurufBelajar) => {
@@ -123,7 +144,7 @@ export function HurufHijaiyahBelajar() {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
         <div ref={detailRef} className="scroll-mt-24 lg:sticky lg:top-24 lg:order-2">
-          <DetailHuruf huruf={selected} mode={mode} />
+          <DetailHuruf huruf={selected} mode={mode} onTulis={() => setMenulis(true)} />
         </div>
 
         <div className="lg:order-1">
@@ -181,6 +202,7 @@ export function HurufHijaiyahBelajar() {
           Latihan di Kenal Hijaiyah →
         </Link>
       </div>
+      <TulisHurufDialog open={menulis} huruf={selected} onClose={() => setMenulis(false)} />
     </div>
   );
 }
