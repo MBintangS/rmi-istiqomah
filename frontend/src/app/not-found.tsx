@@ -1,3 +1,4 @@
+import { PrayerTimesMarquee } from "@/components/home/PrayerTimesMarquee";
 import { JejakLine } from "@/components/layout/JejakLine";
 import { FooterV2 } from "@/components/layout/FooterV2";
 import { Navbar } from "@/components/layout/Navbar";
@@ -11,9 +12,10 @@ export default function NotFound() {
     <PublicThemeProvider>
       <SkipToContent />
       <Navbar />
+      <PrayerTimesMarquee />
       <main
         id="main-content"
-        className="flex min-h-[calc(100vh-4rem)] flex-col justify-center bg-background px-4 py-16 sm:px-6 lg:px-8"
+        className="flex min-h-[calc(100vh-6.5rem)] flex-col justify-center bg-background px-4 py-16 sm:px-6 lg:px-8"
       >
         <div className="mx-auto w-full max-w-6xl">
           <p className="font-display text-6xl font-bold tracking-tight text-primary sm:text-7xl">

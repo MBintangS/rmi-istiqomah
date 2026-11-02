@@ -223,6 +223,15 @@
     animation-play-state: paused;
   }
 
+  .prayer-marquee-track {
+    animation: social-marquee 48s linear infinite;
+  }
+
+  .group:hover .prayer-marquee-track,
+  .group:focus-visible .prayer-marquee-track {
+    animation-play-state: paused;
+  }
+
   /* Minimal overlay scrollbar - visible only on overflow + hover */
   .scrollbar-sidebar {
     scrollbar-width: thin;
@@ -264,7 +273,8 @@
     .page-hero,
     .float-badge,
     .float-badge-alt,
-    .social-marquee-track {
+    .social-marquee-track,
+    .prayer-marquee-track {
       animation: none;
     }
 

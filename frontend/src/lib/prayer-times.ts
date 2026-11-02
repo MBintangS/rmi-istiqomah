@@ -43,14 +43,23 @@ export function shiftMonth(isoDate: string, months: number): string {
     .slice(0, 10);
 }
 
-export function formatLongDateId(isoDate: string): string {
+function formatDateId(isoDate: string, month: "long" | "short"): string {
   return new Intl.DateTimeFormat("id-ID", {
     weekday: "long",
     day: "numeric",
-    month: "long",
+    month,
     year: "numeric",
     timeZone: "Asia/Jakarta",
   }).format(new Date(`${isoDate}T00:00:00+07:00`));
+}
+
+export function formatLongDateId(isoDate: string): string {
+  return formatDateId(isoDate, "long");
+}
+
+/** Bulan disingkat: Januari → Jan, November → Nov. Dipakai di layar sempit. */
+export function formatShortDateId(isoDate: string): string {
+  return formatDateId(isoDate, "short");
 }
 
 export function formatWeekdayId(isoDate: string): string {

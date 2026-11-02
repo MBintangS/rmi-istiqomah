@@ -1,3 +1,4 @@
+import { PrayerTimesMarquee } from "@/components/home/PrayerTimesMarquee";
 import { FooterV2 } from "@/components/layout/FooterV2";
 import { Navbar } from "@/components/layout/Navbar";
 import { SkipToContent } from "@/components/layout/SkipToContent";
@@ -9,7 +10,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     <PublicThemeProvider>
       <SkipToContent />
       <Navbar />
-      <main id="main-content" className="min-h-[calc(100vh-4rem)]">
+      <PrayerTimesMarquee />
+      <main id="main-content" className="min-h-[calc(100vh-6.5rem)]">
         {children}
       </main>
       <FooterV2 />
